@@ -11,15 +11,7 @@ export default function CelebrationSection() {
       <div className="ceremony-scene__paper" aria-hidden="true">
         <Image src="/heritage/ivory-parchment.png" alt="" fill sizes="100vw" />
       </div>
-      <div className="ceremony-scene__mist" aria-hidden="true">
-        <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw" />
-      </div>
-      <div className="ceremony-scene__pagodas" aria-hidden="true">
-        <Image src="/heritage/bagan-pagodas.png" alt="" fill sizes="(max-width: 759px) 100vw, 900px" />
-      </div>
-      <div className="ceremony-scene__hanging" aria-hidden="true">
-        <Image src="/heritage/hanging-magnolias.png" alt="" fill sizes="(max-width: 759px) 100vw, 850px" />
-      </div>
+      {/* A quiet paper leaf: no duplicated pagoda image or magnolia canopy. */}
 
       <article className="ceremony-page">
         <RoyalCeremonyFrame />
@@ -53,12 +45,6 @@ export default function CelebrationSection() {
         </div>
       </article>
 
-      <div className="ceremony-scene__flower ceremony-scene__flower--left" aria-hidden="true">
-        <Image src="/heritage/floral-left.png" alt="" fill sizes="(max-width: 759px) 60vw, 360px" />
-      </div>
-      <div className="ceremony-scene__flower ceremony-scene__flower--right" aria-hidden="true">
-        <Image src="/heritage/floral-right.png" alt="" fill sizes="(max-width: 759px) 60vw, 360px" />
-      </div>
       <PagodaSkyline className="ceremony-scene__skyline" />
     </section>
   );
