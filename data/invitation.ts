@@ -1,4 +1,4 @@
-/**
+/** 
  * JN-W01 — Essential customer content.
  * All default names, dates, venue wording and photos below are DEMO content.
  * Replace these before publishing a real invitation.
@@ -23,9 +23,9 @@ export const invitation = {
   displayMonth: "December",
   displayYear: "2026",
   ceremony: [
-    { time: "09:00 AM", title: "Wedding ceremony", detail: "The beginning of forever" },
-    { time: "11:30 AM", title: "Wedding luncheon", detail: "A gathering of loved ones" },
-    { time: "01:00 PM", title: "Blessings & photographs", detail: "Memories to cherish" },
+    { tabLabel: "Ceremony", time: "09:00 AM", title: "Wedding ceremony", detail: "The beginning of forever" },
+    { tabLabel: "Luncheon", time: "11:30 AM", title: "Wedding luncheon", detail: "A gathering of loved ones" },
+    { tabLabel: "Blessings", time: "01:00 PM", title: "Blessings & photographs", detail: "Memories to cherish" },
   ],
   venue: {
     name: "Our Wedding Venue",
@@ -46,12 +46,12 @@ export const invitation = {
     },
     {
       src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=85",
-      alt: "Sample wedding floral details",
+      alt: "Sample romantic wedding floral details",
       caption: "Little details",
     },
     {
       src: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=85",
-      alt: "Sample romantic wedding photography",
+      alt: "Sample wedding floral details",
       caption: "Us, always",
     },
   ],

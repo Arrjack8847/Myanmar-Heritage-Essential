@@ -4,11 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/**
- * A short, mist-soft bridge hides the hard boundary between two independent
- * image crops. The small gold lotus moves with scroll instead of repeating
- * the oversized hero crown or adding a third floral composition.
- */
+/** Continuous parchment bridge and chapter reveal, without duplicated scenery. */
 export default function RoyalUnfoldTransition() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -22,57 +18,38 @@ export default function RoyalUnfoldTransition() {
     const context = gsap.context(() => {
       gsap.timeline({
         scrollTrigger: {
-          trigger: intro,
-          start: "bottom bottom",
-          end: "bottom 22%",
-          scrub: 0.55,
-          invalidateOnRefresh: true,
+          trigger: intro, start: "bottom bottom", end: "bottom 22%",
+          scrub: 0.55, invalidateOnRefresh: true,
         },
       })
         .fromTo(".royal-unfold__sigil",
-          { autoAlpha: 0, y: 22, scale: 0.85 },
+          { autoAlpha: 0, y: 18, scale: 0.84 },
           { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "none" }, 0)
         .to(".royal-unfold__sigil",
-          { autoAlpha: 0, y: -26, duration: 0.5, ease: "none" }, 0.5);
-      
-      // Ceremony details appear individually after the bridge, not by moving
-      // the ENTIRE inner page (which caused the visible sliding card seam).
+          { autoAlpha: 0, y: -20, duration: 0.5, ease: "none" }, 0.5);
+
+      // The scene is exactly one viewport tall. Reveal each editorial group
+      // as it enters rather than animating the full section (which shifts seams).
       for (const selector of [
-        ".ceremony-heading", ".ceremony-date",
-        ".ceremony-timeline", ".ceremony-signoff",
+        ".ceremony-one-screen__motif",
+        ".ceremony-one-screen__eyebrow",
+        ".ceremony-one-screen__heading",
+        ".ceremony-one-screen__date",
+        ".ceremony-one-screen__details",
       ]) {
         const node = story.querySelector<HTMLElement>(selector);
         if (!node) continue;
-        gsap.fromTo(node, { autoAlpha: 0, y: 21 }, {
-          autoAlpha: 1, y: 0, ease: "none",
-          scrollTrigger: {
-            trigger: node, start: "top 94%", end: "top 67%",
-            scrub: 0.45, invalidateOnRefresh: true,
+        gsap.fromTo(node,
+          { autoAlpha: 0, y: 17 },
+          {
+            autoAlpha: 1, y: 0, ease: "none",
+            scrollTrigger: {
+              trigger: node, start: "top 96%", end: "top 74%",
+              scrub: 0.45, invalidateOnRefresh: true,
+            },
           },
-        });
+        );
       }
-
-      const timeline = story.querySelector<HTMLElement>(".ceremony-timeline");
-      const thread = story.querySelector<HTMLElement>(".ceremony-timeline__thread");
-      if (timeline && thread) {
-        gsap.fromTo(thread, { scaleY: 0, transformOrigin: "top center" }, {
-          scaleY: 1, ease: "none",
-          scrollTrigger: {
-            trigger: timeline, start: "top 80%", end: "bottom 73%",
-            scrub: 0.65, invalidateOnRefresh: true,
-          },
-        });
-      }
-
-      story.querySelectorAll<HTMLElement>(".ceremony-timeline__event").forEach((event) => {
-        gsap.fromTo(event, { autoAlpha: 0, x: 13 }, {
-          autoAlpha: 1, x: 0, ease: "none",
-          scrollTrigger: {
-            trigger: event, start: "top 94%", end: "top 76%",
-            scrub: 0.4,
-          },
-        });
-      });
     }, story);
 
     return () => context.revert();
