@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
+import InvitationTypography, { addInvitationTypographyReveal } from "@/components/InvitationTypography";
 import {
   CornerFlourish,
   DividerMotif,
@@ -74,12 +75,18 @@ function useHeritageMotion(root: RefObject<HTMLElement | null>) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const context = gsap.context(() => {
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from(".js-hero-crest", { y: -15, opacity: 0, duration: 0.85 })
-        .from(".js-hero-prelude", { y: 18, opacity: 0, duration: 0.8 }, "-=0.48")
-        .from(".js-hero-card", { y: 55, opacity: 0, scale: 0.975, duration: 1.45, ease: "expo.out" }, "-=0.44")
-        .from(".js-hero-name", { y: 24, opacity: 0, stagger: 0.18, duration: 0.8 }, "-=0.9")
-        .from(".js-hero-lower", { y: 12, opacity: 0, duration: 0.85 }, "-=0.45");
+      // A single cinematic timeline controls the existing hero and future arch.
+      const opening = gsap.timeline({ defaults: { ease: "power3.out" } });
+      opening
+        .from(".js-hero-crest", { y: -15, opacity: 0, duration: 0.85 }, 0)
+        .from(".js-hero-prelude", { y: 16, opacity: 0, duration: 0.78 }, 0.17)
+        .addLabel("archReady", 0.65);
+
+      const typography = node.querySelector<HTMLElement>(".js-hero-typography");
+      if (typography) {
+        addInvitationTypographyReveal(opening, typography, "archReady+=0.12");
+      }
+      opening.from(".js-hero-lower", { y: 12, opacity: 0, duration: 0.85 }, "archReady+=1.92");
 
       // The decorative planes part as the guest scrolls into chapter one.
       const heroScroll = {
@@ -90,7 +97,7 @@ function useHeritageMotion(root: RefObject<HTMLElement | null>) {
       };
       gsap.to(".js-hero-left", { xPercent: -34, yPercent: 18, rotate: -7, ease: "none", scrollTrigger: heroScroll });
       gsap.to(".js-hero-right", { xPercent: 34, yPercent: -15, rotate: 7, ease: "none", scrollTrigger: heroScroll });
-      gsap.to(".js-hero-card", { yPercent: -22, scale: 0.93, opacity: 0.38, ease: "none", scrollTrigger: heroScroll });
+      gsap.to(".js-hero-typography", { yPercent: -10, ease: "none", scrollTrigger: heroScroll });
       gsap.to(".js-hero-crest", { yPercent: -45, opacity: 0.25, ease: "none", scrollTrigger: heroScroll });
 
       // Each chapter appears gently; the shared ornamental motif links chapters.
@@ -241,24 +248,17 @@ export default function HeritageInvitation() {
             <span className="eyebrow eyebrow--spaced">A CELEBRATION OF TWO HEARTS</span>
             <p className="hero__myanmar" lang="my">မင်္ဂလာပွဲ ဖိတ်ကြားလွှာ</p>
           </div>
-          <div className="invitation-card js-hero-card">
-            <span className="invitation-card__rim" aria-hidden="true" />
-            <span className="invitation-card__corner invitation-card__corner--tl" aria-hidden="true">✧</span>
-            <span className="invitation-card__corner invitation-card__corner--tr" aria-hidden="true">✧</span>
-            <span className="invitation-card__corner invitation-card__corner--bl" aria-hidden="true">✧</span>
-            <span className="invitation-card__corner invitation-card__corner--br" aria-hidden="true">✧</span>
-            <p className="invitation-card__introduction">{invitation.intro}</p>
-            <h1 className="invitation-card__names" id="hero-title">
-              <span className="js-hero-name">{invitation.couple.first}</span>
-              <span className="invitation-card__ampersand js-hero-name">&amp;</span>
-              <span className="js-hero-name">{invitation.couple.second}</span>
-            </h1>
-            <DividerMotif className="invitation-card__divider" />
-            <p className="invitation-card__tagline">{invitation.tagline}</p>
-            <div className="invitation-card__date">
-              <span>{invitation.dayOfWeek}</span>
-              <strong>{invitation.displayDay} {invitation.displayMonth} {invitation.displayYear}</strong>
-            </div>
+          <div className="hero__typography js-hero-typography">
+            <InvitationTypography
+              id="hero-title"
+              firstName={invitation.couple.first}
+              secondName={invitation.couple.second}
+              heading={invitation.heroTypography.heading}
+              romanticMessage={invitation.heroTypography.romanticMessage}
+              weekday={invitation.dayOfWeek}
+              weddingDate={`${invitation.displayDay} ${invitation.displayMonth} ${invitation.displayYear}`}
+              language={invitation.heroTypography.language}
+            />
           </div>
           <div className="hero__foot js-hero-lower">
             <p>Honouring tradition. Beginning forever.</p>
