@@ -10,6 +10,11 @@ export const invitation = {
     signature: "Aung & Thiri",
   },
   intro: "Together with our families",
+  heroTypography: {
+    heading: "THE WEDDING CELEBRATION OF",
+    romanticMessage: "Two hearts, one beautiful beginning",
+    language: "en" as const, // Change to "my" for Myanmar Unicode typography.
+  },
   tagline: "A celebration of love, family & forever",
   greeting: "With grateful hearts and joyful spirits, we invite you to share in the beginning of our forever.",
   dateISO: "2026-12-12T09:00:00+06:30",
