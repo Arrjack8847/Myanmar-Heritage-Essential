@@ -42,8 +42,7 @@ export default function HeritageHero() {
         .from(".heritage-scene__hanging", { opacity: 0, x: -18, y: -14, duration: 1.5 }, 0.2)
         .from(".heritage-scene__foliage", { opacity: 0, duration: 1.35 }, 0.45)
         .from(".heritage-scene__prelude", { opacity: 0, y: 13, duration: 0.95 }, 0.35)
-        .from(".heritage-scene__arch", { opacity: 0, y: 19, scale: 0.985, duration: 1.35, ease: "power3.out" }, 0.42)
-        .from(".heritage-scene__lotus", { opacity: 0, scale: 0.95, duration: 0.9 }, 1.05)
+        .from(".heritage-scene__card", { opacity: 0, y: 19, scale: 0.985, duration: 1.35, ease: "power3.out" }, 0.42)
         .from(".heritage-scene__floral--left", { opacity: 0, x: -18, y: 22, duration: 1.35 }, 0.9)
         .from(".heritage-scene__floral--right", { opacity: 0, x: 18, y: 22, duration: 1.35 }, 1.05);
 
@@ -61,7 +60,7 @@ export default function HeritageHero() {
       gsap.to(".heritage-scene__mist", { yPercent: -9, xPercent: 2, ease: "none", scrollTrigger: scroll });
       gsap.to(".heritage-scene__hanging", { yPercent: -12, xPercent: -3, ease: "none", scrollTrigger: scroll });
       gsap.to(".heritage-scene__foliage", { yPercent: -6, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__arch", { yPercent: -6, ease: "none", scrollTrigger: scroll });
+      gsap.to(".heritage-scene__card", { yPercent: -6, ease: "none", scrollTrigger: scroll });
       gsap.to(".heritage-scene__typography", { yPercent: -9, ease: "none", scrollTrigger: scroll });
       gsap.to(".heritage-scene__floral--left", { yPercent: -15, xPercent: -4, ease: "none", scrollTrigger: scroll });
       gsap.to(".heritage-scene__floral--right", { yPercent: -12, xPercent: 3, ease: "none", scrollTrigger: scroll });
@@ -130,26 +129,21 @@ export default function HeritageHero() {
         <p className="heritage-scene__burmese" lang="my">မင်္ဂလာပွဲ ဖိတ်ကြားလွှာ</p>
       </div>
 
-      {/* 07 + 08: no solid card, just a translucent atmosphere and gold arch */}
-      <div className="heritage-scene__inner-light" aria-hidden="true" />
-      <div className="heritage-scene__arch" aria-hidden="true">
-        <Image src={ASSETS + "royal-arch.png"} alt="" fill priority sizes="(max-width: 700px) 100vw, 680px" />
-      </div>
-      {/* 09: subtle independent lotus flourish from the supplied ornament sheet */}
-      <div className="heritage-scene__lotus" aria-hidden="true" />
-
-      {/* 10: genuine accessible HTML; no names are baked into the image */}
-      <div className="heritage-scene__typography">
-        <InvitationTypography
-          id="hero-title"
-          firstName={invitation.couple.first}
-          secondName={invitation.couple.second}
-          heading={invitation.heroTypography.heading}
-          romanticMessage={invitation.heroTypography.romanticMessage}
-          weekday={invitation.dayOfWeek}
-          weddingDate={invitation.displayDay + " " + invitation.displayMonth + " " + invitation.displayYear}
-          language={invitation.heroTypography.language}
-        />
+      {/* NEW CARD: isolated ivory surface + real editable text, never baked into artwork. */}
+      <div className="heritage-scene__card">
+        <Image src={ASSETS + "royal-card.png"} alt="" fill priority sizes="(max-width: 700px) 88vw, 440px" />
+        <div className="heritage-scene__typography">
+          <InvitationTypography
+            id="hero-title"
+            firstName={invitation.couple.first}
+            secondName={invitation.couple.second}
+            heading={invitation.heroTypography.heading}
+            romanticMessage={invitation.heroTypography.romanticMessage}
+            weekday={invitation.dayOfWeek}
+            weddingDate={invitation.displayDay + " " + invitation.displayMonth + " " + invitation.displayYear}
+            language={invitation.heroTypography.language}
+          />
+        </div>
       </div>
 
       {/* 11: two independently art-directed foreground bouquets */}

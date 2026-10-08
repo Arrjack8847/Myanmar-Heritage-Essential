@@ -1,0 +1,138 @@
+/* JN-W01 · Luxury ivory card integration: no navigation, no duplicate arch. */
+.hero.heritage-scene {
+  display: block;
+  padding: 0;
+  min-height: max(770px, 100svh);
+  height: max(770px, 100svh);
+  overflow: hidden;
+  isolation: isolate;
+}
+.heritage-scene__paper,
+.heritage-scene__pagodas,
+.heritage-scene__mist,
+.heritage-scene__hanging,
+.heritage-scene__foliage {
+  pointer-events: none;
+}
+.heritage-scene__prelude {
+  top: clamp(29px, 5.1svh, 59px);
+  width: min(68vw, 300px);
+  z-index: 6;
+}
+.heritage-scene__prelude-rule { font-size: 17px; margin-bottom: 1px; }
+.heritage-scene__prelude p:not(.heritage-scene__burmese) { font-size: clamp(7px, 1.8vw, 9px); letter-spacing: .15em; }
+.heritage-scene__prelude .heritage-scene__burmese { font-size: clamp(11px, 2.8vw, 14px); }
+.heritage-scene__card {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  top: clamp(79px, 10.5svh, 120px);
+  width: min(88vw, 41.5svh, 440px);
+  aspect-ratio: 941 / 1672;
+  transform: translateX(-50%);
+  container-type: inline-size;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 16px rgba(83, 49, 30, .16));
+}
+.heritage-scene__card > img {
+  object-fit: contain;
+  object-position: center;
+}
+.heritage-scene__typography {
+  position: absolute;
+  z-index: 2;
+  top: 28.5%;
+  left: 14%;
+  width: 72%;
+  transform: none;
+  text-align: center;
+  pointer-events: auto;
+}
+.heritage-scene__typography > div {
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  padding: 0 !important;
+  gap: 0;
+}
+.heritage-scene__typography [data-typography-part="heading"] {
+  color: #9b7d5e;
+  margin-bottom: clamp(10px, 3.2cqw, 18px);
+  font-size: clamp(7px, 2.4cqw, 10px);
+  letter-spacing: .13em;
+  text-wrap: balance;
+  line-height: 1.45;
+}
+.heritage-scene__typography h1 {
+  font-size: clamp(45px, 17.8cqw, 86px);
+  line-height: .83;
+  gap: 0;
+  letter-spacing: -.055em;
+}
+.heritage-scene__typography [data-typography-part="ampersand"] {
+  font-size: .52em;
+  margin-block: 2px;
+}
+.heritage-scene__typography [data-typography-part="message"] {
+  margin-top: clamp(9px, 3cqw, 18px);
+  font-size: clamp(15px, 5.35cqw, 23px);
+  line-height: 1.14;
+  max-width: 96%;
+}
+.heritage-scene__typography [data-typography-part="weekday"] {
+  font-size: clamp(8px, 2.4cqw, 10px);
+}
+.heritage-scene__typography [data-typography-part="date"] {
+  font-size: clamp(20px, 6.6cqw, 30px);
+}
+.heritage-scene__typography [data-typography-part="date"]::after { display: none; }
+.heritage-scene__typography [data-language="my"] h1 {
+  font-size: clamp(24px, 9cqw, 44px);
+  line-height: 1.5;
+}
+.heritage-scene__typography [data-typography-part="weekday"] {
+  margin-top: 1px;
+}
+.heritage-scene__typography :where(h1,p,time) {
+  text-shadow: none;
+}
+.heritage-scene__floral {
+  width: min(48vw, 290px);
+  height: 34%;
+  bottom: -4%;
+  z-index: 9;
+}
+.heritage-scene__floral--left { left: max(-11%, calc(50% - 500px)); }
+.heritage-scene__floral--right { right: max(-11%, calc(50% - 500px)); }
+.heritage-scene__signoff {
+  z-index: 8;
+  bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  font-size: clamp(15px, 4vw, 20px);
+  line-height: 1.03;
+}
+.heritage-scene [data-scroll-discovery] {
+  bottom: calc(7px + env(safe-area-inset-bottom, 0px));
+  min-height: 75px;
+  gap: 2px;
+}
+.heritage-scene [data-scroll-discovery] .line { height: 13px; }
+.heritage-scene [data-scroll-discovery] .lotus { display: none; }
+@media (min-width: 760px) {
+  .hero.heritage-scene { height: max(950px, 100svh); min-height: max(950px, 100svh); }
+  .heritage-scene__card { top: 76px; width: min(440px, 43svh); }
+  .heritage-scene__prelude { top: 25px; }
+  .heritage-scene__floral { width: min(34vw, 325px); height: 35%; }
+  .heritage-scene__signoff { bottom: 100px; }
+}
+@media (max-width: 360px) {
+  .heritage-scene__card { width: min(89vw, 41svh); }
+  .heritage-scene__typography h1 { font-size: clamp(43px, 17.8cqw, 60px); }
+  .heritage-scene__prelude { top: 23px; }
+}
+@media (max-height: 680px) {
+  .hero.heritage-scene { height: 770px; min-height: 770px; }
+  .heritage-scene__card { top: 73px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heritage-scene__card { will-change: auto; }
+}
