@@ -32,33 +32,62 @@
   object-fit: contain;
 }
 
-/* A non-interactive ornament crosses the hero's clipping boundary. */
+/* The cover is sticky only for its short exit sequence. Its own content
+   remains a genuine one-screen page, and the ceremony follows in normal flow. */
+.heritage-story__intro {
+  position: relative;
+  height: 158svh;
+}
+.heritage-story__intro > .hero.heritage-scene {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+/* Seam veil overlaps the end of the cover and the start of the inner page.
+   At its center the two independent crops share the same parchment tone. */
 .royal-unfold {
   position: absolute;
   z-index: 13;
-  top: calc(100svh - 94px);
-  left: 50%;
-  width: clamp(143px, 28vw, 206px);
-  height: clamp(268px, 40vw, 310px);
-  transform: translateX(-50%);
+  top: calc(158svh - 160px);
+  left: 0;
+  width: 100%;
+  height: 320px;
   pointer-events: none;
+  overflow: hidden;
 }
-.royal-unfold__ornament {
+.royal-unfold__veil {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  filter: drop-shadow(0 4px 8px rgba(129, 81, 39, .16));
+  background: linear-gradient(
+    180deg,
+    rgba(248,238,220,0) 0%,
+    rgba(248,238,220,.48) 24%,
+    #f8eedc 43%,
+    #f8eedc 56%,
+    rgba(248,238,220,.55) 78%,
+    rgba(248,238,220,0) 100%
+  );
 }
-.royal-unfold__ornament img { object-fit: contain; }
-.royal-unfold__thread {
+.royal-unfold__sigil {
   position: absolute;
-  left: calc(50% - 1px);
-  top: 49%;
-  height: 86%;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, #c3a069 18%, #b58c53 65%, transparent);
-  transform-origin: top center;
-  opacity: .62;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  width: 174px;
+  color: #ac8951;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1px 2px rgba(255,252,241,.85));
+}
+.royal-unfold__sigil svg { flex: none; display: block; }
+.royal-unfold__line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b99556 65%, transparent);
+  opacity: .75;
 }
 
 /* Section 2 is the SAME ivory parchment, not a separate opaque rectangle. */
@@ -82,7 +111,7 @@
   pointer-events: none;
 }
 .ceremony-scene__paper { inset: 0; z-index: 0; }
-.ceremony-scene__paper img { object-fit: cover; object-position: 50% 40%; }
+.ceremony-scene__paper img { object-fit: cover; object-position: 50% 40%; opacity: .16; }
 .ceremony-scene__paper::after {
   content: "";
   position: absolute;
@@ -455,7 +484,6 @@
   .ceremony-timeline__description h4 { font-size: clamp(18px, 4.7vw, 21px); }
   .ceremony-timeline__corner { width: 69px; height: 69px; }
   .ceremony-scene__flower { width: 50vw; height: 260px; bottom: -3%; }
-  .royal-unfold { top: calc(100svh - 72px); }
 }
 @media (max-width: 350px) {
   .ceremony-page__content { padding-inline: 41px; }
@@ -473,10 +501,8 @@
   .ceremony-scene__flower { bottom: -7%; }
   .ceremony-timeline__corner--left { left: -47px; }
   .ceremony-timeline__corner--right { right: -47px; }
-  .royal-unfold { top: calc(100svh - 120px); }
 }
 @media (max-height: 520px) and (orientation: landscape) {
-  .royal-unfold { top: calc(100svh - 52px); }
   .ceremony-scene__hanging { height: 160px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -484,6 +510,5 @@
     opacity: .27;
     will-change: auto;
   }
-  .royal-unfold__ornament { opacity: .83; }
-  .royal-unfold__thread { transform: none; }
+  .royal-unfold__sigil { opacity: .75; }
 }
