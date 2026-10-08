@@ -31,7 +31,8 @@ export default function MotionStability() {
 
     const story = document.querySelector<HTMLElement>(".royal-story");
     const hero = document.getElementById("welcome");
-    const page = document.querySelector<HTMLElement>(".ceremony-page");
+    const page = document.querySelector<HTMLElement>(".ceremony-one-screen");
+    const ceremonyRunway = document.querySelector<HTMLElement>(".ceremony-story__scroll");
     const images = story ? Array.from(story.querySelectorAll<HTMLImageElement>("img")) : [];
     const pending = images.filter((img) => !img.complete);
     pending.forEach((img) => {
@@ -44,6 +45,7 @@ export default function MotionStability() {
       : null;
     if (hero) resizeObserver?.observe(hero);
     if (page) resizeObserver?.observe(page);
+    if (ceremonyRunway) resizeObserver?.observe(ceremonyRunway);
 
     window.addEventListener("load", refresh);
     window.addEventListener("pageshow", refresh);
