@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600&display=swap");
 
+/* Tailwind v4 utilities only: avoid Preflight resetting existing chapter styles. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 :root {
   --paper: #f7f0e4;
   --paper-light: #fffaf1;
@@ -76,6 +81,9 @@ img, svg { max-width: 100%; }
 .hero__suspended { position: absolute; z-index: 2; color: var(--gold); font-size: 22px; opacity: .7; pointer-events: none; }
 .hero__suspended--left { top: 38%; left: 19%; }
 .hero__suspended--right { top: 51%; right: 18%; }
+/* Component 08 lives directly on the parchment; no rectangular backing. */
+.hero__typography { width: min(100%, 430px); min-width: 0; position: relative; }
+
 .invitation-card { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(137deg, #fffcf4 0%,#fffaf0 45%,#f6e8d5 100%); width: min(100%, 425px); min-height: 415px; padding: 49px 38px 42px; border: 1px solid rgba(183,139,71,.9); box-shadow: 0 40px 95px rgba(89,49,40,.18),0 7px 28px rgba(105,60,44,.09), inset 0 0 55px rgba(255,255,255,.65); isolation: isolate; }
 .invitation-card::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(180,140,78,.45); pointer-events: none; }
 .invitation-card::after { content: ""; position: absolute; left: 50%; top: -17px; width: 64px; height: 32px; transform: translateX(-50%); background: radial-gradient(circle at 50% 50%, var(--gold) 2px, transparent 3px), linear-gradient(90deg,transparent 0,var(--gold) 48%,transparent 100%); background-size: 100% 100%,100% 1px; background-position: center,center; background-repeat: no-repeat; opacity: .9; }
