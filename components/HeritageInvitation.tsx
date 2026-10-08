@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import InvitationTypography, { addInvitationTypographyReveal } from "@/components/InvitationTypography";
+import ScrollDiscoveryIndicator, { addScrollDiscoveryReveal } from "@/components/ScrollDiscoveryIndicator";
 import {
   CornerFlourish,
   DividerMotif,
@@ -87,6 +88,10 @@ function useHeritageMotion(root: RefObject<HTMLElement | null>) {
         addInvitationTypographyReveal(opening, typography, "archReady+=0.12");
       }
       opening.from(".js-hero-lower", { y: 12, opacity: 0, duration: 0.85 }, "archReady+=1.92");
+      const scrollDiscovery = node.querySelector<HTMLElement>("[data-scroll-discovery]");
+      if (scrollDiscovery) {
+        addScrollDiscoveryReveal(opening, scrollDiscovery, "archReady+=2.78");
+      }
 
       // The decorative planes part as the guest scrolls into chapter one.
       const heroScroll = {
@@ -180,7 +185,6 @@ function Countdown() {
 
 export default function HeritageInvitation() {
   const root = useRef<HTMLElement>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
   useHeritageMotion(root);
 
@@ -200,35 +204,11 @@ export default function HeritageInvitation() {
     };
   }, [lightbox]);
 
-  const navigate = () => setMenuOpen(false);
-
   return (
     <main ref={root} className="invitation-page">
       <a className="skip-link" href="#celebration">Skip to invitation details</a>
       <div className="paper-grain" aria-hidden="true" />
       <GoldenThread className="golden-thread" />
-
-      <header className="site-header">
-        <a href="#welcome" className="site-header__brand" onClick={navigate} aria-label="Myanmar Heritage, back to beginning">
-          <span className="site-header__monogram">M<span>✦</span>H</span>
-          <span className="site-header__brand-name">MYANMAR HERITAGE <small>THE WEDDING COLLECTION</small></span>
-        </a>
-        <nav className={menuOpen ? "site-nav site-nav--open" : "site-nav"} aria-label="Invitation navigation">
-          <a href="#celebration" onClick={navigate}>The day</a>
-          <a href="#venue" onClick={navigate}>The venue</a>
-          <a href="#memories" onClick={navigate}>Memories</a>
-          <a href="#with-love" onClick={navigate}>With love</a>
-        </nav>
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span /><span />
-        </button>
-      </header>
 
       {/* 01 — CEREMONIAL HERO */}
       <section id="welcome" className="hero section-panel" aria-labelledby="hero-title">
@@ -263,12 +243,10 @@ export default function HeritageInvitation() {
           <div className="hero__foot js-hero-lower">
             <p>Honouring tradition. Beginning forever.</p>
             <span className="hero__foot-divider" />
-            <a className="scroll-prompt" href="#celebration" aria-label="Scroll to wedding details">
-              <span>SCROLL TO DISCOVER</span>
-              <span className="scroll-prompt__line" aria-hidden="true" />
-            </a>
+
           </div>
         </div>
+        <ScrollDiscoveryIndicator targetId="celebration" timelineControlled />
         <PagodaSkyline className="hero__skyline" />
       </section>
 
@@ -281,7 +259,7 @@ export default function HeritageInvitation() {
           <div className="js-reveal section-heading">
             <span className="eyebrow">CHAPTER ONE <span className="eyebrow__diamond">◆</span> OUR CELEBRATION</span>
             <HeritageCrest className="section-heading__crest" />
-            <h2 id="celebration-title">A day to <em>remember.</em></h2>
+            <h2 id="celebration-title">A union of <em>two hearts.</em></h2>
             <p>{invitation.greeting}</p>
           </div>
 
