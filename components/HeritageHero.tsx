@@ -72,11 +72,13 @@ export default function HeritageHero() {
 
       // Scrubbed, reversible depth. Motion on OUTER planes never competes
       // with the subtle idle animation on their INNER image surfaces.
+      const intro = section.closest<HTMLElement>(".heritage-story__intro") ?? section;
       const scrollDepth = gsap.timeline({
         scrollTrigger: {
-          trigger: section,
+          trigger: intro,
           start: "top top",
-          end: "bottom top",
+          // Scroll only through the sticky portion, not through the next chapter.
+          end: "bottom bottom",
           scrub: 0.6,
           invalidateOnRefresh: true,
         },
@@ -109,7 +111,33 @@ export default function HeritageHero() {
         .to(".heritage-scene__floral--right", {
           y: () => -Math.min(section.clientHeight * 0.10, 75),
           x: 13, ease: "none",
-        }, 0);
+        }, 0)
+        // Second half of the sticky scroll: the printed cover rises away.
+        // Content and its card fade as a single physical element, never separately.
+        .to(".heritage-scene__card", {
+          y: () => -Math.min(section.clientHeight * 0.18, 148),
+          scale: 0.94, autoAlpha: 0, duration: 0.5, ease: "power1.in",
+        }, 0.5)
+        .to(".heritage-scene__floral--left", {
+          x: -68, y: -110, autoAlpha: 0, duration: 0.48, ease: "none",
+        }, 0.52)
+        .to(".heritage-scene__floral--right", {
+          x: 68, y: -110, autoAlpha: 0, duration: 0.48, ease: "none",
+        }, 0.52)
+        .to(".heritage-scene__hanging", {
+          x: -34, autoAlpha: 0, duration: 0.45, ease: "none",
+        }, 0.55)
+        .to(".heritage-scene__foliage", {
+          x: 27, autoAlpha: 0, duration: 0.45, ease: "none",
+        }, 0.55)
+        .to(".heritage-scene__prelude", { autoAlpha: 0, y: -18, duration: 0.36 }, 0.38)
+        .to(".heritage-scene__signoff", { autoAlpha: 0, duration: 0.35 }, 0.4)
+        .to(".heritage-scene__pagodas", { opacity: 0.22, duration: 0.4 }, 0.6)
+        .to(".heritage-scene__mist", { opacity: 0.12, duration: 0.4 }, 0.6);
+
+      if (scrollCue) {
+        scrollDepth.to(scrollCue, { autoAlpha: 0, y: -9, duration: 0.35 }, 0.38);
+      }
 
       const idle = (selector: string, vars: gsap.TweenVars) => {
         const element = section.querySelector<HTMLElement>(selector);
