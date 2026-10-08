@@ -445,6 +445,156 @@
   .ceremony-scene__petal--d { right: calc(50% - 345px); }
 }
 
+
+/* JN-W01 · SECTION 02 / EDITORIAL CEREMONY
+   The hero owns the statement royal frame. This chapter uses open
+   ivory parchment and a readable lotus timeline, without overlapping caps. */
+.ceremony-page {
+  width: min(calc(100% - 30px), 640px);
+  height: 100svh;
+  margin: 0 auto;
+}
+.ceremony-cover,
+.ceremony-program {
+  inset: 0;
+  box-sizing: border-box;
+  padding: clamp(54px, 7svh, 74px) clamp(18px, 5vw, 58px) clamp(56px, 7svh, 78px);
+}
+.ceremony-cover {
+  justify-content: center;
+}
+.ceremony-cover__crest {
+  width: clamp(62px, 9svh, 86px);
+  height: clamp(32px, 5svh, 47px);
+  margin-bottom: 16px;
+}
+.ceremony-cover h2 {
+  max-width: 440px;
+  font-size: clamp(48px, 7.5svh, 75px);
+  line-height: 1.05;
+  margin: 15px 0;
+}
+.ceremony-cover__greeting { max-width: 370px; line-height: 1.4; }
+.ceremony-program {
+  justify-content: center;
+}
+.ceremony-program__crest {
+  color: #b08c58;
+  width: clamp(51px, 7svh, 67px);
+  height: clamp(27px, 3.8svh, 37px);
+  margin: 0 0 12px;
+}
+.ceremony-eyebrow {
+  font-size: clamp(9px, 1.3svh, 11px);
+  letter-spacing: .2em;
+}
+.ceremony-program__title {
+  width: 100%;
+  max-width: 470px;
+  color: #743745;
+  font: 400 clamp(38px, 5.8svh, 53px)/1.02 var(--display);
+  letter-spacing: -.04em;
+  text-wrap: balance;
+  margin: 9px 0 12px;
+}
+.ceremony-program__title em { display: block; line-height: 1.08; }
+.ceremony-program__date {
+  color: #987750;
+  font: 400 clamp(14px, 2svh, 17px)/1.35 var(--display);
+}
+.ceremony-timeline {
+  width: min(100%, 410px);
+  margin: clamp(22px, 3.4svh, 31px) auto 0;
+  padding: 0 4px;
+}
+.ceremony-timeline__heading {
+  color: #97734d;
+  font-size: clamp(9px, 1.4svh, 11px);
+  letter-spacing: .21em;
+  margin-bottom: clamp(21px, 3.1svh, 29px);
+}
+.ceremony-timeline__body {
+  max-width: 375px;
+  margin: 0 auto;
+}
+.ceremony-timeline__thread { top: 14px; bottom: 29px; left: 12px; }
+.ceremony-timeline__event {
+  grid-template-columns: 27px minmax(0, 1fr);
+  gap: clamp(12px, 3.2vw, 18px);
+  min-height: clamp(105px, 13.5svh, 124px);
+  padding: 0 0 10px;
+}
+.ceremony-timeline__event:last-child { min-height: 0; padding-bottom: 0; }
+.ceremony-timeline__chapter {
+  font-size: clamp(9px, 1.3svh, 11px);
+  margin-bottom: 4px;
+}
+.ceremony-timeline__event time {
+  font-size: clamp(11px, 1.5svh, 13px);
+  margin-bottom: 5px;
+}
+.ceremony-timeline__event h5 {
+  font: 500 clamp(24px, 3.4svh, 31px)/1.08 var(--display);
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+.ceremony-timeline__event p {
+  font-size: clamp(15px, 2.1svh, 18px);
+  line-height: 1.25;
+  margin-top: 5px;
+}
+.ceremony-scene__light {
+  background: linear-gradient(180deg,
+    rgba(248,238,220,.96) 0%,
+    rgba(248,238,220,.94) 34%,
+    rgba(248,238,220,.86) 66%,
+    rgba(248,238,220,.44) 100%);
+}
+/* Petals frame the parchment; never interrupt headings or schedule. */
+.ceremony-scene__petal--a { top: 12%; left: 1%; opacity: .36; }
+.ceremony-scene__petal--b { top: 22%; right: 0; opacity: .28; }
+.ceremony-scene__petal--c { bottom: 14%; left: 0; opacity: .25; }
+.ceremony-scene__petal--d { bottom: 9%; right: 0; opacity: .28; }
+.ceremony-scroll__label { font-size: 9px; letter-spacing: .12em; }
+
+/* Very short/landscape phones: natural document flow instead of clipped
+   sticky content. JS mirrors this media query and skips hiding events. */
+@media (max-height: 700px) {
+  .ceremony-story__scroll { height: auto; }
+  .celebration.celebration--royal.ceremony-scene {
+    position: relative !important;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+  .ceremony-page {
+    width: min(calc(100% - 30px), 640px);
+    height: auto;
+    padding: 54px 0 85px;
+    margin: 0 auto;
+  }
+  .ceremony-cover,
+  .ceremony-program {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 16px 20px;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .ceremony-program { margin-top: 54px; }
+  .ceremony-timeline__event {
+    min-height: 111px;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .ceremony-timeline__thread { transform: none !important; }
+  .ceremony-scroll { display: none; }
+  .ceremony-scene__pagodas { height: 27%; }
+}
+
 /* Respect reduced-motion setting. No sticky wait or invisible data. All
    ceremony details appear as ordinary sequential HTML on parchment. */
 @media (prefers-reduced-motion: reduce) {
