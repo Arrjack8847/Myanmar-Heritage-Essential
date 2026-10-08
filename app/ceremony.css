@@ -1,9 +1,8 @@
-/* JN-W01 / A continuous, mobile-first royal invitation.
-   The second chapter is a SINGLE viewport, with an interactive inner leaf. */
+/* JN-W01 · THE ROYAL CEREMONY UNFOLDING
+   Same original Bagan/paper/mist, original ornate frame and lotus timeline.
+   No tab UX; the entire information hierarchy is driven by natural scroll. */
 
 .royal-story { position: relative; isolation: isolate; }
-
-/* Shared hero petals remain a real layer, not painted into any image. */
 .royal-story__petals {
   position: sticky;
   top: 0;
@@ -20,7 +19,7 @@
 .royal-story__petal { position: absolute; opacity: .32; will-change: transform, opacity; }
 .royal-story__petal img { display: block; object-fit: contain; }
 
-/* The cover holds for 58% of a viewport during its graceful scroll exit. */
+/* Chapter one cover: separate, brief hold during its own scroll exit. */
 .heritage-story__intro { position: relative; height: 158svh; }
 .heritage-story__intro > .hero.heritage-scene {
   position: sticky;
@@ -28,7 +27,7 @@
   height: 100svh;
 }
 
-/* Only a fine lotus and atmospheric ivory veil bridge the two crops. */
+/* The short connected ivory-and-lotus transition remains between chapters. */
 .royal-unfold {
   position: absolute;
   z-index: 13;
@@ -42,12 +41,9 @@
 .royal-unfold__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg,
-    rgba(248,238,220,0) 0%,
-    rgba(248,238,220,.65) 30%,
-    #f8eedc 49%,
-    rgba(248,238,220,.72) 73%,
-    rgba(248,238,220,0) 100%
+  background: linear-gradient(
+    180deg, transparent, rgba(248,238,220,.63) 30%,
+    #f8eedc 49%, rgba(248,238,220,.68) 75%, transparent
   );
 }
 .royal-unfold__sigil {
@@ -63,473 +59,421 @@
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 1px 2px rgba(255,252,241,.85));
 }
-.royal-unfold__sigil svg { flex: none; display: block; }
+.royal-unfold__sigil svg { display: block; flex: none; }
 .royal-unfold__line {
   flex: 1 1 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #b99556 65%, transparent);
+  background: linear-gradient(90deg,transparent,#b99556 65%,transparent);
   opacity: .7;
 }
 
-/* The distinct second composition reuses the Bagan world but NOT the
-   massive hero canopy, second card frame, or repeated flower bouquets. */
-.celebration.celebration--royal.ceremony-one-screen {
-  display: block;
+/* 100svh visual page, ~3.8 viewports of naturally scrollable story.
+   Sticky is CSS-driven: no scroll hijacking or artificial pin spacers. */
+.ceremony-story__scroll {
   position: relative;
-  overflow: hidden;
   isolation: isolate;
+  height: 385svh;
+  scroll-margin-top: 0;
+}
+.celebration.celebration--royal.ceremony-scene {
+  position: sticky !important;
+  top: 0;
+  display: block;
+  isolation: isolate;
+  overflow: hidden;
   width: 100%;
+  height: 100vh;
   height: 100svh;
   min-height: 0;
   padding: 0;
   margin: 0;
-  scroll-margin-top: 0;
-  color: #713543;
+  color: #703642;
   background: #f8eedc;
 }
-.ceremony-one-screen__paper,
-.ceremony-one-screen__pagodas,
-.ceremony-one-screen__mist,
-.ceremony-one-screen__golden-haze,
-.ceremony-one-screen__petals {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.ceremony-one-screen__paper { z-index: 0; }
-.ceremony-one-screen__paper img { object-fit: cover; opacity: .31; }
-.ceremony-one-screen__pagodas {
+.ceremony-scene__paper,
+.ceremony-scene__pagodas,
+.ceremony-scene__mist,
+.ceremony-scene__light,
+.ceremony-scene__petals { position: absolute; pointer-events: none; }
+.ceremony-scene__paper { z-index: 0; inset: 0; }
+.ceremony-scene__paper img { object-fit: cover; opacity: .45; }
+.ceremony-scene__pagodas {
   z-index: 1;
+  bottom: -2%;
   left: 50%;
-  top: auto;
-  bottom: -3%;
-  height: 54%;
-  width: min(100%, 880px);
+  width: min(100%, 950px);
+  height: 48%;
+  opacity: .4;
   transform: translateX(-50%);
-  opacity: .42;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 15%, #000 76%);
-  mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 15%, #000 76%);
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.32) 27%,black 88%);
+  mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.32) 27%,black 88%);
 }
-.ceremony-one-screen__pagodas img {
-  object-fit: cover;
-  object-position: center 68%;
-}
-.ceremony-one-screen__mist {
+.ceremony-scene__pagodas img { object-fit: cover; object-position: center 64%; }
+.ceremony-scene__mist {
   z-index: 2;
-  top: 31%;
-  opacity: .48;
-  -webkit-mask-image: linear-gradient(180deg, transparent, #000 38%, #000 79%, transparent);
-  mask-image: linear-gradient(180deg, transparent, #000 38%, #000 79%, transparent);
+  inset: 24% -5% 0;
+  opacity: .46;
+  -webkit-mask-image: linear-gradient(180deg, transparent 2%, black 38%, black 83%, transparent);
+  mask-image: linear-gradient(180deg, transparent 2%, black 38%, black 83%, transparent);
 }
-.ceremony-one-screen__mist img { object-fit: cover; }
-.ceremony-one-screen__golden-haze {
+.ceremony-scene__mist img { object-fit: cover; }
+.ceremony-scene__light {
   z-index: 3;
-  background:
-    linear-gradient(180deg,
-      #f8eedc 0%, rgba(248,238,220,.96) 20%,
-      rgba(248,238,220,.83) 47%, rgba(248,238,220,.38) 73%,
-      rgba(248,238,220,.16) 100%),
-    radial-gradient(ellipse 58% 48% at 50% 43%, rgba(255,253,245,.85), transparent 90%);
+  inset: 0;
+  background: linear-gradient(180deg,#f8eedc 0%,rgba(248,238,220,.94) 24%,rgba(248,238,220,.79) 50%,rgba(248,238,220,.48) 80%,rgba(248,238,220,.22) 100%);
 }
-.ceremony-one-screen__petals { z-index: 5; overflow: hidden; }
-.ceremony-one-screen__petal {
+.ceremony-scene__petals { z-index: 7; inset: 0; overflow: hidden; }
+.ceremony-scene__petal {
   position: absolute;
-  width: clamp(24px, 5.5vw, 41px);
-  height: auto;
-  opacity: .63;
-  filter: drop-shadow(0 4px 5px rgba(156,113,75,.14));
+  width: clamp(28px, 7vw, 44px);
+  height: clamp(28px, 7vw, 44px);
+  opacity: .65;
 }
-.ceremony-one-screen__petal--one { top: 16%; left: 8%; transform: rotate(-27deg); }
-.ceremony-one-screen__petal--two { top: 30%; right: 8%; transform: rotate(24deg); }
-.ceremony-one-screen__petal--three { bottom: 18%; left: 4%; transform: rotate(17deg); }
-.ceremony-one-screen__petal--four { bottom: 14%; right: 5%; transform: rotate(-31deg); }
+.ceremony-scene__petal img { object-fit: contain; }
+.ceremony-scene__petal--a { top: 18%; left: 4%; transform: rotate(-20deg); }
+.ceremony-scene__petal--b { top: 27%; right: 5%; transform: rotate(25deg); }
+.ceremony-scene__petal--c { bottom: 18%; left: 2%; transform: rotate(17deg); }
+.ceremony-scene__petal--d { bottom: 12%; right: 2%; transform: rotate(-18deg); }
 
-.ceremony-one-screen__inner {
+/* Original ceremonial frame, now fitted elegantly to the screen instead
+   of stretching a long 3,000-pixel illustration around tabbed content. */
+.ceremony-page {
   position: relative;
-  z-index: 7;
-  width: min(100% - 44px, 570px);
-  height: 100%;
-  margin-inline: auto;
-  padding: clamp(55px, 8svh, 82px) 0 clamp(29px, 5svh, 49px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(7px, 1.2svh, 13px);
-  text-align: center;
+  z-index: 5;
+  width: min(calc(100vw - 26px), 590px);
+  height: min(calc(100svh - 72px), 900px);
+  margin: clamp(12px, 3svh, 28px) auto;
+  color: #703642;
 }
-.ceremony-one-screen__motif {
-  color: #ae8750;
-  width: min(66%, 225px);
-  height: clamp(21px, 3.3svh, 31px);
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  opacity: .85;
-}
-.ceremony-one-screen__motif svg {
-  display: block;
-  width: 58px;
-  height: 100%;
-  flex: 0 0 58px;
-}
-.ceremony-one-screen__motif-rule {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #b38c50);
-}
-.ceremony-one-screen__motif-rule:last-child {
-  background: linear-gradient(90deg, #b38c50, transparent);
-}
-.ceremony-one-screen__eyebrow {
-  margin: 0;
-  color: #947144;
-  font: 600 clamp(8px, 1.5svh, 10px)/1.4 var(--sans);
-  letter-spacing: .24em;
-  text-transform: uppercase;
-}
-.ceremony-one-screen__eyebrow span { color: #b9935b; margin-inline: 3px; }
-.ceremony-one-screen__heading {
-  max-width: 480px;
-  width: 100%;
-}
-.ceremony-one-screen__heading h2 {
-  margin: 0;
-  color: #733646;
-  font: 400 clamp(38px, 6.6svh, 63px)/.86 var(--display);
-  letter-spacing: -.035em;
-  text-wrap: balance;
-}
-.ceremony-one-screen__heading h2 em {
-  display: block;
-  margin-top: .08em;
-  font-weight: 400;
-  line-height: 1;
-}
-.ceremony-one-screen__heading p {
-  margin: clamp(8px, 1.1svh, 13px) auto 0;
-  width: min(94%, 380px);
-  color: #846361;
-  font: 400 clamp(14px, 2.3svh, 19px)/1.2 var(--display);
-  text-wrap: balance;
-}
-.ceremony-one-screen__date {
-  width: min(100%, 400px);
-  min-height: 0;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(10px, 2.3vw, 18px);
-  margin-block: clamp(0px, .35svh, 6px);
-}
-.ceremony-one-screen__date-rule {
-  flex: 1 1 14px;
-  max-width: 50px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #b99360);
-}
-.ceremony-one-screen__date-rule:last-child {
-  background: linear-gradient(90deg, #b99360, transparent);
-}
-.ceremony-one-screen__day {
-  color: #733646;
-  font: 400 clamp(73px, 13.6svh, 117px)/.83 var(--display);
-  letter-spacing: -.065em;
-}
-.ceremony-one-screen__date-divider {
-  width: 1px;
-  flex: 0 0 1px;
-  height: clamp(58px, 9.2svh, 85px);
-  background: linear-gradient(transparent, #c49d60 20%, #c49d60 80%, transparent);
-}
-.ceremony-one-screen__date-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  align-items: flex-start;
-  text-align: left;
-  color: #795347;
-}
-.ceremony-one-screen__date-caption span {
-  font: 600 clamp(8px, 1.4svh, 10px)/1.35 var(--sans);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.ceremony-one-screen__date-caption strong {
-  color: #733646;
-  font: 400 clamp(24px, 4svh, 37px)/.99 var(--display);
-}
-.ceremony-one-screen__details {
-  width: min(100%, 465px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(7px, 1svh, 11px);
-}
-.ceremony-one-screen__tabs {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-around;
-  width: 100%;
-  min-height: 44px;
-  border-bottom: 1px solid rgba(181,139,78,.44);
-}
-.ceremony-one-screen__tab {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 44px;
-  padding: 10px 2px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #8c7360;
-  font: 600 clamp(10px, 2.6vw, 12px)/1.3 var(--sans);
-  letter-spacing: .08em;
-  transition: color 220ms ease, background-color 220ms ease;
-}
-.ceremony-one-screen__tab:hover { color: #703545; background: rgba(255,252,247,.25); }
-.ceremony-one-screen__tab[aria-selected="true"] { color: #703545; }
-.ceremony-one-screen__tab::after {
-  content: "";
+.ceremony-frame { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
+.ceremony-frame__rails {
   position: absolute;
-  height: 2px;
-  bottom: -1px;
-  left: 22%;
-  right: 22%;
-  border-radius: 2px;
-  background: #b79256;
-  transform: scaleX(0);
-  transition: transform 290ms cubic-bezier(.22,.8,.22,1);
+  inset: 16% 0 18%;
 }
-.ceremony-one-screen__tab[aria-selected="true"]::after { transform: scaleX(1); }
-.ceremony-one-screen__tab:focus-visible {
-  outline: 2px solid #8d6c40;
-  outline-offset: -4px;
-  border-radius: 3px;
-}
-.ceremony-one-screen__detail-shell {
-  width: 100%;
-  height: clamp(105px, 16.4svh, 146px);
-  overflow: hidden;
-  border: 1px solid rgba(184,145,83,.57);
-  border-radius: 10px;
-  background: linear-gradient(125deg, rgba(255,251,241,.9), rgba(251,242,224,.8));
-  box-shadow: 0 8px 25px rgba(134,92,51,.07), inset 0 0 0 3px rgba(255,251,243,.42);
-}
-.ceremony-one-screen__panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(3px, .5svh, 6px);
-  width: 100%;
-  height: 100%;
-  padding: clamp(8px, 1.8svh, 16px) 16px;
-  overflow-y: auto;
-  animation: ceremony-panel-in 370ms cubic-bezier(.2,.75,.2,1) both;
-}
-.ceremony-one-screen__event-time {
-  color: #957248;
-  font: 700 clamp(10px, 1.65svh, 12px)/1.3 var(--sans);
-  letter-spacing: .22em;
-}
-.ceremony-one-screen__panel h3 {
-  margin: 0;
-  color: #723747;
-  font: 500 clamp(23px, 4svh, 33px)/1.08 var(--display);
-}
-.ceremony-one-screen__panel p {
-  margin: 0;
-  color: #88655e;
-  font: italic clamp(16px, 2.5svh, 19px)/1.15 var(--display);
-}
-.ceremony-one-screen__hint {
-  margin: 0;
-  color: #957c5e;
-  font: 500 clamp(9px, 1.4svh, 11px)/1.3 var(--sans);
-  letter-spacing: .045em;
-}
-@keyframes ceremony-panel-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Short screens keep everything operable rather than clipping real information. */
-@media (max-height: 700px) {
-  .ceremony-one-screen__inner {
-    padding-top: 45px;
-    padding-bottom: 17px;
-    gap: 5px;
-  }
-  .ceremony-one-screen__motif { height: 19px; }
-  .ceremony-one-screen__heading h2 { font-size: clamp(34px, 6.4svh, 47px); }
-  .ceremony-one-screen__heading p { font-size: clamp(13px, 2.2svh, 16px); margin-top: 5px; }
-  .ceremony-one-screen__day { font-size: clamp(65px, 12svh, 91px); }
-  .ceremony-one-screen__date-divider { height: 57px; }
-  .ceremony-one-screen__detail-shell { height: clamp(93px, 15svh, 117px); }
-  .ceremony-one-screen__tabs, .ceremony-one-screen__tab { min-height: 40px; }
-}
-@media (max-height: 560px) {
-  .ceremony-one-screen__inner {
-    width: min(100% - 38px, 570px);
-    padding-block: 30px 13px;
-    overflow-y: auto;
-    justify-content: flex-start;
-    scrollbar-width: thin;
-  }
-  .ceremony-one-screen__motif { display: none; }
-  .ceremony-one-screen__heading h2 { font-size: 34px; }
-  .ceremony-one-screen__day { font-size: 63px; }
-  .ceremony-one-screen__details { flex: 0 0 auto; }
-  .ceremony-one-screen__detail-shell { height: 100px; flex: 0 0 auto; }
-  .ceremony-one-screen__hint { margin-bottom: 12px; }
-}
-@media (max-width: 360px) {
-  .ceremony-one-screen__inner { width: calc(100% - 32px); }
-  .ceremony-one-screen__date { gap: 9px; }
-  .ceremony-one-screen__day { font-size: clamp(67px, 13svh, 93px); }
-  .ceremony-one-screen__date-caption strong { font-size: 24px; }
-  .ceremony-one-screen__tab { font-size: 10px; letter-spacing: .015em; }
-  .ceremony-one-screen__petal { width: 25px; }
-}
-@media (min-width: 760px) {
-  .ceremony-one-screen__inner { width: min(100% - 60px, 570px); }
-  .ceremony-one-screen__petal--one { left: calc(50% - 390px); }
-  .ceremony-one-screen__petal--two { right: calc(50% - 400px); }
-  .ceremony-one-screen__petal--three { left: calc(50% - 320px); }
-  .ceremony-one-screen__petal--four { right: calc(50% - 330px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .royal-story__petal, .ceremony-one-screen__petal { will-change: auto; }
-  .royal-unfold__sigil { opacity: .8; }
-  .ceremony-one-screen__panel { animation: none; }
-  .ceremony-one-screen__tab, .ceremony-one-screen__tab::after { transition: none; }
-}
-
-/* SECTION TWO / STICKY CINEMATIC JOURNEY
-   The stage stays 100svh, while its wrapper adds scroll distance. ScrollTrigger
-   reads this wrapper for a reversible entrance, detail focus, and scenic depth. */
-.ceremony-story__scroll {
-  position: relative;
-  height: 185svh;
-  isolation: isolate;
-  scroll-margin-top: 0;
-}
-.ceremony-story__scroll > .ceremony-one-screen {
-  position: sticky !important;
+.ceremony-frame__rail {
+  position: absolute;
   top: 0;
-  height: 100svh;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(90deg,#ecdaa9,#b99058,#94703f,#e8d09b);
+  opacity: .72;
 }
-
-/* Layer movements stay transform/opacity-only for mobile Safari. */
-.ceremony-one-screen__pagodas { transform-origin: 50% 75%; }
-.ceremony-one-screen__motif-rule { transform-origin: center; }
-.ceremony-one-screen__date, 
-.ceremony-one-screen__heading,
-.ceremony-one-screen__details { transform-origin: center; }
-
-/* A restrained progress rule follows the scroll; unlike a fixed app bar, it
-   belongs visually to the invitation stationery. */
-.ceremony-one-screen__progress {
+.ceremony-frame__rail--left { left: 9.9%; }
+.ceremony-frame__rail--right { right: 9.9%; }
+.ceremony-frame__cap {
   position: absolute;
-  z-index: 9;
-  pointer-events: none;
-  left: 50%;
-  bottom: max(11px, env(safe-area-inset-bottom, 0px));
-  width: min(170px, 42vw);
-  height: 2px;
-  background: rgba(184,145,83,.21);
-  transform: translateX(-50%);
-  border-radius: 9px;
-  overflow: hidden;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 24%;
+  background-image: url("/heritage/ceremony/ceremony-gold-frame.png");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
-.ceremony-one-screen__progress-fill {
+.ceremony-frame__cap--top { top: 0; background-position: center top; }
+.ceremony-frame__cap--bottom { bottom: 0; background-position: center bottom; }
+
+/* Only one composition fills the portrait page at a time. Both are genuine
+   editable HTML, not flattened artwork. The scroll timeline owns visibility. */
+.ceremony-cover, .ceremony-program {
+  position: absolute;
+  z-index: 3;
+  inset: 14% 11% 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 0;
+}
+.ceremony-cover__crest, .ceremony-program__crest {
+  flex: 0 0 auto;
+  color: #af884e;
+  width: clamp(74px, 13svh, 100px);
+  height: clamp(40px, 7svh, 58px);
+  margin-bottom: clamp(7px, 1svh, 13px);
+}
+.ceremony-eyebrow {
+  color: #9e7e55;
+  font: 650 clamp(8px, 1.25svh, 10px)/1.45 var(--sans);
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.ceremony-cover h2 {
+  color: #763543;
+  font: 400 clamp(45px, 8svh, 78px)/.91 var(--display);
+  letter-spacing: -.04em;
+  margin: clamp(9px, 1.7svh, 18px) 0;
+}
+.ceremony-cover h2 em { display: block; font-weight: 400; line-height: 1.06; }
+.ceremony-cover__greeting {
+  color: #84625d;
+  font: 400 clamp(16px, 2.8svh, 21px)/1.24 var(--display);
+  max-width: 390px;
+  margin: clamp(6px, 1svh, 10px) auto clamp(13px, 2.5svh, 22px);
+  text-wrap: balance;
+}
+.ceremony-cover__date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(13px, 3vw, 23px);
+  max-width: 100%;
+}
+.ceremony-cover__day {
+  color: #763543;
+  font: 400 clamp(93px, 15svh, 135px)/.82 var(--display);
+  letter-spacing: -.072em;
+}
+.ceremony-cover__date-divider {
+  flex: 0 0 1px;
+  background: linear-gradient(180deg,transparent,#bb995f 20%,#bb995f 80%,transparent);
+  width: 1px;
+  height: clamp(70px, 11svh, 95px);
+}
+.ceremony-cover__date-details {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+.ceremony-cover__date-details span {
+  color: #927351;
+  font: 700 clamp(9px, 1.5svh, 11px)/1.4 var(--sans);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.ceremony-cover__date-details strong {
+  color: #763543;
+  font: 400 clamp(28px, 4.5svh, 39px)/.98 var(--display);
+}
+
+/* The old CeremonyTimeline is now the entire center of the unfolded page:
+   hand-drawn lotus markers and a growing antique-gold thread. */
+.ceremony-program {
+  inset: 16% 13.5% 14%;
+  justify-content: flex-start;
+}
+.ceremony-program__crest {
+  width: clamp(60px, 11svh, 89px);
+  height: clamp(28px, 5svh, 44px);
+  margin: 0 0 6px;
+}
+.ceremony-program__title {
+  color: #743745;
+  font: 400 clamp(34px, 6svh, 53px)/.93 var(--display);
+  letter-spacing: -.035em;
+  margin: 5px 0 7px;
+}
+.ceremony-program__title em { display: block; font-weight: 400; }
+.ceremony-program__date {
+  margin: 0;
+  color: #9c774e;
+  font: 500 clamp(12px, 2.1svh, 16px)/1.25 var(--display);
+}
+.ceremony-timeline {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  margin: clamp(14px, 2.4svh, 22px) auto 0;
+  text-align: left;
+}
+.ceremony-timeline__corner {
+  position: absolute;
+  z-index: 0;
+  width: clamp(50px, 11vw, 80px);
+  height: clamp(50px, 11vw, 80px);
+  opacity: .32;
+  pointer-events: none;
+}
+.ceremony-timeline__corner img { object-fit: contain; }
+.ceremony-timeline__corner--left { left: -20px; top: -8px; }
+.ceremony-timeline__corner--right { right: -20px; bottom: 0; transform: rotate(180deg); }
+.ceremony-timeline__heading {
+  color: #97734d;
+  font: 650 clamp(9px, 1.45svh, 11px)/1.35 var(--sans);
+  letter-spacing: .19em;
+  text-align: center;
+  margin: 0 0 clamp(14px, 2.5svh, 22px);
+}
+.ceremony-timeline__body { position: relative; width: 100%; }
+.ceremony-timeline__body ol { margin: 0; padding: 0; list-style: none; }
+.ceremony-timeline__thread {
+  position: absolute;
+  z-index: 0;
+  top: 16px;
+  bottom: 21px;
+  left: 12px;
+  width: 1.5px;
+  background: linear-gradient(180deg,#a37a41,#dabd83,#af8852);
+  transform-origin: top center;
+}
+.ceremony-timeline__event {
+  position: relative;
+  display: grid;
+  grid-template-columns: 27px minmax(0,1fr);
+  align-items: start;
+  gap: clamp(8px, 2.6vw, 16px);
+  min-height: clamp(83px, 13svh, 111px);
+  padding: 0 0 clamp(6px, 1.5svh, 15px);
+}
+.ceremony-timeline__event:last-child { padding-bottom: 0; min-height: 76px; }
+.ceremony-timeline__marker {
+  z-index: 2;
+  position: relative;
+  display: grid;
+  place-content: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #b38d55;
+  border-radius: 50%;
+  color: #a7814f;
+  background: #f9f0e1;
+}
+.ceremony-timeline__marker svg { display: block; width: 19px; height: 19px; }
+.ceremony-timeline__event-content {
+  padding-top: 0;
+  min-width: 0;
+}
+.ceremony-timeline__chapter {
+  color: #a08058;
   display: block;
+  font: 700 clamp(8px, 1.25svh, 10px)/1.2 var(--sans);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  margin: 0 0 3px;
+}
+.ceremony-timeline__event time {
+  color: #87664d;
+  display: block;
+  font: 600 clamp(10px, 1.7svh, 13px)/1.2 var(--sans);
+  letter-spacing: .035em;
+  margin-bottom: 2px;
+}
+.ceremony-timeline__event h5 {
+  color: #733745;
+  font: 500 clamp(22px, 3.6svh, 29px)/1.03 var(--display);
+  margin: 0;
+}
+.ceremony-timeline__event p {
+  color: #92706b;
+  font: italic clamp(14px, 2.3svh, 17px)/1.2 var(--display);
+  margin: 3px 0 0;
+}
+.ceremony-scroll {
+  z-index: 9;
+  position: absolute;
+  left: 50%;
+  bottom: calc(6px + env(safe-area-inset-bottom,0px));
+  width: min(84vw, 240px);
+  transform: translateX(-50%);
+  text-align: center;
+  color: #936f4e;
+  pointer-events: none;
+}
+.ceremony-scroll__label {
+  margin: 0 0 5px;
+  font: 650 clamp(8px, 1.2svh, 10px)/1.3 var(--sans);
+  letter-spacing: .17em;
+}
+.ceremony-scroll__progress {
+  width: 100%;
+  height: 2px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(181,139,81,.2);
+}
+.ceremony-scroll__progress-fill {
   height: 100%;
   width: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg,#b28a50,#dfc18e);
+  display: block;
   transform: scaleX(0);
   transform-origin: left center;
+  background: linear-gradient(90deg,#b28a50,#dfc18e);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  /* A motion-free single page, no empty hold when user requests less motion. */
-  .ceremony-story__scroll { height: 100svh; }
-  .ceremony-one-screen__progress-fill { transform: scaleX(1); }
-}
-
-/* SECTION TWO / INFORMATION REVEALS ON SCROLL
-   Scroll progresses through every ceremony event while the ONE-SCREEN
-   stage remains sticky. Tabs are only a shortcut; never a requirement. */
-.ceremony-story__scroll { height: 340svh; }
-.ceremony-one-screen__story-label {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  color: #a17c4d;
-  padding-inline: 3px;
-  font: 650 clamp(8px, 1.35svh, 10px)/1.2 var(--sans);
-  letter-spacing: .16em;
-}
-.ceremony-one-screen__story-label strong {
-  color: #753747;
-  font: 500 clamp(13px, 2svh, 16px)/1 var(--display);
-  letter-spacing: .07em;
-  font-variant-numeric: tabular-nums;
-}
-.ceremony-one-screen__story-label i {
-  color: #c2a578;
-  margin-inline: 5px;
-  font-style: normal;
-}
-.ceremony-one-screen__tab[aria-selected="true"] {
-  background: rgba(255,251,240,.54);
-}
-.ceremony-one-screen__panel > * {
-  animation: ceremony-letter-reveal 520ms cubic-bezier(.2,.72,.2,1) both;
-}
-.ceremony-one-screen__panel > :nth-child(2) { animation-delay: 80ms; }
-.ceremony-one-screen__panel > :nth-child(3) { animation-delay: 145ms; }
-@keyframes ceremony-letter-reveal {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.ceremony-one-screen__hint {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 7px;
-  color: #916a49;
-  font-weight: 600;
-  letter-spacing: .07em;
-}
-.ceremony-one-screen__scroll-arrow {
+.ceremony-scroll__arrow {
   display: inline-block;
-  color: #a87f42;
-  font-size: 16px;
-  line-height: 1;
-  animation: ceremony-nudge 1.7s ease-in-out infinite;
+  font: 20px/1.25 var(--display);
+  animation: ceremony-scroll-arrow 1.65s ease-in-out infinite;
 }
-@keyframes ceremony-nudge {
-  0%, 100% { transform: translateY(-2px); opacity: .63; }
-  50% { transform: translateY(3px); opacity: 1; }
+@keyframes ceremony-scroll-arrow {
+  0%,100% { transform: translateY(-2px); opacity: .6; }
+  50% { transform: translateY(2px); opacity: 1; }
 }
-@media (max-height: 700px) {
-  .ceremony-one-screen__inner { gap: 3px; }
-  .ceremony-one-screen__details { gap: 5px; }
-  .ceremony-one-screen__story-label { font-size: 8px; }
-  .ceremony-one-screen__hint { font-size: 9px; }
+
+/* Small phones still show a single physical scene. Content is gracefully
+   fitted, rather than clipped behind an inflexible oversized date. */
+@media (max-height: 740px) {
+  .ceremony-page { height: calc(100svh - 54px); margin-top: 12px; }
+  .ceremony-cover, .ceremony-program { inset-block: 14% 15%; }
+  .ceremony-cover__crest { width: 73px; height: 38px; margin-bottom: 5px; }
+  .ceremony-cover h2 { font-size: clamp(43px, 7.2svh, 57px); }
+  .ceremony-cover__day { font-size: clamp(83px, 14svh, 107px); }
+  .ceremony-program { top: 15%; bottom: 11%; }
+  .ceremony-program__title { font-size: clamp(32px, 5.2svh, 44px); }
+  .ceremony-timeline { margin-top: 11px; }
+  .ceremony-timeline__heading { margin-bottom: 13px; }
+  .ceremony-timeline__event { min-height: clamp(78px, 12.1svh, 91px); padding-bottom: 5px; }
+  .ceremony-timeline__event h5 { font-size: clamp(21px, 3.4svh, 25px); }
+  .ceremony-scroll { bottom: 2px; }
 }
+@media (max-height: 600px) {
+  .ceremony-cover__greeting { font-size: 15px; margin-bottom: 10px; }
+  .ceremony-cover__crest, .ceremony-program__crest { display: none; }
+  .ceremony-program { top: 16%; bottom: 6%; }
+  .ceremony-program__title { font-size: 33px; }
+  .ceremony-timeline__event { min-height: 73px; }
+  .ceremony-timeline__event h5 { font-size: 21px; }
+  .ceremony-timeline__event p { font-size: 13px; }
+  .ceremony-timeline__heading { margin-bottom: 8px; }
+  .ceremony-scroll__label { display: none; }
+}
+@media (max-width: 350px) {
+  .ceremony-page { width: calc(100vw - 14px); }
+  .ceremony-program { left: 14%; right: 14%; }
+  .ceremony-cover h2 { font-size: 41px; }
+  .ceremony-timeline__event h5 { font-size: 20px; }
+  .ceremony-timeline__corner { opacity: .2; }
+}
+@media (min-width: 760px) {
+  .ceremony-page { height: min(calc(100svh - 72px), 900px); }
+  .ceremony-scene__petal--a { left: calc(50% - 360px); }
+  .ceremony-scene__petal--b { right: calc(50% - 365px); }
+  .ceremony-scene__petal--c { left: calc(50% - 350px); }
+  .ceremony-scene__petal--d { right: calc(50% - 345px); }
+}
+
+/* Respect reduced-motion setting. No sticky wait or invisible data. All
+   ceremony details appear as ordinary sequential HTML on parchment. */
 @media (prefers-reduced-motion: reduce) {
-  /* Keep all three steps discoverable by TAPPING for motion-sensitive visitors. */
-  .ceremony-story__scroll { height: 100svh; }
-  .ceremony-one-screen__panel > *,
-  .ceremony-one-screen__scroll-arrow { animation: none; }
+  .ceremony-story__scroll { height: auto; }
+  .celebration.celebration--royal.ceremony-scene {
+    position: relative !important;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+  .ceremony-page {
+    width: min(calc(100% - 24px), 590px);
+    height: auto;
+    min-height: 100svh;
+    padding: 110px 0 90px;
+    margin: 0 auto;
+  }
+  .ceremony-cover, .ceremony-program {
+    position: relative;
+    inset: auto;
+    width: 76%;
+    margin: 0 auto;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  .ceremony-program { margin-top: 65px; }
+  .ceremony-timeline__event { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+  .ceremony-timeline__thread { transform: none !important; }
+  .ceremony-scroll { display: none; }
+  .ceremony-scene__petal, .royal-story__petal { animation: none; will-change: auto; }
 }
