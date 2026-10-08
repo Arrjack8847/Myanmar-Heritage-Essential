@@ -23,6 +23,9 @@ export default function CelebrationSection() {
     if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     gsap.registerPlugin(ScrollTrigger);
+    const runway = section.closest<HTMLElement>(".ceremony-story__scroll");
+    if (!runway) return;
+
     const ambient: gsap.core.Tween[] = [];
     let onScreen = false;
 
@@ -42,14 +45,62 @@ export default function CelebrationSection() {
       slowlyFloat(".ceremony-one-screen__petal--three", { x: 10, y: -17, rotation: 16, duration: 9.3 });
       slowlyFloat(".ceremony-one-screen__petal--four", { x: -11, y: 19, rotation: -18, duration: 10.5 });
 
-      // The landscape moves at its own depth without disturbing the live text.
-      gsap.to(".ceremony-one-screen__pagodas", {
-        y: -18, ease: "none",
+      // No artificial scroll pin: CSS sticky keeps the full chapter in one
+      // viewport, while the wrapper supplies an extra 85svh of scroll travel.
+      // The editorial typography and tabs remain real, accessible HTML.
+      const journey = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
-          trigger: section, start: "top bottom", end: "bottom top",
-          scrub: 1.1, invalidateOnRefresh: true,
+          trigger: runway,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.75,
+          invalidateOnRefresh: true,
         },
       });
+
+      journey
+        // First beat: distant Bagan temples emerge from the warm mist.
+        .fromTo(".ceremony-one-screen__pagodas",
+          { y: 27, scale: 1.035, opacity: 0.28 },
+          { y: -27, scale: 1, opacity: 0.56, duration: 1 }, 0)
+        .fromTo(".ceremony-one-screen__mist",
+          { y: 24, opacity: 0.32 },
+          { y: -29, opacity: 0.55, duration: 1 }, 0)
+        .fromTo(".ceremony-one-screen__golden-haze",
+          { opacity: 1 },
+          { opacity: 0.85, duration: 1 }, 0)
+        // Second beat: the printed date rises as the ceremony details become
+        // the focal point. We never auto-switch tabs during scroll.
+        .fromTo(".ceremony-one-screen__heading",
+          { y: 7 }, { y: -12, duration: 0.72 }, 0.12)
+        .fromTo(".ceremony-one-screen__date",
+          { y: 10, scale: 0.975 },
+          { y: -9, scale: 1.01, duration: 0.65 }, 0.2)
+        .fromTo(".ceremony-one-screen__details",
+          { y: 13, opacity: 0.78 },
+          { y: -5, opacity: 1, duration: 0.65 }, 0.3)
+        .fromTo(".ceremony-one-screen__motif",
+          { y: 7 }, { y: -2, duration: 0.54 }, 0.04)
+        .fromTo(".ceremony-one-screen__petals",
+          { y: 24 }, { y: -37, duration: 1 }, 0)
+        .fromTo(".ceremony-one-screen__progress-fill",
+          { scaleX: 0 }, { scaleX: 1, duration: 1 }, 0);
+
+      // A hand-drawn lotus rather than generic sparkles. SVG stroke length
+      // is measured once; all draw positions are reversible when scrolling up.
+      section.querySelectorAll<SVGPathElement>(".ceremony-one-screen__motif svg path")
+        .forEach((path, index) => {
+          const length = path.getTotalLength();
+          journey.fromTo(path,
+            { strokeDasharray: length, strokeDashoffset: length },
+            { strokeDasharray: length, strokeDashoffset: 0, duration: 0.47 },
+            0.08 + index * 0.035);
+        });
+
+      journey.fromTo(".ceremony-one-screen__motif-rule",
+        { scaleX: 0, transformOrigin: "center center" },
+        { scaleX: 1, duration: 0.46 }, 0.12);
     }, section);
 
     const sync = () => {
@@ -89,12 +140,12 @@ export default function CelebrationSection() {
   }
 
   return (
-    <section
-      ref={sectionRef}
-      id="celebration"
-      className="celebration celebration--royal ceremony-one-screen section-panel"
-      aria-labelledby="celebration-title"
-    >
+    <div id="celebration" className="ceremony-story__scroll">
+      <section
+        ref={sectionRef}
+        className="celebration celebration--royal ceremony-one-screen section-panel"
+        aria-labelledby="celebration-title"
+      >
       <div className="ceremony-one-screen__paper" aria-hidden="true">
         <Image src="/heritage/ivory-parchment.png" alt="" fill sizes="100vw" />
       </div>
@@ -196,6 +247,13 @@ export default function CelebrationSection() {
           <p className="ceremony-one-screen__hint">Select an event to explore the celebration</p>
         </div>
       </div>
-    </section>
+
+      {/* Thin stationery rule fills as the visitor progresses through this
+          sticky chapter, without obscuring or disabling the event selector. */}
+      <div className="ceremony-one-screen__progress" aria-hidden="true">
+        <span className="ceremony-one-screen__progress-fill" />
+      </div>
+      </section>
+    </div>
   );
 }
