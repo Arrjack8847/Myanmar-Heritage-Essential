@@ -10,15 +10,21 @@
 
 /* One set of real high-resolution petal assets lives above BOTH chapters. */
 .royal-story__petals {
-  position: absolute;
-  inset: 0;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh; /* fallback */
+  height: 100svh;
+  margin-bottom: -100vh; /* fallback, overridden by svh below */
+  margin-bottom: -100svh;
   z-index: 16;
   pointer-events: none;
   overflow: hidden;
+  isolation: isolate;
 }
 .royal-story__petal {
   position: absolute;
-  opacity: 0;
+  opacity: .32; /* artwork stays visible without JavaScript hydration */
   will-change: transform, opacity;
 }
 .royal-story__petal img {

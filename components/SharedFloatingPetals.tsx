@@ -4,15 +4,16 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
-// The SAME six artwork layers travel across BOTH chapters, rather than
-// restarting or disappearing at the bottom edge of the first viewport.
+// Six high-resolution cutouts float in a viewport-sticky overlay spanning
+// BOTH chapters. All six animate on mobile and desktop, never reduced.
+// A short curved path repeats visibly as visitors scroll either chapter.
 const petals = [
-  { file: "petal-01.png", left: "8%", top: "8svh", size: 78, drift: 46, duration: 30 },
-  { file: "petal-02.png", left: "83%", top: "14svh", size: 65, drift: -43, duration: 36 },
-  { file: "petal-03.png", left: "71%", top: "49svh", size: 53, drift: -38, duration: 33 },
-  { file: "petal-04.png", left: "3%", top: "60svh", size: 63, drift: 42, duration: 37 },
-  { file: "petal-05.png", left: "86%", top: "71svh", size: 53, drift: -36, duration: 34 },
-  { file: "petal-06.png", left: "35%", top: "5svh", size: 47, drift: 42, duration: 40 },
+  { file: "petal-01.png", left: "8%", top: "8%", size: 78, drift: 46, duration: 18 },
+  { file: "petal-02.png", left: "83%", top: "14%", size: 65, drift: -43, duration: 21 },
+  { file: "petal-03.png", left: "71%", top: "49%", size: 53, drift: -38, duration: 17 },
+  { file: "petal-04.png", left: "3%", top: "60%", size: 63, drift: 42, duration: 22 },
+  { file: "petal-05.png", left: "86%", top: "71%", size: 53, drift: -36, duration: 20 },
+  { file: "petal-06.png", left: "35%", top: "5%", size: 47, drift: 42, duration: 24 },
 ] as const;
 
 export default function SharedFloatingPetals() {
@@ -32,33 +33,32 @@ export default function SharedFloatingPetals() {
       elements.forEach((element, index) => {
         const petal = petals[index];
         if (!petal) return;
-        const travel = () => Math.max(story.offsetHeight + window.innerHeight * 0.18, window.innerHeight * 2);
         const timeline = gsap.timeline({
           paused: true, repeat: -1, repeatDelay: 0.6 + (index % 3) * 0.55,
         });
         timeline
           .fromTo(element, {
-            y: -70, x: -petal.drift * 0.25,
+            y: -18, x: -petal.drift * 0.25,
             rotation: index % 2 ? 26 : -18, opacity: 0,
           }, {
-            y: () => travel() * 0.21,
+            y: 50,
             x: petal.drift * 0.12,
             rotation: index % 2 ? -10 : 19,
-            opacity: 0.44,
+            opacity: 0.68,
             duration: petal.duration * 0.24,
             ease: "none",
             immediateRender: true,
           })
           .to(element, {
-            y: () => travel() * 0.7,
+            y: 148,
             x: petal.drift * 0.86,
             rotation: index % 2 ? -84 : 92,
-            opacity: 0.39,
+            opacity: 0.54,
             duration: petal.duration * 0.51,
             ease: "none",
           })
           .to(element, {
-            y: () => travel(),
+            y: 230,
             x: petal.drift * 1.3,
             rotation: index % 2 ? -144 : 151,
             opacity: 0,
@@ -66,7 +66,7 @@ export default function SharedFloatingPetals() {
             ease: "none",
           });
         // Six individual starting phases: no synchronized rain or obvious reset.
-        timeline.progress((index * 0.164 + 0.09) % 1).pause();
+        timeline.progress([0.13, 0.28, 0.48, 0.39, 0.19, 0.61][index] ?? 0.1).pause();
         animations.push(timeline);
       });
     }, root);
@@ -81,14 +81,11 @@ export default function SharedFloatingPetals() {
     }, { threshold: 0 });
     observer.observe(story);
     document.addEventListener("visibilitychange", sync);
-    const onResize = () => animations.forEach((animation) => animation.invalidate());
-    window.addEventListener("resize", onResize, { passive: true });
     sync();
 
     return () => {
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
-      window.removeEventListener("resize", onResize);
       context.revert();
     };
   }, []);

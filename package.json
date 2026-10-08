@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "dev:lan": "node scripts/lan.mjs dev",
+    "preview:lan": "node scripts/lan.mjs preview"
   },
   "dependencies": {
     "next": "16.4.0",

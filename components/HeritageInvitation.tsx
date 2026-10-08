@@ -8,6 +8,8 @@ import HeritageHero from "@/components/HeritageHero";
 import CelebrationSection from "@/components/celebration/CelebrationSection";
 import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
+import MotionStability from "@/components/MotionStability";
+import MotionDebug from "@/components/MotionDebug";
 import {
   CornerFlourish,
   DividerMotif,
@@ -185,11 +187,13 @@ export default function HeritageInvitation() {
       {/* One continuous royal invitation: outside the clipped one-screen hero,
           the bridge and six shared petals can move across both chapters. */}
       <div className="royal-story">
+        <SharedFloatingPetals />
         <HeritageHero />
         <RoyalUnfoldTransition />
         <CelebrationSection />
-        <SharedFloatingPetals />
       </div>
+      <MotionStability />
+      <MotionDebug />
 
       {/* 03 — THE VENUE */}
       <section id="venue" className="venue section-panel" aria-labelledby="venue-title">
