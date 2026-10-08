@@ -1,10 +1,17 @@
+import Image from "next/image";
 import { Lotus } from "@/components/Decorations";
 import { invitation } from "@/data/invitation";
 
-/** Editorial lotus timeline, progressively revealed by the sticky story. */
+/** The existing royal timeline, progressively revealed by the sticky story. */
 export default function CeremonyTimeline() {
   return (
     <section className="ceremony-timeline ceremony-timeline--unfold" aria-labelledby="ceremony-timeline-title">
+      <div className="ceremony-timeline__corner ceremony-timeline__corner--left" aria-hidden="true">
+        <Image src="/heritage/ceremony/ceremony-corner-flourish.png" alt="" fill sizes="85px" />
+      </div>
+      <div className="ceremony-timeline__corner ceremony-timeline__corner--right" aria-hidden="true">
+        <Image src="/heritage/ceremony/ceremony-corner-flourish.png" alt="" fill sizes="85px" />
+      </div>
       <h4 id="ceremony-timeline-title" className="ceremony-timeline__heading">ORDER OF CELEBRATION</h4>
       <div className="ceremony-timeline__body">
         <div className="ceremony-timeline__thread" aria-hidden="true" />
