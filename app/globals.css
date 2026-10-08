@@ -22,7 +22,7 @@
   --burmese: "Noto Sans Myanmar", sans-serif;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 65px; }
+html { scroll-behavior: smooth; scroll-padding-top: 0; }
 body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
 body, button, a { -webkit-tap-highlight-color: transparent; }
 button, a { touch-action: manipulation; }
@@ -62,7 +62,7 @@ img, svg { max-width: 100%; }
 .section-topline span { width: 75px; height: 1px; background: var(--line); }
 
 /* SECTION 01 — CEREMONIAL OPENING */
-.hero { min-height: 100svh; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse 48% 50% at 50% 47%, rgba(255,252,243,.99),transparent 88%), radial-gradient(circle at 5% 0%, rgba(181,137,98,.17), transparent 43%), radial-gradient(circle at 100% 100%, rgba(124,53,65,.13),transparent 39%), var(--paper); padding: 104px 30px 63px; }
+.hero { min-height: 100svh; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse 48% 50% at 50% 47%, rgba(255,252,243,.99),transparent 88%), radial-gradient(circle at 5% 0%, rgba(181,137,98,.17), transparent 43%), radial-gradient(circle at 100% 100%, rgba(124,53,65,.13),transparent 39%), var(--paper); padding: 104px 30px calc(132px + env(safe-area-inset-bottom, 0px)); }
 .hero__aura { position: absolute; width: min(75vw, 750px); height: 80%; left: 50%; top: 10%; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(ellipse, rgba(255,250,237,.97) 12%,rgba(255,247,228,.4) 58%,transparent 75%); pointer-events: none; }
 .hero__stage { position: relative; z-index: 5; width: min(100%, 500px); display: flex; flex-direction: column; align-items: center; text-align: center; }
 .hero__prelude { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; margin-bottom: 23px; }
@@ -105,9 +105,6 @@ img, svg { max-width: 100%; }
 .hero__foot { display: flex; flex-direction: column; align-items: center; margin-top: 24px; gap: 9px; }
 .hero__foot p { margin: 0; font: italic 21px/1.15 var(--display); color: #876763; }
 .hero__foot-divider { width: 42px; height: 1px; background: var(--gold); opacity: .6; }
-.scroll-prompt { display: flex; flex-direction: column; gap: 9px; align-items: center; text-decoration: none; font-size: 8px; letter-spacing: .29em; font-weight: 700; color: var(--wine); }
-.scroll-prompt__line { width: 1px; height: 31px; background: linear-gradient(var(--gold), transparent); transform-origin: top; animation: scroll-breathe 2.3s ease-in-out infinite; }
-@keyframes scroll-breathe { 0%,100% { transform: scaleY(.7); opacity:.6; } 50% {transform: scaleY(1); opacity:1;} }
 .hero__skyline { position: absolute; z-index: 1; bottom: -2px; left: 50%; width: min(100%,1100px); height: auto; transform: translateX(-50%); color: var(--wine); opacity: .11; pointer-events: none; }
 
 /* SECTION 02 — THE CELEBRATION */
@@ -240,7 +237,7 @@ img, svg { max-width: 100%; }
 
 /* MOBILE — PRIMARY PRODUCT EXPERIENCE */
 @media (max-width: 640px) {
-  html { scroll-padding-top:58px; }
+  html { scroll-padding-top:0; }
   .site-header { height:59px; padding:0 17px; }
   .site-header__brand { gap:9px; }
   .site-header__monogram { height:35px; width:35px; font-size:14px; }
@@ -256,7 +253,7 @@ img, svg { max-width: 100%; }
   .section-heading__crest { margin-top:23px; width:80px; height:42px; }
   .section-heading h2 { font-size:clamp(56px,14vw,82px); }
   .section-heading p { font-size:20px; }
-  .hero { min-height:100svh; padding:80px 30px 35px; }
+  .hero { min-height:100svh; padding:80px 30px calc(127px + env(safe-area-inset-bottom, 0px)); }
   .hero__prelude { margin-bottom:16px; }
   .hero__crest { width:105px; height:48px; margin-bottom:3px; }
   .hero__prelude .eyebrow { font-size:7px; letter-spacing:.24em; }
@@ -376,7 +373,12 @@ img, svg { max-width: 100%; }
   .invitation-card__tagline { margin:5px 0 12px; font-size:16px; }
   .hero__foot { margin-top:12px; }
   .hero__foot p { font-size:16px; }
-  .scroll-prompt__line { height:16px; }
+}
+@media (max-height: 650px) {
+  .hero { padding-bottom: calc(105px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-height: 520px) {
+  .hero { padding-bottom: 38px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
