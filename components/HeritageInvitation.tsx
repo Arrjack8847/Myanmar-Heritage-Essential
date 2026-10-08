@@ -188,7 +188,9 @@ export default function HeritageInvitation() {
           the bridge and six shared petals can move across both chapters. */}
       <div className="royal-story">
         <SharedFloatingPetals />
-        <HeritageHero />
+        <div className="heritage-story__intro">
+          <HeritageHero />
+        </div>
         <RoyalUnfoldTransition />
         <CelebrationSection />
       </div>
