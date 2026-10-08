@@ -462,3 +462,74 @@
   .ceremony-story__scroll { height: 100svh; }
   .ceremony-one-screen__progress-fill { transform: scaleX(1); }
 }
+
+/* SECTION TWO / INFORMATION REVEALS ON SCROLL
+   Scroll progresses through every ceremony event while the ONE-SCREEN
+   stage remains sticky. Tabs are only a shortcut; never a requirement. */
+.ceremony-story__scroll { height: 340svh; }
+.ceremony-one-screen__story-label {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: #a17c4d;
+  padding-inline: 3px;
+  font: 650 clamp(8px, 1.35svh, 10px)/1.2 var(--sans);
+  letter-spacing: .16em;
+}
+.ceremony-one-screen__story-label strong {
+  color: #753747;
+  font: 500 clamp(13px, 2svh, 16px)/1 var(--display);
+  letter-spacing: .07em;
+  font-variant-numeric: tabular-nums;
+}
+.ceremony-one-screen__story-label i {
+  color: #c2a578;
+  margin-inline: 5px;
+  font-style: normal;
+}
+.ceremony-one-screen__tab[aria-selected="true"] {
+  background: rgba(255,251,240,.54);
+}
+.ceremony-one-screen__panel > * {
+  animation: ceremony-letter-reveal 520ms cubic-bezier(.2,.72,.2,1) both;
+}
+.ceremony-one-screen__panel > :nth-child(2) { animation-delay: 80ms; }
+.ceremony-one-screen__panel > :nth-child(3) { animation-delay: 145ms; }
+@keyframes ceremony-letter-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ceremony-one-screen__hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  color: #916a49;
+  font-weight: 600;
+  letter-spacing: .07em;
+}
+.ceremony-one-screen__scroll-arrow {
+  display: inline-block;
+  color: #a87f42;
+  font-size: 16px;
+  line-height: 1;
+  animation: ceremony-nudge 1.7s ease-in-out infinite;
+}
+@keyframes ceremony-nudge {
+  0%, 100% { transform: translateY(-2px); opacity: .63; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+@media (max-height: 700px) {
+  .ceremony-one-screen__inner { gap: 3px; }
+  .ceremony-one-screen__details { gap: 5px; }
+  .ceremony-one-screen__story-label { font-size: 8px; }
+  .ceremony-one-screen__hint { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Keep all three steps discoverable by TAPPING for motion-sensitive visitors. */
+  .ceremony-story__scroll { height: 100svh; }
+  .ceremony-one-screen__panel > *,
+  .ceremony-one-screen__scroll-arrow { animation: none; }
+}
