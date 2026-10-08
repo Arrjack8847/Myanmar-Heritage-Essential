@@ -409,3 +409,56 @@
   .ceremony-one-screen__panel { animation: none; }
   .ceremony-one-screen__tab, .ceremony-one-screen__tab::after { transition: none; }
 }
+
+/* SECTION TWO / STICKY CINEMATIC JOURNEY
+   The stage stays 100svh, while its wrapper adds scroll distance. ScrollTrigger
+   reads this wrapper for a reversible entrance, detail focus, and scenic depth. */
+.ceremony-story__scroll {
+  position: relative;
+  height: 185svh;
+  isolation: isolate;
+  scroll-margin-top: 0;
+}
+.ceremony-story__scroll > .ceremony-one-screen {
+  position: sticky !important;
+  top: 0;
+  height: 100svh;
+}
+
+/* Layer movements stay transform/opacity-only for mobile Safari. */
+.ceremony-one-screen__pagodas { transform-origin: 50% 75%; }
+.ceremony-one-screen__motif-rule { transform-origin: center; }
+.ceremony-one-screen__date, 
+.ceremony-one-screen__heading,
+.ceremony-one-screen__details { transform-origin: center; }
+
+/* A restrained progress rule follows the scroll; unlike a fixed app bar, it
+   belongs visually to the invitation stationery. */
+.ceremony-one-screen__progress {
+  position: absolute;
+  z-index: 9;
+  pointer-events: none;
+  left: 50%;
+  bottom: max(11px, env(safe-area-inset-bottom, 0px));
+  width: min(170px, 42vw);
+  height: 2px;
+  background: rgba(184,145,83,.21);
+  transform: translateX(-50%);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.ceremony-one-screen__progress-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg,#b28a50,#dfc18e);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* A motion-free single page, no empty hold when user requests less motion. */
+  .ceremony-story__scroll { height: 100svh; }
+  .ceremony-one-screen__progress-fill { transform: scaleX(1); }
+}
