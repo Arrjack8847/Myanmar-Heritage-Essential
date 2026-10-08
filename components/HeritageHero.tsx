@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,14 +9,6 @@ import InvitationTypography, { addInvitationTypographyReveal } from "./Invitatio
 import ScrollDiscoveryIndicator, { addScrollDiscoveryReveal } from "./ScrollDiscoveryIndicator";
 
 const ASSETS = "/heritage/";
-const petals = [
-  { file: "petals/petal-01.png", left: "8%", top: "8%", size: 78, drift: 32, duration: 14, delay: -6 },
-  { file: "petals/petal-02.png", left: "81%", top: "10%", size: 65, drift: -24, duration: 17, delay: -11 },
-  { file: "petals/petal-03.png", left: "70%", top: "48%", size: 53, drift: -32, duration: 13, delay: -3 },
-  { file: "petals/petal-04.png", left: "2%", top: "58%", size: 63, drift: 25, duration: 18, delay: -14 },
-  { file: "petals/petal-05.png", left: "86%", top: "71%", size: 53, drift: -22, duration: 15, delay: -9 },
-  { file: "petals/petal-06.png", left: "35%", top: "5%", size: 47, drift: 28, duration: 19, delay: -1 },
-] as const;
 
 /**
  * The entire first section is layered artwork, NOT one flattened poster.
@@ -136,49 +128,7 @@ export default function HeritageHero() {
       idle(".heritage-scene__floral--left img", { y: -3, rotation: 0.24, duration: 5.7 });
       idle(".heritage-scene__floral--right img", { y: -2, rotation: -0.22, duration: 6.6 });
 
-      // Keep every petal on EVERY device. Mobile receives the full cinematic
-      // composition, with all six independently animated cutout petals.
-      // Their loops pause off-screen; do not reduce visible layers on phones.
-      const allPetals = gsap.utils.toArray<HTMLElement>(".heritage-scene__petal", section);
-      allPetals.forEach((element, index) => {
-        const petal = petals[index];
-        if (!petal) return;
-        const path = gsap.timeline({
-          paused: true, repeat: -1, repeatRefresh: true,
-          repeatDelay: index % 3 === 0 ? 1.8 : 1.1,
-        });
-        path.fromTo(element, {
-          x: -petal.drift * 0.32,
-          y: -13,
-          rotation: index % 2 ? 20 : -16,
-          opacity: 0,
-        }, {
-          x: petal.drift * 0.18,
-          y: () => section.clientHeight * 0.11,
-          rotation: index % 2 ? -5 : 15,
-          opacity: 0.55,
-          duration: petal.duration * 0.24,
-          ease: "none",
-          immediateRender: true,
-        }).to(element, {
-          x: petal.drift * 0.77,
-          y: () => section.clientHeight * 0.34,
-          rotation: index % 2 ? -64 : 73,
-          opacity: 0.48,
-          duration: petal.duration * 0.50,
-          ease: "none",
-        }).to(element, {
-          x: petal.drift * 1.20,
-          y: () => section.clientHeight * 0.56,
-          rotation: index % 2 ? -116 : 124,
-          opacity: 0,
-          duration: petal.duration * 0.26,
-          ease: "none",
-        });
-        // Distribute the starting positions to avoid synchronized petals.
-        path.progress((index * 0.19) % 1).pause();
-        ambientTweens.push(path);
-      });
+
     }, section);
 
     const observer = new IntersectionObserver(([entry]) => {
@@ -251,19 +201,6 @@ export default function HeritageHero() {
       </div>
 
       <p className="heritage-scene__signoff">Honouring tradition. <span>Beginning forever.</span></p>
-
-      {/* 12: real cut-out petal assets; small independent GSAP planes */}
-      <div className="heritage-scene__petals" aria-hidden="true">
-        {petals.map((petal) => (
-          <div
-            className="heritage-scene__petal"
-            key={petal.file}
-            style={{ left: petal.left, top: petal.top, width: petal.size, height: petal.size } as CSSProperties}
-          >
-            <Image src={ASSETS + petal.file} alt="" fill sizes="110px" />
-          </div>
-        ))}
-      </div>
 
       {/* 13: real anchor works even without JS; no header or navigation bar */}
       <ScrollDiscoveryIndicator targetId="celebration" supportingText="" timelineControlled />

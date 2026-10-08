@@ -5,6 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import HeritageHero from "@/components/HeritageHero";
+import CelebrationSection from "@/components/celebration/CelebrationSection";
+import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
+import SharedFloatingPetals from "@/components/SharedFloatingPetals";
 import {
   CornerFlourish,
   DividerMotif,
@@ -179,46 +182,14 @@ export default function HeritageInvitation() {
       <div className="paper-grain" aria-hidden="true" />
       <GoldenThread className="golden-thread" />
 
-      {/* 01 — IMMERSIVE LAYERED HERITAGE HERO (no navbar) */}
-      <HeritageHero />
-
-      {/* 02 — THE DAY */}
-      <section id="celebration" className="celebration section-panel" aria-labelledby="celebration-title">
-        <div className="section-topline" aria-hidden="true"><span />✦<span /></div>
-        <CornerFlourish className="section-ornament section-ornament--left js-ornament-drift" />
-        <CornerFlourish className="section-ornament section-ornament--right js-ornament-drift" />
-        <div className="section-inner celebration__inner">
-          <div className="js-reveal section-heading">
-            <span className="eyebrow">CHAPTER ONE <span className="eyebrow__diamond">◆</span> OUR CELEBRATION</span>
-            <HeritageCrest className="section-heading__crest" />
-            <h2 id="celebration-title">A union of <em>two hearts.</em></h2>
-            <p>{invitation.greeting}</p>
-          </div>
-
-          <div className="date-display js-reveal">
-            <span className="date-display__line" />
-            <div className="date-display__day">{invitation.displayDay}</div>
-            <div className="date-display__side"><span>{invitation.dayOfWeek}</span><strong>{invitation.displayMonth}</strong><span>{invitation.displayYear}</span></div>
-            <span className="date-display__line" />
-          </div>
-
-          <div className="itinerary js-reveal">
-            <div className="itinerary__header"><span>ORDER OF CELEBRATION</span><span>✦</span></div>
-            {invitation.ceremony.map((item, index) => (
-              <div className="itinerary__event" key={item.title}>
-                <div className="itinerary__marker"><span>{index === 0 ? "✧" : "◇"}</span></div>
-                <time>{item.time}</time>
-                <div><h3>{item.title}</h3><p>{item.detail}</p></div>
-              </div>
-            ))}
-          </div>
-          <div className="celebration__closing js-reveal">
-            <DividerMotif />
-            <p>Two families, one beautiful beginning.</p>
-          </div>
-        </div>
-        <PagodaSkyline className="celebration__skyline" />
-      </section>
+      {/* One continuous royal invitation: outside the clipped one-screen hero,
+          the bridge and six shared petals can move across both chapters. */}
+      <div className="royal-story">
+        <HeritageHero />
+        <RoyalUnfoldTransition />
+        <CelebrationSection />
+        <SharedFloatingPetals />
+      </div>
 
       {/* 03 — THE VENUE */}
       <section id="venue" className="venue section-panel" aria-labelledby="venue-title">

@@ -1,0 +1,483 @@
+/* JN-W01 · The Royal Unfolding
+   A single layered story: hero cover -> ornate ceremonial inner page.
+   Mobile receives exactly the same artwork and GSAP choreography as desktop.
+   This file intentionally loads AFTER the earlier hero and global styles. */
+
+.royal-story {
+  position: relative;
+  isolation: isolate;
+}
+
+/* One set of real high-resolution petal assets lives above BOTH chapters. */
+.royal-story__petals {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  pointer-events: none;
+  overflow: hidden;
+}
+.royal-story__petal {
+  position: absolute;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.royal-story__petal img {
+  display: block;
+  object-fit: contain;
+}
+
+/* A non-interactive ornament crosses the hero's clipping boundary. */
+.royal-unfold {
+  position: absolute;
+  z-index: 13;
+  top: calc(100svh - 94px);
+  left: 50%;
+  width: clamp(143px, 28vw, 206px);
+  height: clamp(268px, 40vw, 310px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.royal-unfold__ornament {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  filter: drop-shadow(0 4px 8px rgba(129, 81, 39, .16));
+}
+.royal-unfold__ornament img { object-fit: contain; }
+.royal-unfold__thread {
+  position: absolute;
+  left: calc(50% - 1px);
+  top: 49%;
+  height: 86%;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, #c3a069 18%, #b58c53 65%, transparent);
+  transform-origin: top center;
+  opacity: .62;
+}
+
+/* Section 2 is the SAME ivory parchment, not a separate opaque rectangle. */
+.celebration.celebration--royal {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(26px, 6svh, 78px) 0 clamp(85px, 14vw, 160px);
+  background: #f8eedc;
+  color: #703441;
+  isolation: isolate;
+  scroll-margin-top: 0;
+}
+.ceremony-scene__paper,
+.ceremony-scene__mist,
+.ceremony-scene__pagodas,
+.ceremony-scene__hanging,
+.ceremony-scene__flower,
+.ceremony-scene__skyline {
+  position: absolute;
+  pointer-events: none;
+}
+.ceremony-scene__paper { inset: 0; z-index: 0; }
+.ceremony-scene__paper img { object-fit: cover; object-position: 50% 40%; }
+.ceremony-scene__paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 53% at 50% 30%, rgba(255,251,244,.38), transparent 85%),
+    linear-gradient(180deg, rgba(244,229,209,.1) 0%, transparent 32%, rgba(221,184,135,.15) 100%);
+}
+.ceremony-scene__mist {
+  z-index: 1;
+  inset: 4% -12% 0;
+  opacity: .32;
+}
+.ceremony-scene__mist img { object-fit: cover; }
+.ceremony-scene__pagodas {
+  z-index: 1;
+  bottom: -12px;
+  left: 50%;
+  width: min(100%, 1060px);
+  height: clamp(280px, 32vw, 420px);
+  transform: translateX(-50%);
+  opacity: .22;
+}
+.ceremony-scene__pagodas img {
+  object-fit: cover;
+  object-position: center bottom;
+}
+.ceremony-scene__hanging {
+  z-index: 2;
+  top: -58px;
+  left: 50%;
+  width: min(108%, 820px);
+  height: clamp(210px, 31vw, 320px);
+  opacity: .52;
+  transform: translateX(-50%);
+}
+.ceremony-scene__hanging img {
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Foreground flower art is preserved at full detail and kept out of the
+   ceremony's reading column. */
+.ceremony-scene__flower {
+  z-index: 5;
+  bottom: -6%;
+  width: min(45vw, 340px);
+  height: clamp(220px, 44vw, 400px);
+}
+.ceremony-scene__flower img {
+  object-fit: contain;
+  object-position: center bottom;
+}
+.ceremony-scene__flower--left { left: max(-12%, calc(50% - 590px)); }
+.ceremony-scene__flower--right { right: max(-12%, calc(50% - 590px)); }
+.ceremony-scene__skyline {
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  width: min(100%, 980px);
+  color: #bd9964;
+  opacity: .24;
+  transform: translateX(-50%);
+}
+
+/* The frame is assembled with original-scale TOP and BOTTOM illustrations
+   and extendable ultra-fine rails. No stretched ornamental pixels. */
+.ceremony-page {
+  position: relative;
+  z-index: 4;
+  width: min(94vw, 665px);
+  max-width: 100%;
+  margin: clamp(60px, 8vw, 110px) auto clamp(80px, 10vw, 132px);
+  color: #713543;
+}
+.ceremony-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.ceremony-frame__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: clamp(155px, 39vw, 278px);
+  background: url("/heritage/ceremony/ceremony-gold-frame.png") no-repeat;
+  background-size: 100% auto;
+}
+.ceremony-frame__cap--top {
+  top: 0;
+  background-position: center top;
+}
+.ceremony-frame__cap--bottom {
+  bottom: 0;
+  background-position: center bottom;
+}
+.ceremony-frame__rails {
+  position: absolute;
+  inset: clamp(146px, 36vw, 257px) 0 clamp(146px, 36vw, 257px);
+}
+.ceremony-frame__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  opacity: .85;
+  background: linear-gradient(90deg, #eddaae, #c7a269 47%, #906a3e 70%, #e2cb9a);
+  box-shadow: 0 0 1px rgba(159,117,69,.18);
+}
+.ceremony-frame__rail--left { left: 9.9%; }
+.ceremony-frame__rail--right { right: 9.9%; }
+
+.ceremony-page__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(167px, 35vw, 249px) clamp(43px, 12vw, 94px) clamp(177px, 35vw, 250px);
+  text-align: center;
+}
+
+/* Dark burgundy type belongs to the royal stationery, not a generic card. */
+.ceremony-heading {
+  width: 100%;
+  text-align: center;
+}
+.ceremony-heading__chapter,
+.ceremony-heading__subchapter {
+  display: block;
+  color: #9b784b;
+  font: 650 clamp(8px, 1.9vw, 10px)/1.6 var(--sans);
+  letter-spacing: .27em;
+}
+.ceremony-heading__subchapter { margin-top: 3px; }
+.ceremony-heading__diamond {
+  color: #b99556;
+  margin: clamp(10px, 2vw, 14px) auto 0;
+  font: 500 17px/1 var(--display);
+}
+.ceremony-heading h2 {
+  margin: clamp(11px, 2.8vw, 21px) 0 clamp(15px, 3vw, 22px);
+  color: #753545;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(44px, 10.4vw, 83px);
+  line-height: .97;
+  letter-spacing: -.045em;
+}
+.ceremony-heading h2 em {
+  display: block;
+  font-weight: 400;
+  font-size: 1.03em;
+  line-height: 1.08;
+  white-space: nowrap;
+}
+.ceremony-heading p {
+  max-width: 430px;
+  margin: 0 auto;
+  font: 400 clamp(17px, 3.9vw, 23px)/1.42 var(--display);
+  color: #805c5a;
+  text-wrap: balance;
+}
+
+/* Editorial wedding date, centered within the real ornate page. */
+.ceremony-date {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(11px, 2.9vw, 21px);
+  margin: clamp(31px, 7vw, 52px) auto clamp(39px, 7.8vw, 64px);
+  color: #733646;
+  white-space: nowrap;
+}
+.ceremony-date__day {
+  font: 400 clamp(87px, 19vw, 148px)/.8 var(--display);
+  letter-spacing: -.075em;
+  padding-right: .07em;
+}
+.ceremony-date__divider {
+  height: clamp(64px, 13vw, 95px);
+  width: 1px;
+  flex: 0 0 1px;
+  background: linear-gradient(transparent, #b99556 25%, #b99556 75%, transparent);
+}
+.ceremony-date__line {
+  flex: 1 1 14px;
+  min-width: 5px;
+  max-width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #bd985c);
+}
+.ceremony-date__line:last-child {
+  background: linear-gradient(90deg, #bd985c, transparent);
+}
+.ceremony-date__details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  text-transform: uppercase;
+  text-align: left;
+}
+.ceremony-date__details span {
+  font: 700 clamp(8px, 1.7vw, 10px)/1.65 var(--sans);
+  letter-spacing: .14em;
+}
+.ceremony-date__details strong {
+  font: 500 clamp(23px, 5.3vw, 35px)/.97 var(--display);
+  text-transform: none;
+  letter-spacing: -.01em;
+}
+
+/* A programme typeset into the parchment, not enclosed in a new white box. */
+.ceremony-timeline {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(18px, 3vw, 30px) 0 13px;
+  color: #793e49;
+}
+.ceremony-timeline__toprule,
+.ceremony-timeline__bottomrule {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #b18b54;
+  opacity: .85;
+}
+.ceremony-timeline__toprule::before,
+.ceremony-timeline__toprule::after,
+.ceremony-timeline__bottomrule::before,
+.ceremony-timeline__bottomrule::after {
+  content: "";
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c7a36d);
+}
+.ceremony-timeline__toprule::after,
+.ceremony-timeline__bottomrule::after {
+  background: linear-gradient(90deg, #c7a36d, transparent);
+}
+.ceremony-timeline__toprule span,
+.ceremony-timeline__bottomrule span { font: 16px/1 var(--display); }
+.ceremony-timeline h3 {
+  position: relative;
+  z-index: 2;
+  margin: clamp(18px, 3.9vw, 28px) 0 clamp(29px, 6vw, 42px);
+  color: #7a3a47;
+  font: 700 clamp(9px, 2.1vw, 12px)/1.65 var(--sans);
+  letter-spacing: .24em;
+}
+.ceremony-timeline__body {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  text-align: left;
+}
+.ceremony-timeline__body ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ceremony-timeline__thread {
+  position: absolute;
+  z-index: 0;
+  width: 1px;
+  top: 14px;
+  bottom: 31px;
+  left: 12px;
+  transform-origin: top center;
+  background: linear-gradient(180deg, #b88e51 3%, #ceb07b 72%, #b88e51);
+}
+.ceremony-timeline__event {
+  position: relative;
+  display: grid;
+  grid-template-columns: 25px minmax(61px, 77px) minmax(0,1fr);
+  align-items: start;
+  gap: clamp(6px, 1.8vw, 13px);
+  min-height: clamp(99px, 17vw, 122px);
+  padding: 0 0 22px;
+}
+.ceremony-timeline__event:last-child { min-height: 84px; padding-bottom: 0; }
+.ceremony-timeline__marker {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid #b99456;
+  background: #f9efdf;
+  color: #ac8045;
+  font: 16px/1 var(--display);
+}
+.ceremony-timeline__event time {
+  padding-top: 5px;
+  color: #8b6753;
+  font: 700 clamp(8px, 1.85vw, 10px)/1.4 var(--sans);
+  letter-spacing: .025em;
+  white-space: nowrap;
+}
+.ceremony-timeline__description { min-width: 0; }
+.ceremony-timeline__description h4 {
+  margin: 0 0 5px;
+  color: #733745;
+  font: 500 clamp(19px, 4.3vw, 27px)/1.06 var(--display);
+  letter-spacing: -.02em;
+}
+.ceremony-timeline__description p {
+  margin: 0;
+  color: #926e67;
+  font: italic clamp(13px, 2.9vw, 18px)/1.25 var(--display);
+}
+.ceremony-timeline__bottomrule { margin-top: 17px; }
+
+/* A restrained accent from the newly uploaded gold lotus corner flourish. */
+.ceremony-timeline__corner {
+  position: absolute;
+  z-index: 1;
+  width: clamp(62px, 12vw, 108px);
+  height: clamp(62px, 12vw, 108px);
+  opacity: .42;
+  pointer-events: none;
+}
+.ceremony-timeline__corner img { object-fit: contain; }
+.ceremony-timeline__corner--left { left: -37px; top: -10px; }
+.ceremony-timeline__corner--right {
+  right: -37px;
+  bottom: 2px;
+  transform: rotate(180deg);
+}
+.ceremony-signoff {
+  width: 100%;
+  margin: clamp(32px, 7vw, 52px) auto 0;
+  text-align: center;
+}
+.ceremony-signoff svg {
+  display: block;
+  width: min(82%, 230px);
+  height: auto;
+  margin: 0 auto;
+  color: #b99556;
+}
+.ceremony-signoff p {
+  margin: 8px 0 0;
+  color: #825f5a;
+  font: italic clamp(17px, 3.6vw, 23px)/1.3 var(--display);
+}
+
+@media (max-width: 420px) {
+  .celebration.celebration--royal { padding-top: 22px; }
+  .ceremony-page { width: 96vw; margin-top: 75px; }
+  .ceremony-page__content {
+    padding-inline: clamp(41px, 11vw, 48px);
+    padding-top: clamp(150px, 38vw, 163px);
+    padding-bottom: clamp(154px, 39vw, 176px);
+  }
+  .ceremony-frame__cap { height: clamp(152px, 40vw, 168px); }
+  .ceremony-frame__rails { inset-block: clamp(144px, 38vw, 160px); }
+  .ceremony-heading h2 { font-size: clamp(41px, 11.4vw, 49px); }
+  .ceremony-heading p { font-size: clamp(16px, 4.3vw, 19px); }
+  .ceremony-timeline__description h4 { font-size: clamp(18px, 4.7vw, 21px); }
+  .ceremony-timeline__corner { width: 69px; height: 69px; }
+  .ceremony-scene__flower { width: 50vw; height: 260px; bottom: -3%; }
+  .royal-unfold { top: calc(100svh - 72px); }
+}
+@media (max-width: 350px) {
+  .ceremony-page__content { padding-inline: 41px; }
+  .ceremony-heading h2 { font-size: 39px; }
+  .ceremony-date { gap: 8px; }
+  .ceremony-date__day { font-size: 80px; }
+  .ceremony-date__details strong { font-size: 22px; }
+  .ceremony-timeline__event { grid-template-columns: 24px 59px minmax(0, 1fr); gap: 5px; }
+  .ceremony-timeline__description h4 { font-size: 17px; }
+  .ceremony-timeline__description p { font-size: 12px; }
+}
+@media (min-width: 760px) {
+  .celebration.celebration--royal { padding-top: 80px; padding-bottom: 150px; }
+  .ceremony-scene__hanging { opacity: .66; }
+  .ceremony-scene__flower { bottom: -7%; }
+  .ceremony-timeline__corner--left { left: -47px; }
+  .ceremony-timeline__corner--right { right: -47px; }
+  .royal-unfold { top: calc(100svh - 120px); }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .royal-unfold { top: calc(100svh - 52px); }
+  .ceremony-scene__hanging { height: 160px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .royal-story__petal {
+    opacity: .27;
+    will-change: auto;
+  }
+  .royal-unfold__ornament { opacity: .83; }
+  .royal-unfold__thread { transform: none; }
+}
