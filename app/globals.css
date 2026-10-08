@@ -383,3 +383,228 @@ img, svg { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
+
+
+/* ========================================================================
+   JN-W01 HERO V2 — real individually controllable, transparent art layers
+   Keeps the existing four following chapters intact. No navigation/header.
+   ======================================================================== */
+.hero.heritage-scene {
+  display: block;
+  position: relative;
+  height: max(760px, 100svh);
+  min-height: 0;
+  padding: 0;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 54%, #fff9ef 0%, #f6e8d4 72%, #edddc5 100%);
+}
+.heritage-scene :where(img) { display: block; max-width: none; }
+.heritage-scene__paper,
+.heritage-scene__pagodas,
+.heritage-scene__mist,
+.heritage-scene__hanging,
+.heritage-scene__foliage,
+.heritage-scene__arch,
+.heritage-scene__inner-light,
+.heritage-scene__lotus,
+.heritage-scene__typography,
+.heritage-scene__floral,
+.heritage-scene__petals,
+.heritage-scene__prelude,
+.heritage-scene__signoff {
+  position: absolute;
+  pointer-events: none;
+}
+.heritage-scene__paper { z-index: 0; inset: 0; }
+.heritage-scene__paper img { object-fit: cover; object-position: center center; }
+.heritage-scene__paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 52% 65% at 50% 47%, rgba(255,251,240,.25), transparent 80%);
+}
+.heritage-scene__pagodas,
+.heritage-scene__mist,
+.heritage-scene__hanging,
+.heritage-scene__foliage {
+  inset-block: 0;
+  left: 50%;
+  width: min(100%, 760px);
+  transform: translateX(-50%);
+}
+.heritage-scene__pagodas { z-index: 1; opacity: .81; }
+.heritage-scene__pagodas img {
+  object-fit: cover; object-position: center;
+}
+.heritage-scene__mist { z-index: 2; opacity: .75; }
+.heritage-scene__mist img { object-fit: cover; }
+.heritage-scene__hanging { z-index: 5; }
+.heritage-scene__hanging img { object-fit: cover; }
+.heritage-scene__foliage { z-index: 4; opacity: .8; }
+.heritage-scene__foliage img { object-fit: cover; }
+.heritage-scene__inner-light {
+  z-index: 5;
+  width: min(82%, 470px);
+  height: 56%;
+  left: 50%;
+  top: 32%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,250,239,.65), rgba(255,249,237,.22) 60%, transparent 80%);
+}
+.heritage-scene__arch {
+  z-index: 6;
+  top: 18.5%;
+  bottom: 11%;
+  left: 50%;
+  width: min(100%, 685px);
+  transform: translateX(-50%);
+  filter: drop-shadow(0 7px 6px rgba(111,67,29,.13));
+}
+.heritage-scene__arch img { object-fit: contain; object-position: center; }
+.heritage-scene__lotus {
+  z-index: 7;
+  left: 50%;
+  top: 29.5%;
+  width: 92px;
+  height: 51px;
+  transform: translateX(-50%);
+  opacity: .78;
+  background-image: url("/heritage/lotus-ornaments.png");
+  background-size: 92px auto;
+  background-repeat: no-repeat;
+  background-position: center -8px;
+}
+.heritage-scene__prelude {
+  z-index: 7;
+  top: clamp(53px, 9.5%, 95px);
+  left: 50%;
+  width: min(88vw, 460px);
+  transform: translateX(-50%);
+  text-align: center;
+  color: #a98149;
+}
+.heritage-scene__prelude-rule {
+  display: block;
+  font: 25px/1 "Cormorant Garamond", Georgia, serif;
+  color: #c29e61;
+  margin-bottom: 4px;
+}
+.heritage-scene__prelude p { margin: 0; }
+.heritage-scene__prelude p:not(.heritage-scene__burmese) {
+  font: 600 clamp(8px, 1.35vw, 10px)/1.6 var(--sans);
+  letter-spacing: .27em;
+}
+.heritage-scene__prelude .heritage-scene__burmese {
+  font-family: var(--burmese);
+  font-size: clamp(12px, 2vw, 16px);
+  line-height: 1.95;
+  color: #7c3040;
+  margin-top: 4px;
+}
+.heritage-scene__typography {
+  z-index: 8;
+  top: 38%;
+  left: 50%;
+  width: min(78%, 410px);
+  transform: translateX(-50%);
+  text-align: center;
+}
+.heritage-scene__typography > div {
+  padding: 0 !important;
+  min-height: 0;
+  max-width: none;
+}
+.heritage-scene__typography h1 {
+  font-size: clamp(61px, 16.8vw, 112px);
+  line-height: .81;
+  gap: clamp(1px, .55svh, 7px);
+}
+.heritage-scene__typography [data-typography-part="heading"] {
+  font-size: clamp(8px, 1.4vw, 10px);
+  letter-spacing: .2em;
+  margin-bottom: clamp(10px, 2svh, 20px);
+  color: #a67f5b;
+}
+.heritage-scene__typography [data-typography-part="message"] {
+  margin-top: clamp(13px, 2.2svh, 23px);
+  font-size: clamp(19px, 4.7vw, 25px);
+  line-height: 1.2;
+}
+.heritage-scene__typography [data-typography-part="weekday"] { color: #915f4c; }
+.heritage-scene__typography [data-typography-part="date"] { font-size: clamp(23px, 5.6vw, 31px); }
+.heritage-scene__typography [data-typography-part="date"]::after {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 1px;
+  margin: 10px auto 0;
+  background: rgba(184,145,86,.58);
+}
+.heritage-scene__typography [data-language="my"] h1 {
+  font-size: clamp(29px, 8.4vw, 57px);
+  line-height: 1.55;
+}
+.heritage-scene__floral {
+  z-index: 9;
+  bottom: -4.5%;
+  width: min(59vw, 390px);
+  height: 45%;
+}
+.heritage-scene__floral img { object-fit: contain; object-position: bottom center; }
+.heritage-scene__floral--left { left: max(-9%, calc(50% - 490px)); }
+.heritage-scene__floral--right { right: max(-10%, calc(50% - 490px)); }
+.heritage-scene__signoff {
+  z-index: 8;
+  left: 50%;
+  bottom: calc(121px + env(safe-area-inset-bottom, 0px));
+  width: min(72%, 340px);
+  margin: 0;
+  transform: translateX(-50%);
+  color: #80544f;
+  text-align: center;
+  font: italic clamp(16px, 3vw, 22px)/1.08 var(--display);
+  text-shadow: 0 2px 7px rgba(255,250,239,.94);
+}
+.heritage-scene__signoff span { display: block; }
+.heritage-scene__petals { z-index: 10; inset: 0; overflow: hidden; }
+.heritage-scene__petal { position: absolute; opacity: .66; will-change: transform; }
+.heritage-scene__petal img { object-fit: contain; }
+.heritage-scene [data-scroll-discovery] {
+  z-index: 12;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  filter: drop-shadow(0 1px 4px rgba(255,250,240,.7));
+}
+.heritage-scene [data-scroll-discovery] .unused { display: none; }
+
+/* Wider screens receive the same mobile-first portrait composition, surrounded
+   by quiet parchment; the wedding text never grows into a billboard. */
+@media (min-width: 760px) {
+  .heritage-scene__arch { width: min(68vw, 680px); top: 12%; bottom: 9%; }
+  .heritage-scene__lotus { top: 24%; width: 115px; height: 69px; background-size: 115px auto; }
+  .heritage-scene__typography { top: 31%; }
+  .heritage-scene__prelude { top: 5%; }
+  .heritage-scene__floral { width: min(36vw, 405px); height: 57%; bottom: -8%; }
+  .heritage-scene__signoff { bottom: 118px; }
+  .heritage-scene__hanging, .heritage-scene__foliage { width: min(100%, 900px); }
+}
+@media (max-width: 390px) {
+  .heritage-scene__prelude { top: 8.6%; }
+  .heritage-scene__arch { top: 19%; bottom: 12%; }
+  .heritage-scene__lotus { top: 29%; }
+  .heritage-scene__typography { top: 37%; width: 79%; }
+  .heritage-scene__typography h1 { font-size: clamp(56px, 16vw, 66px); }
+  .heritage-scene__signoff { font-size: 16px; }
+}
+@media (max-height: 740px) {
+  .hero.heritage-scene { height: 740px; }
+  .heritage-scene__typography { top: 36%; }
+  .heritage-scene__prelude { top: 7%; }
+  .heritage-scene__signoff { bottom: 113px; }
+  .heritage-scene__lotus { top: 26%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heritage-scene__petal { will-change: auto; opacity: .48; }
+}

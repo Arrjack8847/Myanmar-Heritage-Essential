@@ -4,15 +4,13 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
-import InvitationTypography, { addInvitationTypographyReveal } from "@/components/InvitationTypography";
-import ScrollDiscoveryIndicator, { addScrollDiscoveryReveal } from "@/components/ScrollDiscoveryIndicator";
+import HeritageHero from "@/components/HeritageHero";
 import {
   CornerFlourish,
   DividerMotif,
   FloralSprig,
   GoldenThread,
   HeritageCrest,
-  Lotus,
   PagodaSkyline,
   VenueIllustration,
 } from "@/components/Decorations";
@@ -76,35 +74,6 @@ function useHeritageMotion(root: RefObject<HTMLElement | null>) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const context = gsap.context(() => {
-      // A single cinematic timeline controls the existing hero and future arch.
-      const opening = gsap.timeline({ defaults: { ease: "power3.out" } });
-      opening
-        .from(".js-hero-crest", { y: -15, opacity: 0, duration: 0.85 }, 0)
-        .from(".js-hero-prelude", { y: 16, opacity: 0, duration: 0.78 }, 0.17)
-        .addLabel("archReady", 0.65);
-
-      const typography = node.querySelector<HTMLElement>(".js-hero-typography");
-      if (typography) {
-        addInvitationTypographyReveal(opening, typography, "archReady+=0.12");
-      }
-      opening.from(".js-hero-lower", { y: 12, opacity: 0, duration: 0.85 }, "archReady+=1.92");
-      const scrollDiscovery = node.querySelector<HTMLElement>("[data-scroll-discovery]");
-      if (scrollDiscovery) {
-        addScrollDiscoveryReveal(opening, scrollDiscovery, "archReady+=2.78");
-      }
-
-      // The decorative planes part as the guest scrolls into chapter one.
-      const heroScroll = {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1.1,
-      };
-      gsap.to(".js-hero-left", { xPercent: -34, yPercent: 18, rotate: -7, ease: "none", scrollTrigger: heroScroll });
-      gsap.to(".js-hero-right", { xPercent: 34, yPercent: -15, rotate: 7, ease: "none", scrollTrigger: heroScroll });
-      gsap.to(".js-hero-typography", { yPercent: -10, ease: "none", scrollTrigger: heroScroll });
-      gsap.to(".js-hero-crest", { yPercent: -45, opacity: 0.25, ease: "none", scrollTrigger: heroScroll });
-
       // Each chapter appears gently; the shared ornamental motif links chapters.
       gsap.utils.toArray<HTMLElement>(".js-reveal").forEach((element) => {
         gsap.from(element, {
@@ -210,45 +179,8 @@ export default function HeritageInvitation() {
       <div className="paper-grain" aria-hidden="true" />
       <GoldenThread className="golden-thread" />
 
-      {/* 01 — CEREMONIAL HERO */}
-      <section id="welcome" className="hero section-panel" aria-labelledby="hero-title">
-        <div className="hero__aura" aria-hidden="true" />
-        <div className="hero__corner hero__corner--top-left js-hero-left" aria-hidden="true"><CornerFlourish /></div>
-        <div className="hero__corner hero__corner--top-right js-hero-right" aria-hidden="true"><CornerFlourish /></div>
-        <div className="hero__corner hero__corner--bottom-left js-hero-left" aria-hidden="true"><CornerFlourish /></div>
-        <div className="hero__corner hero__corner--bottom-right js-hero-right" aria-hidden="true"><CornerFlourish /></div>
-        <div className="hero__flora hero__flora--left js-hero-left" aria-hidden="true"><FloralSprig /><Lotus /></div>
-        <div className="hero__flora hero__flora--right js-hero-right" aria-hidden="true"><FloralSprig /><Lotus /></div>
-        <div className="hero__suspended hero__suspended--left js-hero-left" aria-hidden="true">✧</div>
-        <div className="hero__suspended hero__suspended--right js-hero-right" aria-hidden="true">✧</div>
-
-        <div className="hero__stage">
-          <div className="hero__prelude js-hero-prelude">
-            <HeritageCrest className="hero__crest js-hero-crest" />
-            <span className="eyebrow eyebrow--spaced">A CELEBRATION OF TWO HEARTS</span>
-            <p className="hero__myanmar" lang="my">မင်္ဂလာပွဲ ဖိတ်ကြားလွှာ</p>
-          </div>
-          <div className="hero__typography js-hero-typography">
-            <InvitationTypography
-              id="hero-title"
-              firstName={invitation.couple.first}
-              secondName={invitation.couple.second}
-              heading={invitation.heroTypography.heading}
-              romanticMessage={invitation.heroTypography.romanticMessage}
-              weekday={invitation.dayOfWeek}
-              weddingDate={`${invitation.displayDay} ${invitation.displayMonth} ${invitation.displayYear}`}
-              language={invitation.heroTypography.language}
-            />
-          </div>
-          <div className="hero__foot js-hero-lower">
-            <p>Honouring tradition. Beginning forever.</p>
-            <span className="hero__foot-divider" />
-
-          </div>
-        </div>
-        <ScrollDiscoveryIndicator targetId="celebration" timelineControlled />
-        <PagodaSkyline className="hero__skyline" />
-      </section>
+      {/* 01 — IMMERSIVE LAYERED HERITAGE HERO (no navbar) */}
+      <HeritageHero />
 
       {/* 02 — THE DAY */}
       <section id="celebration" className="celebration section-panel" aria-labelledby="celebration-title">
