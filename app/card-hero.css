@@ -193,10 +193,9 @@
 .heritage-scene__floral--left img { transform-origin: 28% 85%; }
 .heritage-scene__floral--right img { transform-origin: 72% 85%; }
 .heritage-scene__petals { pointer-events: none; }
-@media (max-width: 759px) {
-  /* Four unique particles max on mobile, and only a few visible per cycle. */
-  .heritage-scene__petal:nth-child(n + 5) { display: none; }
-}
+/* Keep all six detailed petal layers visible and animated on phones.
+ * Any performance savings come from visibility-pausing and transform-only
+ * motion, never from removing artwork or animations on mobile. */
 @media (prefers-reduced-motion: reduce) {
   .heritage-scene__card-content,
   .heritage-scene__hanging img,

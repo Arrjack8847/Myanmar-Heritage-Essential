@@ -136,12 +136,11 @@ export default function HeritageHero() {
       idle(".heritage-scene__floral--left img", { y: -3, rotation: 0.24, duration: 5.7 });
       idle(".heritage-scene__floral--right img", { y: -2, rotation: -0.22, duration: 6.6 });
 
-      // Petals follow individually staggered CURVED paths (three segments);
-      // they fade in/out and do not teleport visibly at loop boundaries.
-      // Limit animated petals on phone-sized displays to lower GPU use.
+      // Keep every petal on EVERY device. Mobile receives the full cinematic
+      // composition, with all six independently animated cutout petals.
+      // Their loops pause off-screen; do not reduce visible layers on phones.
       const allPetals = gsap.utils.toArray<HTMLElement>(".heritage-scene__petal", section);
-      const mobile = window.matchMedia("(max-width: 759px)").matches;
-      allPetals.slice(0, mobile ? 4 : allPetals.length).forEach((element, index) => {
+      allPetals.forEach((element, index) => {
         const petal = petals[index];
         if (!petal) return;
         const path = gsap.timeline({
