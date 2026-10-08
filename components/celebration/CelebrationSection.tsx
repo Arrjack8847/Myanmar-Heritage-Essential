@@ -1,299 +1,198 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
+import { HeritageCrest } from "@/components/Decorations";
+import RoyalCeremonyFrame from "./RoyalCeremonyFrame";
+import CeremonyTimeline from "./CeremonyTimeline";
 
 /**
- * One-screen inner leaf for the Royal Myanmar invitation.
- * All times, titles and descriptions come from data/invitation.ts.
- * Only one event is shown at a time; tabs remain usable without motion.
+ * JN-W01: a real scrolling invitation, not a tabbed application.
+ * One sticky royal page contains a date cover and the existing ornate event
+ * timeline. The page holds its position while scroll reveals each event.
  */
 export default function CelebrationSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const currentStep = useRef(0);
-  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
-  const events = invitation.ceremony;
-  const activeEvent = events[activeIndex] ?? events[0];
+  const sceneRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
+    const scene = sceneRef.current;
+    const runway = scene?.closest<HTMLElement>(".ceremony-story__scroll");
+    if (!scene || !runway || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
-    const runway = section.closest<HTMLElement>(".ceremony-story__scroll");
-    if (!runway) return;
 
-    const ambient: gsap.core.Tween[] = [];
-    let onScreen = false;
+    const ambient: gsap.core.Animation[] = [];
+    let visible = false;
+    let lastCue = -1;
+    const cue = scene.querySelector<HTMLElement>("[data-ceremony-scroll-cue]");
+    const cueLabels = [
+      "SCROLL TO UNFOLD THE DAY",
+      "NEXT · " + invitation.ceremony[1].tabLabel.toUpperCase(),
+      "NEXT · " + invitation.ceremony[2].tabLabel.toUpperCase(),
+      "CONTINUE TO THE VENUE",
+    ];
 
     const context = gsap.context(() => {
-      const slowlyFloat = (selector: string, variables: gsap.TweenVars) => {
-        const node = section.querySelector<HTMLElement>(selector);
-        if (!node) return;
-        ambient.push(gsap.to(node, {
-          ...variables, ease: "sine.inOut", repeat: -1, yoyo: true, paused: true,
-          force3D: true,
-        }));
-      };
+      const cover = scene.querySelector<HTMLElement>(".ceremony-cover");
+      const program = scene.querySelector<HTMLElement>(".ceremony-program");
+      const events = gsap.utils.toArray<HTMLElement>(".ceremony-timeline__event", scene);
+      const thread = scene.querySelector<HTMLElement>(".ceremony-timeline__thread");
+      const progress = scene.querySelector<HTMLElement>(".ceremony-scroll__progress-fill");
 
-      slowlyFloat(".ceremony-one-screen__mist img", { x: 12, y: -5, duration: 12 });
-      slowlyFloat(".ceremony-one-screen__petal--one", { x: 16, y: 22, rotation: 19, duration: 8.5 });
-      slowlyFloat(".ceremony-one-screen__petal--two", { x: -14, y: 26, rotation: -24, duration: 10 });
-      slowlyFloat(".ceremony-one-screen__petal--three", { x: 10, y: -17, rotation: 16, duration: 9.3 });
-      slowlyFloat(".ceremony-one-screen__petal--four", { x: -11, y: 19, rotation: -18, duration: 10.5 });
+      if (!cover || !program || events.length !== invitation.ceremony.length) return;
 
-      // The STICKY chapter tells its own story, without requiring a tap.
-      // Each roughly 80svh of scroll reveals the next scheduled celebration
-      // event. Scrolling upward restores the previous event naturally.
-      const revealByScroll = (progress: number) => {
-        const step = Math.min(
-          events.length - 1,
-          Math.floor(Math.max(0, Math.min(progress, 0.99999)) * events.length),
-        );
-        if (step !== currentStep.current) {
-          currentStep.current = step;
-          setActiveIndex(step);
-        }
-      };
+      // The printed cover is visible without JavaScript. On an animated device,
+      // prepare the unfolded schedule before making it visible.
+      gsap.set(program, { autoAlpha: 0, y: 23 });
+      gsap.set(events, { autoAlpha: 0, y: 22 });
+      if (thread) gsap.set(thread, { scaleY: 0, transformOrigin: "top center" });
+      if (progress) gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
 
-      const journey = gsap.timeline({
+      const scroll = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: runway,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.6,
+          scrub: 0.65,
           invalidateOnRefresh: true,
-          onUpdate: (trigger) => revealByScroll(trigger.progress),
-          onRefresh: (trigger) => revealByScroll(trigger.progress),
+          onUpdate: ({ progress: value }) => {
+            const nextCue = value < 0.25 ? 0 : value < 0.49 ? 1 : value < 0.73 ? 2 : 3;
+            if (nextCue !== lastCue) {
+              lastCue = nextCue;
+              if (cue) cue.textContent = cueLabels[nextCue] ?? cueLabels[3];
+            }
+          },
         },
       });
-      scrollTriggerRef.current = journey.scrollTrigger ?? null;
 
-      journey
-        // First beat: distant Bagan temples emerge from the warm mist.
-        .fromTo(".ceremony-one-screen__pagodas",
-          { y: 27, scale: 1.035, opacity: 0.28 },
-          { y: -27, scale: 1, opacity: 0.56, duration: 1 }, 0)
-        .fromTo(".ceremony-one-screen__mist",
-          { y: 24, opacity: 0.32 },
-          { y: -29, opacity: 0.55, duration: 1 }, 0)
-        .fromTo(".ceremony-one-screen__golden-haze",
-          { opacity: 1 },
-          { opacity: 0.85, duration: 1 }, 0)
-        // Second beat: the printed date rises into focus. The actual
-        // information now advances on scroll, not just on button presses.
-        .fromTo(".ceremony-one-screen__heading",
-          { y: 7 }, { y: -12, duration: 0.72 }, 0.12)
-        .fromTo(".ceremony-one-screen__date",
-          { y: 10, scale: 0.975 },
-          { y: -9, scale: 1.01, duration: 0.65 }, 0.2)
-        .fromTo(".ceremony-one-screen__details",
-          { y: 13, opacity: 0.78 },
-          { y: -5, opacity: 1, duration: 0.65 }, 0.3)
-        .fromTo(".ceremony-one-screen__motif",
-          { y: 7 }, { y: -2, duration: 0.54 }, 0.04)
-        .fromTo(".ceremony-one-screen__petals",
-          { y: 24 }, { y: -37, duration: 1 }, 0)
-        .fromTo(".ceremony-one-screen__progress-fill",
-          { scaleX: 0 }, { scaleX: 1, duration: 1 }, 0);
+      // Scene one: a full wedding date printed inside the original royal frame.
+      // Scene two: the entire existing timeline physically unfolds below a
+      // smaller title, one event at a time. Nothing requires clicking.
+      scroll
+        .to(cover, { autoAlpha: 0, y: -46, scale: 0.96, duration: 0.48, ease: "power1.inOut" }, 0.28)
+        .to(program, { autoAlpha: 1, y: 0, duration: 0.37, ease: "power2.out" }, 0.64)
+        .to(events[0], { autoAlpha: 1, y: 0, duration: 0.34, ease: "power2.out" }, 0.91)
+        .to(events[1], { autoAlpha: 1, y: 0, duration: 0.34, ease: "power2.out" }, 1.74)
+        .to(events[2], { autoAlpha: 1, y: 0, duration: 0.34, ease: "power2.out" }, 2.57)
+        // Keep the complete ceremony readable at the end of the chapter.
+        .to({}, { duration: 0.68 }, 2.95)
+        .fromTo(".ceremony-scene__pagodas",
+          { y: 28, scale: 1.045, opacity: 0.34 },
+          { y: -23, scale: 1.005, opacity: 0.57, duration: 3.63 }, 0)
+        .fromTo(".ceremony-scene__mist",
+          { y: 22, opacity: 0.34 },
+          { y: -26, opacity: 0.55, duration: 3.63 }, 0)
+        .fromTo(".ceremony-scene__petals",
+          { y: 17 },
+          { y: -50, duration: 3.63 }, 0);
 
-      // A hand-drawn lotus rather than generic sparkles. SVG stroke length
-      // is measured once; all draw positions are reversible when scrolling up.
-      section.querySelectorAll<SVGPathElement>(".ceremony-one-screen__motif svg path")
-        .forEach((path, index) => {
-          const length = path.getTotalLength();
-          journey.fromTo(path,
-            { strokeDasharray: length, strokeDashoffset: length },
-            { strokeDasharray: length, strokeDashoffset: 0, duration: 0.47 },
-            0.08 + index * 0.035);
-        });
+      if (thread) scroll.to(thread, { scaleY: 1, duration: 2.22 }, 0.9);
+      if (progress) scroll.to(progress, { scaleX: 1, duration: 3.63 }, 0);
 
-      journey.fromTo(".ceremony-one-screen__motif-rule",
-        { scaleX: 0, transformOrigin: "center center" },
-        { scaleX: 1, duration: 0.46 }, 0.12);
-    }, section);
+      // Ambient movements remain separate from scrub positioning and are
+      // paused when the scene is offscreen or the tab is backgrounded.
+      const ambientFloat = (selector: string, vars: gsap.TweenVars) => {
+        const element = scene.querySelector<HTMLElement>(selector);
+        if (!element) return;
+        ambient.push(gsap.to(element, {
+          ...vars,
+          repeat: -1,
+          yoyo: true,
+          paused: true,
+          ease: "sine.inOut",
+          force3D: true,
+        }));
+      };
+      ambientFloat(".ceremony-scene__mist img", { x: 8, duration: 12 });
+      ambientFloat(".ceremony-scene__petal--a", { x: 11, rotation: 15, duration: 9 });
+      ambientFloat(".ceremony-scene__petal--b", { x: -10, rotation: -16, duration: 10 });
+      ambientFloat(".ceremony-scene__petal--c", { x: 8, rotation: 12, duration: 11 });
+      ambientFloat(".ceremony-scene__petal--d", { x: -13, rotation: -10, duration: 8 });
+
+    }, scene);
 
     const sync = () => {
-      const play = onScreen && !document.hidden;
-      ambient.forEach((animation) => play ? animation.play() : animation.pause());
+      const run = visible && !document.hidden;
+      ambient.forEach((animation) => run ? animation.play() : animation.pause());
     };
-
     const observer = new IntersectionObserver(([entry]) => {
-      onScreen = Boolean(entry?.isIntersecting) && (entry?.intersectionRatio ?? 0) > 0.04;
+      visible = Boolean(entry?.isIntersecting && entry.intersectionRatio > 0.04);
       sync();
     }, { threshold: [0, 0.04, 0.2] });
-
-    observer.observe(section);
+    observer.observe(scene);
     document.addEventListener("visibilitychange", sync);
 
     return () => {
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
       context.revert();
-      scrollTriggerRef.current = null;
     };
   }, []);
-
-  // A tap is an OPTIONAL shortcut to a stage in the same scroll journey.
-  // It never becomes the only way to discover Luncheon or Blessings.
-  function jumpToStep(index: number) {
-    const trigger = scrollTriggerRef.current;
-    if (!trigger || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      currentStep.current = index;
-      setActiveIndex(index);
-      return;
-    }
-
-    const targetProgress = (index + 0.5) / events.length;
-    const top = trigger.start + (trigger.end - trigger.start) * targetProgress;
-    window.scrollTo({ top, behavior: "smooth" });
-  }
-
-  function handleTabKeys(event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) {
-    const max = events.length;
-    if (!max) return;
-
-    let next = currentIndex;
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (currentIndex + 1) % max;
-    else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (currentIndex - 1 + max) % max;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = max - 1;
-    else return;
-
-    event.preventDefault();
-    jumpToStep(next);
-    tabRefs.current[next]?.focus();
-  }
 
   return (
     <div id="celebration" className="ceremony-story__scroll">
       <section
-        ref={sectionRef}
-        className="celebration celebration--royal ceremony-one-screen section-panel"
+        ref={sceneRef}
+        className="celebration celebration--royal ceremony-scene section-panel"
         aria-labelledby="celebration-title"
       >
-      <div className="ceremony-one-screen__paper" aria-hidden="true">
-        <Image src="/heritage/ivory-parchment.png" alt="" fill sizes="100vw" />
-      </div>
-      <div className="ceremony-one-screen__pagodas" aria-hidden="true">
-        <Image src="/heritage/bagan-pagodas.png" alt="" fill sizes="(max-width: 759px) 100vw, 900px" />
-      </div>
-      <div className="ceremony-one-screen__mist" aria-hidden="true">
-        <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw" />
-      </div>
-      <div className="ceremony-one-screen__golden-haze" aria-hidden="true" />
-
-      {/* Real lotus-petal silhouettes, never sparkle dots or particle glitter. */}
-      <div className="ceremony-one-screen__petals" aria-hidden="true">
-        {[1, 2, 3, 4].map((number) => (
-          <svg
-            key={number}
-            className={"ceremony-one-screen__petal ceremony-one-screen__petal--" + ["one", "two", "three", "four"][number - 1]}
-            viewBox="0 0 62 90"
-            fill="none"
-          >
-            <path d="M31 4C12 20 8 51 26 79c3 5 7 5 10 0C54 51 50 20 31 4Z" fill="#FFF6E7" fillOpacity=".89" stroke="#D9BC86" strokeWidth="1.2" />
-            <path d="M31 13c-5 24-5 43 0 63M31 36c-9-6-13-9-16-15M31 49c9-8 13-11 16-18" stroke="#D7B98A" strokeWidth=".85" strokeOpacity=".74" />
-          </svg>
-        ))}
-      </div>
-
-      <div className="ceremony-one-screen__inner">
-        <div className="ceremony-one-screen__motif" aria-hidden="true">
-          <span className="ceremony-one-screen__motif-rule" />
-          <svg viewBox="0 0 76 42" fill="none">
-            <g stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M38 33C31 27 32 15 38 5c6 10 7 22 0 28Z" />
-              <path d="M37 32C26 29 20 24 19 15c10 2 17 8 19 18M39 32c11-3 17-8 18-17-10 2-17 8-19 18" />
-              <path d="M38 35C25 38 17 34 11 28c11-2 21 1 27 7ZM38 35c13 3 21-1 27-7-11-2-21 1-27 7ZM21 39h34" />
-            </g>
-          </svg>
-          <span className="ceremony-one-screen__motif-rule" />
+        <div className="ceremony-scene__paper" aria-hidden="true">
+          <Image src="/heritage/ivory-parchment.png" alt="" fill sizes="100vw" />
+        </div>
+        <div className="ceremony-scene__pagodas" aria-hidden="true">
+          <Image src="/heritage/bagan-pagodas.png" alt="" fill sizes="(max-width: 760px) 100vw, 950px" />
+        </div>
+        <div className="ceremony-scene__mist" aria-hidden="true">
+          <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw" />
+        </div>
+        <div className="ceremony-scene__light" aria-hidden="true" />
+        <div className="ceremony-scene__petals" aria-hidden="true">
+          {(["a", "b", "c", "d"] as const).map((key, index) => (
+            <div className={"ceremony-scene__petal ceremony-scene__petal--" + key} key={key}>
+              <Image src={"/heritage/petals/petal-0" + (index + 1) + ".png"} alt="" fill sizes="46px" />
+            </div>
+          ))}
         </div>
 
-        <p className="ceremony-one-screen__eyebrow">
-          CHAPTER ONE <span aria-hidden="true">·</span> CEREMONY DETAILS
-        </p>
-
-        <header className="ceremony-one-screen__heading">
-          <h2 id="celebration-title">A Union of <em>Two Hearts</em></h2>
-          <p>{invitation.greeting}</p>
-        </header>
-
-        <div
-          className="ceremony-one-screen__date"
-          aria-label={"Wedding date: " + invitation.dayOfWeek + ", " + invitation.displayDay + " " + invitation.displayMonth + " " + invitation.displayYear}
-        >
-          <span className="ceremony-one-screen__date-rule" aria-hidden="true" />
-          <strong className="ceremony-one-screen__day">{invitation.displayDay}</strong>
-          <span className="ceremony-one-screen__date-divider" aria-hidden="true" />
-          <span className="ceremony-one-screen__date-caption">
-            <span>{invitation.dayOfWeek}</span>
-            <strong>{invitation.displayMonth}</strong>
-            <span>{invitation.displayYear}</span>
-          </span>
-          <span className="ceremony-one-screen__date-rule" aria-hidden="true" />
-        </div>
-
-        <div className="ceremony-one-screen__details" aria-label="Order of celebration">
-          <div className="ceremony-one-screen__story-label" aria-hidden="true">
-            <span>OUR CELEBRATION STORY</span>
-            <strong>{String(activeIndex + 1).padStart(2, "0")} <i>/</i> {String(events.length).padStart(2, "0")}</strong>
-          </div>
-          <div className="ceremony-one-screen__tabs" role="tablist" aria-label="Wedding celebration events revealed by scrolling">
-            {events.map((item, index) => (
-              <button
-                key={item.title + index}
-                ref={(node) => { tabRefs.current[index] = node; }}
-                id={"ceremony-tab-" + index}
-                type="button"
-                className="ceremony-one-screen__tab"
-                role="tab"
-                aria-selected={index === activeIndex}
-                aria-controls="ceremony-details-panel"
-                tabIndex={index === activeIndex ? 0 : -1}
-                onClick={() => jumpToStep(index)}
-                onKeyDown={(event) => handleTabKeys(event, index)}
-              >
-                {item.tabLabel}
-              </button>
-            ))}
-          </div>
-
-          <div className="ceremony-one-screen__detail-shell">
-            <div
-              key={activeIndex}
-              className="ceremony-one-screen__panel"
-              id="ceremony-details-panel"
-              role="tabpanel"
-              aria-labelledby={"ceremony-tab-" + activeIndex}
-              tabIndex={0}
-            >
-              <span className="ceremony-one-screen__event-time">{activeEvent.time}</span>
-              <h3>{activeEvent.title}</h3>
-              <p>{activeEvent.detail}</p>
+        <div className="ceremony-page">
+          <RoyalCeremonyFrame />
+          <div className="ceremony-cover">
+            <HeritageCrest className="ceremony-cover__crest" aria-hidden="true" />
+            <p className="ceremony-eyebrow">CHAPTER ONE · OUR CELEBRATION</p>
+            <h2 id="celebration-title">A Union of <em>Two Hearts</em></h2>
+            <p className="ceremony-cover__greeting">{invitation.greeting}</p>
+            <div className="ceremony-cover__date" aria-label={"Wedding date " + invitation.dayOfWeek + ", " + invitation.displayDay + " " + invitation.displayMonth + " " + invitation.displayYear}>
+              <strong className="ceremony-cover__day">{invitation.displayDay}</strong>
+              <span className="ceremony-cover__date-divider" aria-hidden="true" />
+              <span className="ceremony-cover__date-details">
+                <span>{invitation.dayOfWeek}</span>
+                <strong>{invitation.displayMonth}</strong>
+                <span>{invitation.displayYear}</span>
+              </span>
             </div>
           </div>
-          <p className="ceremony-one-screen__hint" aria-hidden="true">
-            <span className="ceremony-one-screen__scroll-arrow">↓</span>
-            {activeIndex < events.length - 1
-              ? `KEEP SCROLLING · NEXT: ${events[activeIndex + 1].tabLabel.toUpperCase()}`
-              : "CONTINUE SCROLLING · THE GATHERING PLACE"}
-          </p>
-        </div>
-      </div>
 
-      {/* Thin stationery rule fills as the visitor progresses through this
-          sticky chapter, without obscuring or disabling the event selector. */}
-      <div className="ceremony-one-screen__progress" aria-hidden="true">
-        <span className="ceremony-one-screen__progress-fill" />
-      </div>
+          <div className="ceremony-program">
+            <HeritageCrest className="ceremony-program__crest" aria-hidden="true" />
+            <p className="ceremony-eyebrow">OUR WEDDING DAY</p>
+            <h3 className="ceremony-program__title">The Celebration <em>Unfolds</em></h3>
+            <p className="ceremony-program__date">
+              {invitation.dayOfWeek}, {invitation.displayDay} {invitation.displayMonth} {invitation.displayYear}
+            </p>
+            <CeremonyTimeline />
+          </div>
+        </div>
+
+        <div className="ceremony-scroll" aria-hidden="true">
+          <p className="ceremony-scroll__label" data-ceremony-scroll-cue>SCROLL TO UNFOLD THE DAY</p>
+          <div className="ceremony-scroll__progress">
+            <span className="ceremony-scroll__progress-fill" />
+          </div>
+          <span className="ceremony-scroll__arrow">↓</span>
+        </div>
       </section>
     </div>
   );
