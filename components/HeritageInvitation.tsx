@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
@@ -64,7 +64,7 @@ function exportCalendarEvent() {
   window.setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 
-function useHeritageMotion(root: React.RefObject<HTMLElement | null>) {
+function useHeritageMotion(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const node = root.current;
