@@ -1,4 +1,4 @@
-/** 
+/**
  * JN-W01 — Essential customer content.
  * All default names, dates, venue wording and photos below are DEMO content.
  * Replace these before publishing a real invitation.
@@ -46,12 +46,12 @@ export const invitation = {
     },
     {
       src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=85",
-      alt: "Sample romantic wedding floral details",
+      alt: "Sample wedding floral details",
       caption: "Little details",
     },
     {
       src: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=85",
-      alt: "Sample wedding floral details",
+      alt: "Sample romantic wedding photography",
       caption: "Us, always",
     },
   ],
