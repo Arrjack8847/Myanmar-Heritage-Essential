@@ -28,28 +28,9 @@ export default function RoyalUnfoldTransition() {
         .to(".royal-unfold__sigil",
           { autoAlpha: 0, y: -20, duration: 0.5, ease: "none" }, 0.5);
 
-      // The scene is exactly one viewport tall. Reveal each editorial group
-      // as it enters rather than animating the full section (which shifts seams).
-      for (const selector of [
-        ".ceremony-one-screen__motif",
-        ".ceremony-one-screen__eyebrow",
-        ".ceremony-one-screen__heading",
-        ".ceremony-one-screen__date",
-        ".ceremony-one-screen__details",
-      ]) {
-        const node = story.querySelector<HTMLElement>(selector);
-        if (!node) continue;
-        gsap.fromTo(node,
-          { autoAlpha: 0, y: 17 },
-          {
-            autoAlpha: 1, y: 0, ease: "none",
-            scrollTrigger: {
-              trigger: node, start: "top 96%", end: "top 74%",
-              scrub: 0.45, invalidateOnRefresh: true,
-            },
-          },
-        );
-      }
+      // Section 2 owns its new sticky choreography. Do not also animate
+      // its heading/date/details here: two ScrollTriggers targeting the same
+      // transforms caused flickering and mobile scrub jumps.
     }, story);
 
     return () => context.revert();
