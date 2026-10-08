@@ -6,12 +6,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import { HeritageCrest } from "@/components/Decorations";
-import RoyalCeremonyFrame from "./RoyalCeremonyFrame";
 import CeremonyTimeline from "./CeremonyTimeline";
 
 /**
  * JN-W01: a real scrolling invitation, not a tabbed application.
- * One sticky royal page contains a date cover and the existing ornate event
+ * One understated parchment page contains a date cover and an elegant event
  * timeline. The page holds its position while scroll reveals each event.
  */
 export default function CelebrationSection() {
@@ -20,7 +19,7 @@ export default function CelebrationSection() {
   useEffect(() => {
     const scene = sceneRef.current;
     const runway = scene?.closest<HTMLElement>(".ceremony-story__scroll");
-    if (!scene || !runway || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!scene || !runway || window.matchMedia("(prefers-reduced-motion: reduce), (max-height: 700px)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const ambient: gsap.core.Animation[] = [];
@@ -158,7 +157,6 @@ export default function CelebrationSection() {
         </div>
 
         <div className="ceremony-page">
-          <RoyalCeremonyFrame />
           <div className="ceremony-cover">
             <HeritageCrest className="ceremony-cover__crest" aria-hidden="true" />
             <p className="ceremony-eyebrow">CHAPTER ONE · OUR CELEBRATION</p>
