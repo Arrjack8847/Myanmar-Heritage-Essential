@@ -51,7 +51,13 @@
   pointer-events: none;
   filter: drop-shadow(0 9px 15px rgba(83,49,30,.15));
 }
-.heritage-scene__card > img {
+.heritage-scene__card-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform-origin: center 55%;
+}
+.heritage-scene__card-content > img {
   object-fit: contain;
   object-position: center;
 }
@@ -179,4 +185,23 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .heritage-scene__card { will-change: auto; }
+}
+
+/* Animate image surfaces, not their scroll-driven positioning wrappers. */
+.heritage-scene__hanging img { transform-origin: 50% 8%; }
+.heritage-scene__foliage img { transform-origin: 50% 17%; }
+.heritage-scene__floral--left img { transform-origin: 28% 85%; }
+.heritage-scene__floral--right img { transform-origin: 72% 85%; }
+.heritage-scene__petals { pointer-events: none; }
+@media (max-width: 759px) {
+  /* Four unique particles max on mobile, and only a few visible per cycle. */
+  .heritage-scene__petal:nth-child(n + 5) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heritage-scene__card-content,
+  .heritage-scene__hanging img,
+  .heritage-scene__foliage img,
+  .heritage-scene__floral img,
+  .heritage-scene__mist img,
+  .heritage-scene__petal { will-change: auto; }
 }

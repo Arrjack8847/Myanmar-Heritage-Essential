@@ -31,72 +31,167 @@ export default function HeritageHero() {
     if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     gsap.registerPlugin(ScrollTrigger);
-    const petalTweens: gsap.core.Tween[] = [];
+
+    // Only animate on screen. On mobile this avoids wasting GPU cycles
+    // after the visitor moves to the ceremony or backgrounds the browser.
+    const ambientTweens: gsap.core.Animation[] = [];
+    let sectionVisible = section.getBoundingClientRect().bottom > 0;
+    let entranceFinished = false;
+    const syncAmbient = () => {
+      const shouldPlay = sectionVisible && !document.hidden && entranceFinished;
+      ambientTweens.forEach((animation) => {
+        if (shouldPlay) animation.play();
+        else animation.pause();
+      });
+    };
 
     const context = gsap.context(() => {
+      // Each layer enters on a different beat; the invitation text is HTML.
       const opening = gsap.timeline({ defaults: { ease: "power2.out" } });
-
       opening
-        .from(".heritage-scene__pagodas", { opacity: 0, scale: 1.025, duration: 1.8 }, 0)
-        .from(".heritage-scene__mist", { opacity: 0, duration: 1.9 }, 0.2)
-        .from(".heritage-scene__hanging", { opacity: 0, x: -18, y: -14, duration: 1.5 }, 0.2)
-        .from(".heritage-scene__foliage", { opacity: 0, duration: 1.35 }, 0.45)
-        .from(".heritage-scene__prelude", { opacity: 0, y: 13, duration: 0.95 }, 0.35)
-        .from(".heritage-scene__card", { opacity: 0, y: 19, scale: 0.985, duration: 1.35, ease: "power3.out" }, 0.42)
-        .from(".heritage-scene__floral--left", { opacity: 0, x: -18, y: 22, duration: 1.35 }, 0.9)
-        .from(".heritage-scene__floral--right", { opacity: 0, x: 18, y: 22, duration: 1.35 }, 1.05);
+        .from(".heritage-scene__pagodas", { opacity: 0, scale: 1.03, duration: 1.35 }, 0)
+        .from(".heritage-scene__mist", { opacity: 0, y: 7, duration: 1.55 }, 0.1)
+        .from(".heritage-scene__hanging", { opacity: 0, x: -12, y: -12, duration: 1.25 }, 0.28)
+        .from(".heritage-scene__foliage", { opacity: 0, y: -7, duration: 1.15 }, 0.39)
+        .from(".heritage-scene__prelude", { opacity: 0, y: 9, duration: 0.75 }, 0.38)
+        // Animate the inner card only. The outer frame owns scroll parallax;
+        // names and date are children and never drift off the ivory paper.
+        .from(".heritage-scene__card-content", {
+          opacity: 0, y: 17, scale: 0.984, duration: 1.12, ease: "power3.out",
+        }, 0.68)
+        .from(".heritage-scene__floral--left", {
+          opacity: 0, x: -13, y: 17, duration: 1.1,
+        }, 0.95)
+        .from(".heritage-scene__floral--right", {
+          opacity: 0, x: 13, y: 17, duration: 1.1,
+        }, 1.07);
 
       const typography = section.querySelector<HTMLElement>(".heritage-scene__typography");
-      if (typography) addInvitationTypographyReveal(opening, typography, 0.95);
+      if (typography) addInvitationTypographyReveal(opening, typography, 0.98);
 
-      opening.from(".heritage-scene__signoff", { opacity: 0, y: 10, duration: 0.8 }, 2.15);
-
+      opening.from(".heritage-scene__signoff", { opacity: 0, y: 7, duration: 0.7 }, 1.9);
       const scrollCue = section.querySelector<HTMLElement>("[data-scroll-discovery]");
-      if (scrollCue) addScrollDiscoveryReveal(opening, scrollCue, 2.3);
+      if (scrollCue) addScrollDiscoveryReveal(opening, scrollCue, 2.13);
 
-      // Individual depth planes. CSS stays static if animations are disabled.
-      const scroll = { trigger: section, start: "top top", end: "bottom top", scrub: 1.15 };
-      gsap.to(".heritage-scene__pagodas", { yPercent: -5, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__mist", { yPercent: -9, xPercent: 2, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__hanging", { yPercent: -12, xPercent: -3, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__foliage", { yPercent: -6, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__card", { yPercent: -6, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__typography", { yPercent: -9, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__floral--left", { yPercent: -15, xPercent: -4, ease: "none", scrollTrigger: scroll });
-      gsap.to(".heritage-scene__floral--right", { yPercent: -12, xPercent: 3, ease: "none", scrollTrigger: scroll });
+      opening.eventCallback("onComplete", () => {
+        entranceFinished = true;
+        syncAmbient();
+      });
 
-      const petalElements = gsap.utils.toArray<HTMLElement>(".heritage-scene__petal", section);
-      petalElements.forEach((element, index) => {
-        const settings = petals[index];
-        if (!settings) return;
-        petalTweens.push(gsap.fromTo(element,
-          { x: 0, y: -24, rotation: index % 2 ? 18 : -20, opacity: 0 },
-          {
-            x: settings.drift, y: 135, rotation: index % 2 ? -105 : 105,
-            opacity: 0.74, duration: settings.duration, delay: settings.delay,
-            repeat: -1, ease: "sine.inOut", paused: true,
-          }
-        ));
+      // Scrubbed, reversible depth. Motion on OUTER planes never competes
+      // with the subtle idle animation on their INNER image surfaces.
+      const scrollDepth = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        },
+      });
+      scrollDepth
+        .to(".heritage-scene__pagodas", {
+          y: () => -Math.min(section.clientHeight * 0.045, 40),
+          scale: 1.024, ease: "none",
+        }, 0)
+        .to(".heritage-scene__mist", {
+          y: () => -Math.min(section.clientHeight * 0.072, 59),
+          ease: "none",
+        }, 0)
+        .to(".heritage-scene__hanging", {
+          y: () => -Math.min(section.clientHeight * 0.09, 72),
+          x: -7, ease: "none",
+        }, 0)
+        .to(".heritage-scene__foliage", {
+          y: () => -Math.min(section.clientHeight * 0.055, 45),
+          x: 6, ease: "none",
+        }, 0)
+        .to(".heritage-scene__card", {
+          y: () => -Math.min(section.clientHeight * 0.055, 43),
+          ease: "none",
+        }, 0)
+        .to(".heritage-scene__floral--left", {
+          y: () => -Math.min(section.clientHeight * 0.11, 85),
+          x: -13, ease: "none",
+        }, 0)
+        .to(".heritage-scene__floral--right", {
+          y: () => -Math.min(section.clientHeight * 0.10, 75),
+          x: 13, ease: "none",
+        }, 0);
+
+      const idle = (selector: string, vars: gsap.TweenVars) => {
+        const element = section.querySelector<HTMLElement>(selector);
+        if (!element) return;
+        ambientTweens.push(gsap.to(element, {
+          ...vars, paused: true, repeat: -1, yoyo: true,
+          ease: "sine.inOut", force3D: true,
+        }));
+      };
+
+      // Slow, independent ambient motion while the card stays still.
+      // Use only transform/opacity, never animated blur or backdrop filters.
+      idle(".heritage-scene__mist img", { x: 8, duration: 11 });
+      idle(".heritage-scene__hanging img", { y: 3, rotation: 0.18, duration: 6.4 });
+      idle(".heritage-scene__foliage img", { y: 2, rotation: -0.16, duration: 7.6 });
+      idle(".heritage-scene__floral--left img", { y: -3, rotation: 0.24, duration: 5.7 });
+      idle(".heritage-scene__floral--right img", { y: -2, rotation: -0.22, duration: 6.6 });
+
+      // Petals follow individually staggered CURVED paths (three segments);
+      // they fade in/out and do not teleport visibly at loop boundaries.
+      // Limit animated petals on phone-sized displays to lower GPU use.
+      const allPetals = gsap.utils.toArray<HTMLElement>(".heritage-scene__petal", section);
+      const mobile = window.matchMedia("(max-width: 759px)").matches;
+      allPetals.slice(0, mobile ? 4 : allPetals.length).forEach((element, index) => {
+        const petal = petals[index];
+        if (!petal) return;
+        const path = gsap.timeline({
+          paused: true, repeat: -1, repeatRefresh: true,
+          repeatDelay: index % 3 === 0 ? 1.8 : 1.1,
+        });
+        path.fromTo(element, {
+          x: -petal.drift * 0.32,
+          y: -13,
+          rotation: index % 2 ? 20 : -16,
+          opacity: 0,
+        }, {
+          x: petal.drift * 0.18,
+          y: () => section.clientHeight * 0.11,
+          rotation: index % 2 ? -5 : 15,
+          opacity: 0.55,
+          duration: petal.duration * 0.24,
+          ease: "none",
+          immediateRender: true,
+        }).to(element, {
+          x: petal.drift * 0.77,
+          y: () => section.clientHeight * 0.34,
+          rotation: index % 2 ? -64 : 73,
+          opacity: 0.48,
+          duration: petal.duration * 0.50,
+          ease: "none",
+        }).to(element, {
+          x: petal.drift * 1.20,
+          y: () => section.clientHeight * 0.56,
+          rotation: index % 2 ? -116 : 124,
+          opacity: 0,
+          duration: petal.duration * 0.26,
+          ease: "none",
+        });
+        // Distribute the starting positions to avoid synchronized petals.
+        path.progress((index * 0.19) % 1).pause();
+        ambientTweens.push(path);
       });
     }, section);
 
     const observer = new IntersectionObserver(([entry]) => {
-      const active = Boolean(entry?.isIntersecting) && !document.hidden;
-      petalTweens.forEach((tween) => active ? tween.play() : tween.pause());
-    }, { threshold: 0.03 });
+      sectionVisible = Boolean(entry?.isIntersecting) && entry.intersectionRatio > 0.03;
+      syncAmbient();
+    }, { threshold: [0, 0.03, 0.2] });
     observer.observe(section);
-
-    const onVisibility = () => {
-      if (document.hidden) petalTweens.forEach((tween) => tween.pause());
-      else if (section.getBoundingClientRect().bottom > 0 &&
-               section.getBoundingClientRect().top < window.innerHeight)
-        petalTweens.forEach((tween) => tween.play());
-    };
-    document.addEventListener("visibilitychange", onVisibility);
+    document.addEventListener("visibilitychange", syncAmbient);
 
     return () => {
-      document.removeEventListener("visibilitychange", onVisibility);
       observer.disconnect();
+      document.removeEventListener("visibilitychange", syncAmbient);
       context.revert();
     };
   }, []);
@@ -129,20 +224,22 @@ export default function HeritageHero() {
         <p className="heritage-scene__burmese" lang="my">မင်္ဂလာပွဲ ဖိတ်ကြားလွှာ</p>
       </div>
 
-      {/* NEW CARD: isolated ivory surface + real editable text, never baked into artwork. */}
+      {/* Luxury card and all editable typography form ONE physical motion plane. */}
       <div className="heritage-scene__card">
-        <Image src={ASSETS + "royal-card.png"} alt="" fill priority sizes="(max-width: 700px) 88vw, 440px" />
-        <div className="heritage-scene__typography">
-          <InvitationTypography
-            id="hero-title"
-            firstName={invitation.couple.first}
-            secondName={invitation.couple.second}
-            heading={invitation.heroTypography.heading}
-            romanticMessage={invitation.heroTypography.romanticMessage}
-            weekday={invitation.dayOfWeek}
-            weddingDate={invitation.displayDay + " " + invitation.displayMonth + " " + invitation.displayYear}
-            language={invitation.heroTypography.language}
-          />
+        <div className="heritage-scene__card-content">
+          <Image src={ASSETS + "royal-card.png"} alt="" fill priority sizes="(max-width: 700px) 88vw, 440px" />
+          <div className="heritage-scene__typography">
+            <InvitationTypography
+              id="hero-title"
+              firstName={invitation.couple.first}
+              secondName={invitation.couple.second}
+              heading={invitation.heroTypography.heading}
+              romanticMessage={invitation.heroTypography.romanticMessage}
+              weekday={invitation.dayOfWeek}
+              weddingDate={invitation.displayDay + " " + invitation.displayMonth + " " + invitation.displayYear}
+              language={invitation.heroTypography.language}
+            />
+          </div>
         </div>
       </div>
 
