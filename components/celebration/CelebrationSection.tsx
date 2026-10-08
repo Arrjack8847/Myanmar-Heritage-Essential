@@ -15,6 +15,8 @@ export default function CelebrationSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const currentStep = useRef(0);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
   const events = invitation.ceremony;
   const activeEvent = events[activeIndex] ?? events[0];
 
@@ -45,19 +47,33 @@ export default function CelebrationSection() {
       slowlyFloat(".ceremony-one-screen__petal--three", { x: 10, y: -17, rotation: 16, duration: 9.3 });
       slowlyFloat(".ceremony-one-screen__petal--four", { x: -11, y: 19, rotation: -18, duration: 10.5 });
 
-      // No artificial scroll pin: CSS sticky keeps the full chapter in one
-      // viewport, while the wrapper supplies an extra 85svh of scroll travel.
-      // The editorial typography and tabs remain real, accessible HTML.
+      // The STICKY chapter tells its own story, without requiring a tap.
+      // Each roughly 80svh of scroll reveals the next scheduled celebration
+      // event. Scrolling upward restores the previous event naturally.
+      const revealByScroll = (progress: number) => {
+        const step = Math.min(
+          events.length - 1,
+          Math.floor(Math.max(0, Math.min(progress, 0.99999)) * events.length),
+        );
+        if (step !== currentStep.current) {
+          currentStep.current = step;
+          setActiveIndex(step);
+        }
+      };
+
       const journey = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: runway,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.75,
+          scrub: 0.6,
           invalidateOnRefresh: true,
+          onUpdate: (trigger) => revealByScroll(trigger.progress),
+          onRefresh: (trigger) => revealByScroll(trigger.progress),
         },
       });
+      scrollTriggerRef.current = journey.scrollTrigger ?? null;
 
       journey
         // First beat: distant Bagan temples emerge from the warm mist.
@@ -70,8 +86,8 @@ export default function CelebrationSection() {
         .fromTo(".ceremony-one-screen__golden-haze",
           { opacity: 1 },
           { opacity: 0.85, duration: 1 }, 0)
-        // Second beat: the printed date rises as the ceremony details become
-        // the focal point. We never auto-switch tabs during scroll.
+        // Second beat: the printed date rises into focus. The actual
+        // information now advances on scroll, not just on button presses.
         .fromTo(".ceremony-one-screen__heading",
           { y: 7 }, { y: -12, duration: 0.72 }, 0.12)
         .fromTo(".ceremony-one-screen__date",
@@ -120,8 +136,24 @@ export default function CelebrationSection() {
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
       context.revert();
+      scrollTriggerRef.current = null;
     };
   }, []);
+
+  // A tap is an OPTIONAL shortcut to a stage in the same scroll journey.
+  // It never becomes the only way to discover Luncheon or Blessings.
+  function jumpToStep(index: number) {
+    const trigger = scrollTriggerRef.current;
+    if (!trigger || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      currentStep.current = index;
+      setActiveIndex(index);
+      return;
+    }
+
+    const targetProgress = (index + 0.5) / events.length;
+    const top = trigger.start + (trigger.end - trigger.start) * targetProgress;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
 
   function handleTabKeys(event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) {
     const max = events.length;
@@ -135,7 +167,7 @@ export default function CelebrationSection() {
     else return;
 
     event.preventDefault();
-    setActiveIndex(next);
+    jumpToStep(next);
     tabRefs.current[next]?.focus();
   }
 
@@ -210,7 +242,11 @@ export default function CelebrationSection() {
         </div>
 
         <div className="ceremony-one-screen__details" aria-label="Order of celebration">
-          <div className="ceremony-one-screen__tabs" role="tablist" aria-label="Wedding celebration events">
+          <div className="ceremony-one-screen__story-label" aria-hidden="true">
+            <span>OUR CELEBRATION STORY</span>
+            <strong>{String(activeIndex + 1).padStart(2, "0")} <i>/</i> {String(events.length).padStart(2, "0")}</strong>
+          </div>
+          <div className="ceremony-one-screen__tabs" role="tablist" aria-label="Wedding celebration events revealed by scrolling">
             {events.map((item, index) => (
               <button
                 key={item.title + index}
@@ -222,7 +258,7 @@ export default function CelebrationSection() {
                 aria-selected={index === activeIndex}
                 aria-controls="ceremony-details-panel"
                 tabIndex={index === activeIndex ? 0 : -1}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => jumpToStep(index)}
                 onKeyDown={(event) => handleTabKeys(event, index)}
               >
                 {item.tabLabel}
@@ -244,7 +280,12 @@ export default function CelebrationSection() {
               <p>{activeEvent.detail}</p>
             </div>
           </div>
-          <p className="ceremony-one-screen__hint">Select an event to explore the celebration</p>
+          <p className="ceremony-one-screen__hint" aria-hidden="true">
+            <span className="ceremony-one-screen__scroll-arrow">↓</span>
+            {activeIndex < events.length - 1
+              ? `KEEP SCROLLING · NEXT: ${events[activeIndex + 1].tabLabel.toUpperCase()}`
+              : "CONTINUE SCROLLING · THE GATHERING PLACE"}
+          </p>
         </div>
       </div>
 
