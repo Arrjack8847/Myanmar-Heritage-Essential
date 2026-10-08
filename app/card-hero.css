@@ -1,9 +1,14 @@
-/* JN-W01 · Luxury ivory card integration: no navigation, no duplicate arch. */
+/* JN-W01 · One-screen royal invitation hero.
+ * The first chapter is exactly one SMALL viewport tall on phones.
+ * On short phones the card scales to available vertical space instead of
+ * demanding a 770px canvas. All content remains live/selectable HTML.
+ */
 .hero.heritage-scene {
   display: block;
   padding: 0;
-  min-height: max(770px, 100svh);
-  height: max(770px, 100svh);
+  height: 100vh; /* fallback */
+  height: 100svh; /* iOS Safari browser chrome safe */
+  min-height: 0;
   overflow: hidden;
   isolation: isolate;
 }
@@ -15,24 +20,36 @@
   pointer-events: none;
 }
 .heritage-scene__prelude {
-  top: clamp(29px, 5.1svh, 59px);
-  width: min(68vw, 300px);
+  top: clamp(4px, .8svh, 12px);
+  width: min(75vw, 300px);
   z-index: 6;
 }
-.heritage-scene__prelude-rule { font-size: 17px; margin-bottom: 1px; }
-.heritage-scene__prelude p:not(.heritage-scene__burmese) { font-size: clamp(7px, 1.8vw, 9px); letter-spacing: .15em; }
-.heritage-scene__prelude .heritage-scene__burmese { font-size: clamp(11px, 2.8vw, 14px); }
+.heritage-scene__prelude-rule { font-size: 15px; margin-bottom: 0; }
+.heritage-scene__prelude p:not(.heritage-scene__burmese) {
+  font-size: clamp(7px, 1.7vw, 9px);
+  line-height: 1.45;
+  letter-spacing: .14em;
+}
+.heritage-scene__prelude .heritage-scene__burmese {
+  font-size: clamp(11px, 2.7vw, 14px);
+  line-height: 1.7;
+  margin-top: 0;
+}
+
+/* 941×1672 is the real card's ratio. 43svh limits its HEIGHT to 76.4%
+   of the screen, leaving room for the heading and scroll indicator.
+   91vw makes it beautiful on tall, narrow devices. */
 .heritage-scene__card {
   position: absolute;
   z-index: 7;
   left: 50%;
-  top: clamp(79px, 10.5svh, 120px);
-  width: min(88vw, 41.5svh, 440px);
+  top: clamp(35px, 6.7svh, 65px);
+  width: min(91vw, 43svh, 440px);
   aspect-ratio: 941 / 1672;
   transform: translateX(-50%);
   container-type: inline-size;
   pointer-events: none;
-  filter: drop-shadow(0 12px 16px rgba(83, 49, 30, .16));
+  filter: drop-shadow(0 9px 15px rgba(83,49,30,.15));
 }
 .heritage-scene__card > img {
   object-fit: contain;
@@ -57,81 +74,108 @@
 }
 .heritage-scene__typography [data-typography-part="heading"] {
   color: #9b7d5e;
-  margin-bottom: clamp(10px, 3.2cqw, 18px);
-  font-size: clamp(7px, 2.4cqw, 10px);
+  margin-bottom: clamp(8px, 3cqw, 16px);
+  font-size: clamp(7px, 2.35cqw, 10px);
   letter-spacing: .13em;
   text-wrap: balance;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 .heritage-scene__typography h1 {
-  font-size: clamp(45px, 17.8cqw, 86px);
+  font-size: clamp(43px, 17.6cqw, 85px);
   line-height: .83;
   gap: 0;
   letter-spacing: -.055em;
 }
 .heritage-scene__typography [data-typography-part="ampersand"] {
   font-size: .52em;
-  margin-block: 2px;
+  margin-block: 1px;
 }
 .heritage-scene__typography [data-typography-part="message"] {
-  margin-top: clamp(9px, 3cqw, 18px);
-  font-size: clamp(15px, 5.35cqw, 23px);
+  margin-top: clamp(8px, 2.9cqw, 17px);
+  font-size: clamp(15px, 5.2cqw, 23px);
   line-height: 1.14;
   max-width: 96%;
 }
 .heritage-scene__typography [data-typography-part="weekday"] {
-  font-size: clamp(8px, 2.4cqw, 10px);
+  margin-top: 1px;
+  font-size: clamp(8px, 2.3cqw, 10px);
 }
 .heritage-scene__typography [data-typography-part="date"] {
-  font-size: clamp(20px, 6.6cqw, 30px);
+  font-size: clamp(19px, 6.5cqw, 30px);
 }
-.heritage-scene__typography [data-typography-part="date"]::after { display: none; }
+.heritage-scene__typography [data-typography-part="date"]::after {
+  display: none;
+}
 .heritage-scene__typography [data-language="my"] h1 {
   font-size: clamp(24px, 9cqw, 44px);
   line-height: 1.5;
 }
-.heritage-scene__typography [data-typography-part="weekday"] {
-  margin-top: 1px;
-}
-.heritage-scene__typography :where(h1,p,time) {
+.heritage-scene__typography :where(h1, p, time) {
   text-shadow: none;
 }
+
+/* Bouquets extend from the bottom corners without hiding the date. */
 .heritage-scene__floral {
-  width: min(48vw, 290px);
-  height: 34%;
-  bottom: -4%;
   z-index: 9;
+  width: min(48vw, 290px);
+  height: 33%;
+  bottom: -5%;
 }
-.heritage-scene__floral--left { left: max(-11%, calc(50% - 500px)); }
-.heritage-scene__floral--right { right: max(-11%, calc(50% - 500px)); }
-.heritage-scene__signoff {
-  z-index: 8;
-  bottom: calc(90px + env(safe-area-inset-bottom, 0px));
-  font-size: clamp(15px, 4vw, 20px);
-  line-height: 1.03;
-}
+.heritage-scene__floral--left { left: max(-12%, calc(50% - 500px)); }
+.heritage-scene__floral--right { right: max(-12%, calc(50% - 500px)); }
+
+/* Small screens prioritize the card and the scroll action. The duplicated
+   sign-off moves out of the way; the sentiment is already inside the card. */
+.heritage-scene__signoff { display: none; }
 .heritage-scene [data-scroll-discovery] {
-  bottom: calc(7px + env(safe-area-inset-bottom, 0px));
-  min-height: 75px;
+  z-index: 12;
+  bottom: calc(3px + env(safe-area-inset-bottom, 0px));
+  min-height: 58px;
   gap: 2px;
+  padding-block: 3px;
+  filter: drop-shadow(0 1px 4px rgba(255,250,240,.7));
 }
-.heritage-scene [data-scroll-discovery] .line { height: 13px; }
+.heritage-scene [data-scroll-discovery] .line { height: 11px; }
 .heritage-scene [data-scroll-discovery] .lotus { display: none; }
-@media (min-width: 760px) {
-  .hero.heritage-scene { height: max(950px, 100svh); min-height: max(950px, 100svh); }
-  .heritage-scene__card { top: 76px; width: min(440px, 43svh); }
-  .heritage-scene__prelude { top: 25px; }
-  .heritage-scene__floral { width: min(34vw, 325px); height: 35%; }
-  .heritage-scene__signoff { bottom: 100px; }
+
+@media (max-height: 710px) {
+  .heritage-scene__prelude { top: 3px; }
+  .heritage-scene__prelude-rule { display: none; }
+  .heritage-scene__prelude .heritage-scene__burmese { font-size: 11px; }
+  .heritage-scene__card { top: clamp(34px, 6.7svh, 48px); }
+  .heritage-scene__floral { height: 31%; }
+  .heritage-scene [data-scroll-discovery] {
+    min-height: 53px;
+    gap: 1px;
+    bottom: calc(1px + env(safe-area-inset-bottom, 0px));
+  }
 }
 @media (max-width: 360px) {
-  .heritage-scene__card { width: min(89vw, 41svh); }
-  .heritage-scene__typography h1 { font-size: clamp(43px, 17.8cqw, 60px); }
-  .heritage-scene__prelude { top: 23px; }
+  .heritage-scene__card { width: min(91vw, 42.5svh); }
+  .heritage-scene__typography h1 { font-size: clamp(41px, 17.6cqw, 60px); }
+  .heritage-scene__typography [data-typography-part="message"] { font-size: clamp(14px, 5.1cqw, 17px); }
+  .heritage-scene__floral { width: 47vw; }
 }
-@media (max-height: 680px) {
-  .hero.heritage-scene { height: 770px; min-height: 770px; }
-  .heritage-scene__card { top: 73px; }
+@media (min-width: 760px) {
+  .hero.heritage-scene { height: 100vh; height: 100svh; min-height: 0; }
+  .heritage-scene__prelude { top: clamp(12px, 2.1svh, 26px); }
+  .heritage-scene__card { top: clamp(70px, 9svh, 105px); width: min(440px, 40svh); }
+  .heritage-scene__floral { width: min(34vw, 325px); height: 37%; }
+  .heritage-scene__signoff {
+    display: block;
+    bottom: calc(77px + env(safe-area-inset-bottom, 0px));
+    font-size: clamp(16px, 2.4svh, 21px);
+    line-height: 1.05;
+  }
+  .heritage-scene [data-scroll-discovery] { bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  /* Landscape phones get a stable readable layout instead of compressed text.
+     The main mobile design remains 100svh in normal portrait orientation. */
+  .heritage-scene__prelude { display: none; }
+  .heritage-scene__card { top: 3svh; width: min(68vw, 46svh); }
+  .heritage-scene__floral { height: 29%; }
+  .heritage-scene__signoff { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .heritage-scene__card { will-change: auto; }
