@@ -1,0 +1,116 @@
+/*
+ * JN-W01 · Section 02 → 03 photographic ivory dissolve.
+ * The top holds the venue; a long organic feather blends the lower half into
+ * the ceremony's parchment. Matches the approved mobile reference without
+ * showing a rectangular crop or adding a second full gateway.
+ */
+.bridge {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  height: 137svh;
+  margin: 0;
+  background: #f8eedc;
+  pointer-events: none;
+}
+.stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #f8eedc;
+}
+.parchment,
+.courtyard,
+.mist,
+.light,
+.veil,
+.ivoryFeather {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.parchment {
+  z-index: 0;
+  background:
+    linear-gradient(180deg,#f8eedc 0%,#faf2e5 63%,#f7edde 100%),
+    url("/heritage/ivory-parchment.png") center / cover no-repeat;
+}
+.courtyard {
+  z-index: 1;
+  overflow: hidden;
+  transform-origin: 50% 34%;
+  -webkit-mask-image: linear-gradient(180deg,
+    #000 0%,#000 31%,rgba(0,0,0,.95) 43%,
+    rgba(0,0,0,.77) 54%,rgba(0,0,0,.4) 67%,
+    rgba(0,0,0,.10) 79%,transparent 92%);
+  mask-image: linear-gradient(180deg,
+    #000 0%,#000 31%,rgba(0,0,0,.95) 43%,
+    rgba(0,0,0,.77) 54%,rgba(0,0,0,.4) 67%,
+    rgba(0,0,0,.10) 79%,transparent 92%);
+}
+.courtyard img {
+  display: block;
+  object-fit: cover;
+  object-position: center 54%;
+}
+.mist {
+  z-index: 2;
+  inset: 0 -4%;
+  -webkit-mask-image: linear-gradient(180deg,
+    rgba(0,0,0,.65),#000 26%,rgba(0,0,0,.7) 53%,transparent 91%);
+  mask-image: linear-gradient(180deg,
+    rgba(0,0,0,.65),#000 26%,rgba(0,0,0,.7) 53%,transparent 91%);
+}
+.mist img { object-fit: cover; object-position: center 52%; }
+.light {
+  z-index: 3;
+  background: linear-gradient(180deg,
+    rgba(248,238,220,.28) 0%,rgba(248,238,220,.06) 27%,
+    rgba(248,238,220,.19) 50%,rgba(248,238,220,.4) 73%,
+    rgba(248,238,220,.17) 100%);
+}
+.veil {
+  z-index: 4;
+  background: linear-gradient(180deg,
+    rgba(248,238,220,.68) 0%,rgba(248,238,220,.35) 20%,
+    rgba(248,238,220,.12) 46%,rgba(248,238,220,.29) 66%,
+    rgba(248,238,220,.64) 100%);
+}
+.ivoryFeather {
+  z-index: 5;
+  /* A permanent, long feather reproduces the reference: details remain at
+     the top while the lower composition becomes a natural ivory surface. */
+  background: linear-gradient(180deg,
+    transparent 30%,rgba(248,238,220,.03) 42%,
+    rgba(248,238,220,.18) 51%,rgba(248,238,220,.53) 66%,
+    rgba(248,238,220,.84) 81%,#f7edde 97%);
+}
+/* At narrow widths, retain more of the gazebo/venue structure in the upper
+   half and soften the long wash without a stark cream block. */
+@media (max-width:640px) {
+  .bridge { height: 129svh; }
+  .courtyard img { object-position: center 50%; }
+  .ivoryFeather {
+    background: linear-gradient(180deg,
+      transparent 28%,rgba(248,238,220,.06) 40%,
+      rgba(248,238,220,.24) 51%,rgba(248,238,220,.62) 68%,
+      rgba(248,238,220,.88) 85%,#f7edde 100%);
+  }
+}
+@media (max-height:620px) {
+  .bridge { height: 125svh; }
+}
+/* Accessibility: no sticky scene or hidden/animated scenery. Leave a short,
+   static atmospheric separator without delaying the actual gateway content. */
+@media (prefers-reduced-motion:reduce) {
+  .bridge { height: 45svh; min-height: 260px; }
+  .stage { position: relative; height: 100%; }
+  .courtyard { opacity: .86; transform: none !important; }
+  .mist { opacity: .28; transform: none !important; }
+  .light { opacity: .3; }
+  .veil { opacity: .28; }
+}
