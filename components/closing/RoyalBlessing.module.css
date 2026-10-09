@@ -376,7 +376,7 @@
   .entryBridge { display: none; }
   .calendarButton { transition: none; }
   .calendarButton:hover { transform: none; box-shadow: none; }
-  .intro [data-blessing-intro-item],[data-blessing-reveal] {
+  .intro [data-blessing-intro-item],.story [data-blessing-reveal] {
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
