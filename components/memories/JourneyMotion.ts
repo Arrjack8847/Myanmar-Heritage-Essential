@@ -12,6 +12,24 @@ export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      // The royal gateway hands its golden haze and ornament into the album.
+      // Both transitions are scrubbed and reversible on native mobile scroll.
+      const entry = section.querySelector<HTMLElement>("[data-journey-entry]");
+      const gatewayMark = section.querySelector<HTMLElement>("[data-journey-gateway-mark]");
+      if (entry) gsap.fromTo(entry, { opacity: 0.15, y: 32 }, {
+        opacity: 1, y: 0, ease: "none",
+        scrollTrigger: {
+          trigger: section, start: "top bottom", end: "top 39%", scrub: 0.8,
+        },
+      });
+      if (gatewayMark) gsap.fromTo(gatewayMark,
+        { autoAlpha: 0.18, y: 32, scale: 0.84 },
+        { autoAlpha: 0.85, y: 0, scale: 1, ease: "none",
+          scrollTrigger: {
+            trigger: section, start: "top 96%", end: "top 36%", scrub: 0.7,
+          },
+        });
+
       const title = section.querySelector<HTMLElement>("[data-journey-title]");
       if (title) {
         const eyebrow = title.querySelector<HTMLElement>("[data-journey-eyebrow]");
