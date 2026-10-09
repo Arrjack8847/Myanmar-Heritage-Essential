@@ -41,6 +41,21 @@
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.40) 33%, #000 65%);
   mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.40) 33%, #000 65%);
 }
+/* The same royal gold sigil recedes from Section 03 into the opening album page. */
+.gatewayEcho {
+  position: absolute;
+  z-index: 4;
+  top: clamp(6px,2.5svh,24px);
+  left: 50%;
+  width: 53px;
+  height: 80px;
+  transform-origin: center;
+  translate: -50% 0;
+  pointer-events: none;
+  opacity: .85;
+  filter: drop-shadow(0 4px 7px rgba(140,99,48,.11));
+}
+.gatewayEcho img { width: 100%; height: 100%; object-fit: contain; }
 .pagodaHorizon,.mistVeil,.hangingFlowers,.mistBridge {
   position: absolute;
   pointer-events: none;
@@ -527,6 +542,7 @@
 }
 @media (prefers-reduced-motion:reduce) {
   .entryGlow { display: none; }
+  .gatewayEcho { transform: none !important; opacity: .85 !important; visibility: visible !important; }
   .globalThreadFill { transform: none !important; }
   .photoMotion,.copyColumn,.timelineMarker,.ending,.intro,
   .intro > *,.title > * { opacity: 1 !important; visibility: visible !important; transform: none !important; }
