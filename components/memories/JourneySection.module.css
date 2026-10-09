@@ -449,7 +449,7 @@
   position: relative;
   z-index: 5;
   min-height: 260px;
-  padding: 67px 20px 106px;
+  padding: 67px 20px 62px;
   background: #f8f0e4;
   display: flex;
   flex-direction: column;
@@ -525,7 +525,7 @@
   .hangingFlowers { width: 165px; height: 200px; left: -74px; opacity: .22; }
   .pagodaHorizon { height: 315px; opacity: .13; }
   .mistVeil { height: 255px; opacity: .15; }
-  .ending { min-height: 250px; padding: 58px 18px 96px; }
+  .ending { min-height: 235px; padding: 58px 18px 56px; }
 }
 @media (max-width:360px) {
   .intro { padding: 82px 15px 22px; }
