@@ -772,3 +772,25 @@ img, svg { max-width: 100%; }
   .invitation-page .lightbox__close:active { transform: none !important; }
   .invitation-page .royal-action:hover::after { left: -90%; }
 }
+
+
+/* Refined gold directional accents remain actual text with decorative arrows. */
+.invitation-page .royal-action .royal-action__arrow {
+  flex: none;
+  display: inline-block;
+  color: #e9c993;
+  font: 400 19px/1 var(--display);
+  letter-spacing: 0;
+  transition: transform .3s ease;
+}
+.invitation-page .royal-action--outline .royal-action__arrow,
+.invitation-page .royal-action--quiet .royal-action__arrow {
+  color: #a47a47;
+}
+@media (hover:hover) and (pointer:fine) {
+  .invitation-page .royal-action:hover .royal-action__arrow { transform: translate(2px,-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .invitation-page .royal-action .royal-action__arrow { transition: none !important; }
+  .invitation-page .royal-action:hover .royal-action__arrow { transform: none !important; }
+}
