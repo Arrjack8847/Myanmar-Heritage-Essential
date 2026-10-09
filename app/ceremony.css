@@ -587,3 +587,31 @@
   .ceremony-scroll { display: none; }
   .ceremony-scene__petal, .royal-story__petal { animation: none; will-change: auto; }
 }
+
+
+/* JN-W01 | ceremony -> royal gateway: shared golden horizon.
+   This is a soft lower-frame atmosphere, not an extra card or poster.
+   The exact gateway courtyard asset repeats only under a vertical alpha mask,
+   so the ceremony itself stays intact while its exit meets the same palette. */
+.ceremony-scene__horizon {
+  position: absolute;
+  z-index: 4; /* behind the gold frame and real ceremony information (z=5) */
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background:
+    url("/heritage/gateway/venue-courtyard.png") center 44% / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%, transparent 49%,
+    rgba(0,0,0,.12) 62%, rgba(0,0,0,.58) 82%,
+    #000 100%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%, transparent 49%,
+    rgba(0,0,0,.12) 62%, rgba(0,0,0,.58) 82%,
+    #000 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Normal consecutive pages, no scroll-dependent hidden atmosphere. */
+  .ceremony-scene__horizon { display: none; }
+}

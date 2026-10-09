@@ -87,7 +87,16 @@ export default function CelebrationSection() {
           { y: -26, opacity: 0.55, duration: 3.63 }, 0)
         .fromTo(".ceremony-scene__petals",
           { y: 17 },
-          { y: -50, duration: 3.63 }, 0);
+          { y: -50, duration: 3.63 }, 0)
+        // During the final ~18% only, the existing gateway's golden-hour
+        // courtyard warms the lower parchment. A soft mask keeps the event
+        // timeline and royal frame untouched above it.
+        .fromTo(".ceremony-scene__horizon",
+          { autoAlpha: 0 },
+          { autoAlpha: 0.64, duration: 0.62 }, 3.01)
+        // The progress bar has done its job; let the golden thread and the
+        // incoming gateway replace it without a hard end-of-page signal.
+        .to(".ceremony-scroll", { autoAlpha: 0, duration: 0.5 }, 3.13);
 
       if (thread) scroll.to(thread, { scaleY: 1, duration: 2.22 }, 0.9);
       if (progress) scroll.to(progress, { scaleX: 1, duration: 3.63 }, 0);
@@ -149,6 +158,7 @@ export default function CelebrationSection() {
           <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw" />
         </div>
         <div className="ceremony-scene__light" aria-hidden="true" />
+        <div className="ceremony-scene__horizon" aria-hidden="true" />
         <div className="ceremony-scene__petals" aria-hidden="true">
           {(["a", "b", "c", "d"] as const).map((key, index) => (
             <div className={"ceremony-scene__petal ceremony-scene__petal--" + key} key={key}>

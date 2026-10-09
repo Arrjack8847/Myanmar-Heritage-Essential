@@ -57,6 +57,7 @@ export default function RoyalGateway() {
 
       const handoff = element("handoff");
       const sigil = element("handoff-sigil");
+      const entryHaze = element("entry-haze");
       const veil = element("veil");
       const courtyard = element("courtyard");
       const walkway = element("walkway");
@@ -74,7 +75,7 @@ export default function RoyalGateway() {
       const copy = element("copy");
       const cue = element("cue");
 
-      if (!handoff || !sigil || !veil || !courtyard || !walkway || !mist || !rays || !crown ||
+      if (!handoff || !sigil || !entryHaze || !veil || !courtyard || !walkway || !mist || !rays || !crown ||
           !leftPillar || !rightPillar || !leftCurtain || !rightCurtain ||
           !leftFlowers || !rightFlowers || !lanterns || !scrim || !copy || !cue) return;
 
@@ -102,6 +103,7 @@ export default function RoyalGateway() {
       // The older theatrical sequence, refined: never hide every scenic
       // layer together. The golden courtyard and distant gate are present
       // from the first frame, though they remain quiet until the reveal.
+      gsap.set(entryHaze, { opacity: 1 });
       gsap.set(veil, { opacity: 0.22 });
       gsap.set(courtyard, { opacity: 0.8, scale: 1.01, transformOrigin: "center center" });
       gsap.set(walkway, { opacity: 0.25, scale: 0.96, yPercent: 5, transformOrigin: "center 90%" });
@@ -134,6 +136,9 @@ export default function RoyalGateway() {
 
       // 0–15%: air and landscape already exist; only soft depth changes.
       timeline
+        // Golden-hour scenery stays visible below the upper parchment haze.
+        // Reveal the sky naturally as the gate begins its established entrance.
+        .to(entryHaze, { opacity: 0, duration: 2.15 }, 0)
         .to(courtyard, { opacity: 0.9, scale: 1.025, duration: 1.5 }, 0)
         .to(walkway, { opacity: 0.38, scale: 0.985, yPercent: 2, duration: 1.5 }, 0)
         .to(veil, { opacity: 0.13, duration: 1.5 }, 0)
@@ -211,6 +216,7 @@ export default function RoyalGateway() {
         <Layer name="mist" file="gateway-mist.png" className={styles.mist}
           sizes="100vw" cover />
         <div className={styles.venueVeil} data-gw="veil" aria-hidden="true" />
+        <div className={styles.entryHaze} data-gw="entry-haze" aria-hidden="true" />
 
         <Layer name="curtain-left" file="curtain-left.png" className={styles.curtainLeft}
           sizes="(max-width: 700px) 58vw, 390px" />

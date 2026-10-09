@@ -278,3 +278,25 @@
   .handoff { display: none; }
   .venueVeil { display: none; }
 }
+
+
+/* The first royal-gateway frame shares Section 2's ivory near the TOP only.
+   The rest of the scene is visible immediately; the established GSAP timeline
+   fades this upper atmospheric veil away as the architecture approaches. */
+.entryHaze {
+  position: absolute;
+  z-index: 13;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(39svh, 360px);
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(248,238,220,.88) 0%,
+    rgba(248,238,220,.65) 27%,
+    rgba(248,238,220,.24) 68%,
+    transparent 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .entryHaze { display: none; }
+}
