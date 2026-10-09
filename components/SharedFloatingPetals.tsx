@@ -3,10 +3,11 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Six high-resolution cutouts float in a viewport-sticky overlay spanning
-// BOTH chapters. All six animate on mobile and desktop, never reduced.
-// A short curved path repeats visibly as visitors scroll either chapter.
+// One set of six petals moves continuously across Hero -> Ceremony -> Gateway.
+// Their animation never restarts at the ceremony/gateway boundary; only the
+// alpha of the overall overlay softens as venue information approaches.
 const petals = [
   { file: "petal-01.png", left: "8%", top: "8%", size: 78, drift: 46, duration: 18 },
   { file: "petal-02.png", left: "83%", top: "14%", size: 65, drift: -43, duration: 21 },
@@ -22,8 +23,10 @@ export default function SharedFloatingPetals() {
   useEffect(() => {
     const root = rootRef.current;
     if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const story = root.parentElement;
-    if (!story) return;
+    const journey = root.closest<HTMLElement>(".heritage-journey");
+    if (!journey) return;
+    const gateway = journey.querySelector<HTMLElement>("#venue");
+    gsap.registerPlugin(ScrollTrigger);
 
     const animations: gsap.core.Timeline[] = [];
     let visible = true;
@@ -69,6 +72,21 @@ export default function SharedFloatingPetals() {
         timeline.progress([0.13, 0.28, 0.48, 0.39, 0.19, 0.61][index] ?? 0.1).pause();
         animations.push(timeline);
       });
+
+      // Keep the SAME falling petals visible over the seam; gradually reduce
+      // their prominence during the gateway camera move so typography and the
+      // Google Maps link remain unobstructed.
+      if (gateway) {
+        gsap.fromTo(root, { opacity: 1 }, {
+          opacity: 0.27, ease: "none",
+          scrollTrigger: {
+            trigger: gateway,
+            start: "top 26%",
+            end: "top -105%",
+            scrub: 0.7,
+          },
+        });
+      }
     }, root);
 
     const sync = () => {
@@ -79,7 +97,7 @@ export default function SharedFloatingPetals() {
       visible = Boolean(entry?.isIntersecting);
       sync();
     }, { threshold: 0 });
-    observer.observe(story);
+    observer.observe(journey);
     document.addEventListener("visibilitychange", sync);
     sync();
 

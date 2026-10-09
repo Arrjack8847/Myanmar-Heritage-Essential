@@ -301,3 +301,46 @@
 @media (prefers-reduced-motion: reduce) {
   .entryHaze { display: none; }
 }
+
+
+/* Section 2 -> Section 3: very light ivory floral canopy framing the
+   mist seam. Reuses already-approved transparent hero cutouts; two small
+   edge crops leave the central lotus and gateway crown unobstructed. */
+.handoffCanopy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.handoffCanopy::before,
+.handoffCanopy::after {
+  content: "";
+  position: absolute;
+  top: 13%;
+  width: clamp(126px, 39vw, 320px);
+  height: 75%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: .23;
+  filter: saturate(.75) sepia(.14);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
+}
+.handoffCanopy::before {
+  left: -10%;
+  background-image: url("/heritage/floral-left.png");
+  background-position: left center;
+}
+.handoffCanopy::after {
+  right: -10%;
+  background-image: url("/heritage/floral-right.png");
+  background-position: right center;
+}
+.handoffSigil { z-index: 2; }
+@media (max-width: 420px) {
+  .handoffCanopy::before,
+  .handoffCanopy::after { opacity: .17; width: 40vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .handoffCanopy { display: none; }
+}

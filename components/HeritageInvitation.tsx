@@ -104,21 +104,23 @@ export default function HeritageInvitation() {
       <div className="paper-grain" aria-hidden="true" />
       <GoldenThread className="golden-thread" />
 
-      {/* One continuous royal invitation: outside the clipped one-screen hero,
-          the bridge and six shared petals can move across both chapters. */}
-      <div className="royal-story">
+      {/* A SINGLE sticky petal layer spans hero, ceremony and royal gateway.
+          Keeping it above both stories stops the petals resetting at the seam. */}
+      <div className="heritage-journey">
         <SharedFloatingPetals />
-        <div className="heritage-story__intro">
-          <HeritageHero />
+        <div className="royal-story">
+          <div className="heritage-story__intro">
+            <HeritageHero />
+          </div>
+          <RoyalUnfoldTransition />
+          <CelebrationSection />
         </div>
-        <RoyalUnfoldTransition />
-        <CelebrationSection />
+
+        {/* 03 — THE ROYAL GATEWAY — approved choreography unchanged */}
+        <RoyalGateway />
       </div>
       <MotionStability />
       <MotionDebug />
-
-      {/* 03 — THE ROYAL GATEWAY — independently layered, sticky scroll */}
-      <RoyalGateway />
 
       {/* 04 — EDITORIAL LOVE STORY — natural scroll + golden thread */}
       <JourneySection onOpenPhoto={setLightbox} />

@@ -2,6 +2,9 @@
    Same original Bagan/paper/mist, original ornate frame and lotus timeline.
    No tab UX; the entire information hierarchy is driven by natural scroll. */
 
+/* Extend the existing sticky petal overlay over the gateway, too.
+   It is one journey-wide overlay, not a second competing flower animation. */
+.heritage-journey { position: relative; isolation: isolate; }
 .royal-story { position: relative; isolation: isolate; }
 .royal-story__petals {
   position: sticky;

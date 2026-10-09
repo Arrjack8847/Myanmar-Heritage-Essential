@@ -198,6 +198,7 @@ export default function RoyalGateway() {
     <section id="venue" ref={sectionRef} className={styles.story} aria-labelledby="venue-title">
       <div className={styles.handoff} data-gw="handoff" aria-hidden="true">
         <div className={styles.handoffSky} />
+        <div className={styles.handoffCanopy} />
         <div className={styles.handoffSigil} data-gw="handoff-sigil">
           <span className={styles.handoffThread} />
           <Lotus />
