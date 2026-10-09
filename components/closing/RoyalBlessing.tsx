@@ -112,43 +112,68 @@ export default function RoyalBlessing() {
 
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
-      // The final blessing is a quiet editorial reveal, not another sticky scene.
-      // Animate the header rhythm separately; reveal later interactive controls
-      // when THEY enter the viewport, instead of firing everything at once.
+      // Each editorial element enters when it reaches the reading area.
+      // Unlike once-only reveals, these follow reverse scroll just as faithfully.
       const intro = section.querySelector<HTMLElement>("[data-blessing-intro]");
       if (intro) {
-        const items = gsap.utils.toArray<HTMLElement>("[data-blessing-intro-item]", intro);
-        gsap.fromTo(items, {
-          autoAlpha: 0.42, y: 20,
-        }, {
-          autoAlpha: 1, y: 0,
-          stagger: 0.14, duration: 1.04, ease: "power2.out",
-          scrollTrigger: { trigger: intro, start: "top 84%", once: true },
+        gsap.utils.toArray<HTMLElement>("[data-blessing-intro-item]", intro).forEach((item, index) => {
+          gsap.fromTo(item,
+            { autoAlpha: index === 0 ? 0.48 : 0.24, y: index === 0 ? 8 : 20 },
+            {
+              autoAlpha: 1, y: 0, ease: "power2.out",
+              scrollTrigger: {
+                trigger: item, start: "top 96%", end: "top 73%",
+                scrub: 0.65, invalidateOnRefresh: true,
+              },
+            });
         });
       }
-
       gsap.utils.toArray<HTMLElement>("[data-blessing-reveal]", section).forEach((item) => {
-        gsap.fromTo(item, { autoAlpha: 0.52, y: 17 }, {
-          autoAlpha: 1, y: 0, duration: .85, ease: "power2.out",
-          scrollTrigger: { trigger: item, start: "top 91%", once: true },
+        gsap.fromTo(item, { autoAlpha: 0.3, y: 18 }, {
+          autoAlpha: 1, y: 0, ease: "power2.out",
+          scrollTrigger: {
+            trigger: item, start: "top 94%", end: "top 72%",
+            scrub: 0.7, invalidateOnRefresh: true,
+          },
         });
       });
 
-      // Small layer deltas preserve the approved PNG's realistic materials.
-      // No blur filters, heavy background animations, or pinning on iPhone.
-      const drift = (selector: string, y: number, x = 0) => {
+      // The ivory veil thins as the heirloom foil motif hands off to
+      // the final page. It never hides the actual editable wedding copy.
+      const entry = section.querySelector<HTMLElement>("[data-blessing-entry]");
+      if (entry) gsap.fromTo(entry, { opacity: 0.82, y: 24 }, {
+        opacity: 0.22, y: -16, ease: "none",
+        scrollTrigger: {
+          trigger: section, start: "top bottom", end: "top 19%", scrub: 0.85,
+        },
+      });
+
+      // Transform-only depth planes keep original image assets intact and
+      // avoid scroll-pin jumps, blur filters or heavy continuous animations.
+      type Offset = { x?: number; y?: number; scale?: number };
+      const drift = (selector: string, from: Offset, to: Offset) => {
         const element = section.querySelector<HTMLElement>(selector);
         if (!element) return;
-        gsap.fromTo(element, { x: 0, y: 0 }, {
-          x, y, ease: "none",
-          scrollTrigger: { trigger: section, start: "top bottom",
-            end: "bottom top", scrub: 1.5 },
+        gsap.fromTo(element, from, {
+          ...to, ease: "none",
+          scrollTrigger: {
+            trigger: section, start: "top bottom",
+            end: "bottom top", scrub: 1.35,
+          },
         });
       };
-      drift("[data-blessing-layer='mist']", -33);
-      drift("[data-blessing-layer='sky']", -18);
-      drift("[data-blessing-layer='flora-left']", -24, -10);
-      drift("[data-blessing-layer='flora-right']", -26, 10);
+      drift("[data-blessing-layer='mist']", { y: 24 }, { y: -39 });
+      drift("[data-blessing-layer='sky']", { y: 15, scale: 1.035 }, { y: -25, scale: 1 });
+      drift("[data-blessing-layer='flora-left']", { x: -21, y: 19 }, { x: -2, y: -27 });
+      drift("[data-blessing-layer='flora-right']", { x: 21, y: 19 }, { x: 2, y: -29 });
+
+      const light = section.querySelector<HTMLElement>("[data-blessing-light]");
+      if (light) gsap.fromTo(light, { opacity: 0.42, scale: 0.98 }, {
+        opacity: 1, scale: 1.025, ease: "none",
+        scrollTrigger: {
+          trigger: section, start: "top bottom", end: "top 19%", scrub: 1,
+        },
+      });
     }, section);
 
     const refresh = () => ScrollTrigger.refresh();
@@ -164,7 +189,7 @@ export default function RoyalBlessing() {
   return (
     <section id="with-love" ref={sectionRef} className={styles.story} aria-labelledby="closing-title">
       {/* Soft parchment/mist handoff overlaps the end of the Section 04 album. */}
-      <div className={styles.entryBridge} aria-hidden="true" />
+      <div className={styles.entryBridge} data-blessing-entry aria-hidden="true" />
       <div className={styles.paper} aria-hidden="true">
         <Image src={ASSETS + "ivory-parchment.png"} alt="" fill sizes="100vw" quality={76} />
       </div>
@@ -179,7 +204,7 @@ export default function RoyalBlessing() {
       <div className={styles.floraRight} data-blessing-layer="flora-right" aria-hidden="true">
         <Image src={ASSETS + "floral-right.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
       </div>
-      <div className={styles.readingLight} aria-hidden="true" />
+      <div className={styles.readingLight} data-blessing-light aria-hidden="true" />
 
       <div className={styles.content}>
         <div className={styles.intro} data-blessing-intro>

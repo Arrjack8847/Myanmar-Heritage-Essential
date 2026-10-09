@@ -1,0 +1,116 @@
+/* One continuous ivory-and-foil atmospheric handoff, not another content chapter. */
+.bridge {
+  position: relative;
+  isolation: isolate;
+  z-index: 4;
+  margin-block: -1px;
+  min-height: clamp(250px, 47svh, 460px);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #f8f0e4 0%, #faf4e9 42%, #f7f0e4 100%);
+}
+.bridge::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -3% -8%;
+  opacity: .19;
+  pointer-events: none;
+  background: url("/heritage/golden-mist.png") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000, rgba(0,0,0,.5) 42%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000, rgba(0,0,0,.5) 42%, transparent 100%);
+}
+.bridge::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 36% 40% at 50% 50%,
+    rgba(255,253,244,.85), rgba(255,250,238,.33) 56%, transparent 100%);
+}
+.light {
+  position: absolute;
+  z-index: 1;
+  inset: 5% 15%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(227,187,116,.26), transparent 68%);
+  transform-origin: center center;
+}
+.flowerLeft,.flowerRight {
+  position: absolute;
+  z-index: 2;
+  bottom: -17%;
+  width: clamp(150px,27vw,335px);
+  aspect-ratio: 1;
+  opacity: .23;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse, #000 32%, transparent 76%);
+  mask-image: radial-gradient(ellipse, #000 32%, transparent 76%);
+}
+.flowerLeft { left: max(-92px, calc((100vw - 1320px)/2)); }
+.flowerRight { right: max(-92px, calc((100vw - 1320px)/2)); }
+.flowerLeft img,.flowerRight img { object-fit: contain; }
+.thread {
+  position: absolute;
+  z-index: 3;
+  inset: 0 auto 0 50%;
+  width: 1px;
+  background: rgba(174,128,72,.13);
+  pointer-events: none;
+}
+.threadFill {
+  position: absolute;
+  inset: 0;
+  transform-origin: center top;
+  background: linear-gradient(180deg, rgba(172,123,65,.4), #b58c54 48%, rgba(181,140,84,.14));
+}
+.center {
+  position: relative;
+  z-index: 4;
+  min-height: clamp(250px, 47svh, 460px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 19px;
+  text-align: center;
+  padding: 45px 20px;
+  pointer-events: none;
+}
+.emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 103px;
+  height: 128px;
+  background: radial-gradient(ellipse at center, #faf4e9 21%, rgba(250,244,233,.76) 53%, transparent 73%);
+  filter: drop-shadow(0 5px 10px rgba(146,107,55,.12));
+}
+.emblem img { display: block; width: 59px; height: 96px; object-fit: contain; }
+.words {
+  max-width: 280px;
+  padding: 7px 9px;
+  color: #906a47;
+  background: rgba(250,245,233,.88);
+  font: 700 9px/1.7 var(--sans);
+  letter-spacing: .21em;
+}
+@media (max-width: 640px) {
+  .bridge,.center { min-height: clamp(230px, 42svh, 390px); }
+  .flowerLeft,.flowerRight { width: 49vw; bottom: -10%; opacity: .14; }
+  .flowerLeft { left: -24%; }
+  .flowerRight { right: -24%; }
+  .emblem { width: 92px; height: 112px; }
+  .emblem img { width: 52px; height: 84px; }
+  .words { font-size: 8px; letter-spacing: .17em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bridge,.center { min-height: 220px; }
+  .threadFill,.emblem,.words,.light,.flowerLeft,.flowerRight {
+    transform: none !important;
+    opacity: 1;
+    visibility: visible;
+  }
+  .flowerLeft,.flowerRight { opacity: .14; }
+}
