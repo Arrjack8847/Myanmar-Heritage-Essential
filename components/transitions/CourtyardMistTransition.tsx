@@ -58,9 +58,8 @@ export default function CourtyardMistTransition() {
   }, []);
 
   return (
-    <section ref={ref} className={styles.bridge}
-      aria-label="A soft transition into the royal wedding venue">
-      <div className={styles.stage} aria-hidden="true">
+    <div ref={ref} className={styles.bridge} aria-hidden="true">
+      <div className={styles.stage}>
         <div className={styles.parchment} />
         <div className={styles.courtyard} data-courtyard-dissolve="scene">
           <Image
@@ -88,6 +87,6 @@ export default function CourtyardMistTransition() {
         <div className={styles.veil} data-courtyard-dissolve="veil" />
         <div className={styles.ivoryFeather} />
       </div>
-    </section>
+    </div>
   );
 }
