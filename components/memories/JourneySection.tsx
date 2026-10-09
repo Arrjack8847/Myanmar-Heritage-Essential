@@ -11,8 +11,11 @@ import styles from "./JourneySection.module.css";
 
 type Props = { onOpenPhoto: (galleryIndex: number) => void };
 
-/** Hybrid Royal Album: two editorial memories + one cinematic photo finale.
- * Reuses PNG lotus, floral and mist cutouts; no SVG ornamental assets. */
+/**
+ * Royal Heirloom Album — two handmade photo memories and one cinematic finale.
+ * Decorations reuse approved heritage PNGs / CSS foil details, never SVG assets.
+ * All captions, photos and story text remain editable in data/invitation.ts.
+ */
 export default function JourneySection({ onOpenPhoto }: Props) {
   const root = useRef<HTMLElement>(null);
   useJourneyMotion(root);
@@ -23,17 +26,25 @@ export default function JourneySection({ onOpenPhoto }: Props) {
     <section id="memories" ref={root} className={styles.section} aria-labelledby="memories-title">
       <div className={styles.paper} aria-hidden="true" />
       <div className={styles.entryGlow} aria-hidden="true" />
-      <HeritageAtmosphere scene="journey"
-        skyClassName={styles.pagodaHorizon} mistClassName={styles.mistVeil} />
+      <HeritageAtmosphere
+        scene="journey"
+        skyClassName={styles.pagodaHorizon}
+        mistClassName={styles.mistVeil}
+      />
       <div className={styles.hangingFlowers} data-journey-botanical aria-hidden="true">
         <Image src="/heritage/hanging-magnolias.png" alt="" fill
           sizes="(max-width: 700px) 180px, 320px" quality={70} />
       </div>
 
       <header className={styles.intro} data-journey-title>
-        <p className={styles.eyebrow}>CHAPTER THREE · THE STORY OF US</p>
-        <h2 id="memories-title" className={styles.title}>Our Journey <em>Together</em></h2>
-        <p className={styles.lead}>Every love story begins with a moment.</p>
+        <p className={styles.eyebrow} data-journey-eyebrow>CHAPTER THREE · THE STORY OF US</p>
+        <h2 id="memories-title" className={styles.title}>
+          <span data-journey-title-main>Our Journey</span>
+          <em data-journey-title-accent>Together</em>
+        </h2>
+        <p className={styles.lead} data-journey-lead>
+          Before the celebration, there was a story. Ours was written in the little moments that brought us here.
+        </p>
         <span className={styles.headingRule} aria-hidden="true" />
       </header>
 
@@ -45,25 +56,30 @@ export default function JourneySection({ onOpenPhoto }: Props) {
           const photo = invitation.gallery[memory.galleryIndex];
           if (!photo) return null;
           return (
-            <article key={memory.number}
+            <article
+              key={memory.number}
               className={[styles.memory, index === 1 ? styles.reverse : ""].join(" ")}
-              data-memory>
-              <JourneyTimeline className={styles.timeline}
+              data-memory
+            >
+              <JourneyTimeline
+                className={styles.timeline}
                 progressClassName={styles.timelineProgress}
-                markerClassName={styles.timelineMarker} />
+                markerClassName={styles.timelineMarker}
+              />
               <div className={styles.photoColumn}>
                 <div className={styles.photoMotion} data-memory-photo>
                   <button className={styles.photoButton} type="button"
                     onClick={() => onOpenPhoto(memory.galleryIndex)}
-                    aria-label={"Open wedding photograph: " + photo.alt}>
+                    aria-label={"View photograph: " + photo.alt}>
                     <span className={styles.photoPaper}>
                       <span className={styles.photoWindow}>
+                        {/* Keep original client photograph unchanged. */}
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
                       </span>
                       <span className={styles.photoCaption}>{photo.caption}</span>
                     </span>
-                    <span className={styles.photoAction}>VIEW PHOTOGRAPH <span aria-hidden="true">↗</span></span>
+                    <span className={styles.photoAction}>VIEW PHOTOGRAPH</span>
                   </button>
                 </div>
               </div>
@@ -80,7 +96,7 @@ export default function JourneySection({ onOpenPhoto }: Props) {
       <div className={styles.finaleLead} aria-hidden="true">
         <span className={styles.finaleLeadRule} />
         <LotusMotif variant="marker" />
-        <span>ONE BEAUTIFUL FOREVER</span>
+        <span>OUR NEXT CHAPTER</span>
       </div>
 
       {finale && finalPhoto && (
@@ -109,12 +125,12 @@ export default function JourneySection({ onOpenPhoto }: Props) {
       <div className={styles.ending} data-journey-ending>
         <span className={styles.endRule} aria-hidden="true" />
         <LotusMotif variant="divider" className={styles.endingLotus} />
-        <p className={styles.closingQuote}>Every beautiful journey leads us here.</p>
-        <p className={styles.closingSignoff}>TO BE CONTINUED · WITH LOVE</p>
+        <p className={styles.closingSignoff}>EVERY STORY IS MORE BEAUTIFUL WHEN SHARED</p>
+        <p className={styles.closingQuote}>Our next chapter begins with the people we hold dear.</p>
       </div>
       <div className={styles.mistBridge} data-journey-atmosphere="exit" aria-hidden="true">
-        <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw"
-          quality={65} loading="lazy" draggable={false} />
+        <Image src="/heritage/golden-mist.png" alt="" fill
+          sizes="100vw" quality={65} loading="lazy" draggable={false} />
       </div>
     </section>
   );

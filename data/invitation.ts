@@ -38,26 +38,26 @@ export const invitation = {
    * photography by editing gallery; galleryIndex is zero based.
    */
   journey: [
-    { number: "01", chapter: "THE BEGINNING", title: "When We Met",
-      description: "The first chapter of something beautiful. A chance meeting that changed everything.",
+    { number: "01", chapter: "THE BEGINNING", title: "Where It Began",
+      description: "We never knew where that first moment would lead. Looking back, it was the beginning of something truly special.",
       galleryIndex: 0 },
-    { number: "02", chapter: "GROWING TOGETHER", title: "Our Memories",
-      description: "The little moments that made us who we are. Through every season, we chose each other.",
+    { number: "02", chapter: "THE MEMORIES WE MADE", title: "The Moments Between",
+      description: "The laughter, the little adventures, the quiet days—each became another treasured page of our story.",
       galleryIndex: 1 },
     { number: "03", chapter: "OUR NEXT CHAPTER", title: "And Forever Begins",
-      description: "Every beautiful journey leads us here. A future filled with love, adventure and home.",
+      description: "Every moment led us here. The most beautiful chapter is still ahead.",
       galleryIndex: 3 },
   ],
   gallery: [
     {
       src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=85",
       alt: "Sample photograph of a couple celebrating at a wedding",
-      caption: "A moment of forever",
+      caption: "The first page",
     },
     {
       src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=85",
       alt: "Sample wedding celebration photography",
-      caption: "Made with love",
+      caption: "The moments between",
     },
     {
       src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=85",
@@ -67,7 +67,7 @@ export const invitation = {
     {
       src: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=85",
       alt: "Sample romantic wedding photography",
-      caption: "Us, always",
+      caption: "Our next chapter",
     },
   ],
   closing: "Your presence is our greatest blessing. Thank you for sharing this beautiful day with us.",
