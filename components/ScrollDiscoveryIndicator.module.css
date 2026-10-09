@@ -141,3 +141,25 @@
 @media (prefers-reduced-motion: reduce) {
   .root::before { transition: none; }
 }
+
+
+/* Quiet oval scroll invitation; none of its GSAP-owned child transforms change. */
+.root { border-radius: 999px; }
+.root::before {
+  inset: 1px 0 4px;
+  border-radius: 999px;
+  background: linear-gradient(150deg,rgba(255,251,243,.90),rgba(247,236,217,.72));
+  box-shadow: inset 0 0 0 3px rgba(255,252,245,.75),
+    inset 0 0 0 4px rgba(174,132,73,.19),
+    0 7px 18px rgba(96,62,46,.07);
+}
+.root:focus-visible { border-radius: 999px; }
+@media (hover:hover) and (pointer:fine) {
+  .root:hover::before {
+    border-color: #a97f49;
+    background: linear-gradient(150deg,#fffaf1,#f5e8d2);
+    box-shadow: inset 0 0 0 3px rgba(255,252,245,.84),
+      inset 0 0 0 4px rgba(174,132,73,.29),
+      0 11px 23px rgba(96,62,46,.1);
+  }
+}
