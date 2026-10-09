@@ -86,7 +86,7 @@ export default function VenueDetails({ artwork, gateway = false }: VenueDetailsP
         </address>
         {directionsUrl ? (
           <a
-            className={styles.directions}
+            className={`${styles.directions} royal-action royal-action--wine`}
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
