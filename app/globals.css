@@ -180,36 +180,7 @@ img, svg { max-width: 100%; }
 .memories__end svg { color:var(--gold); width:225px; }
 .memories__end p { margin:5px 0 0; font: italic 22px var(--display); color:var(--muted); }
 
-/* SECTION 05 — CLOSING */
-.closing { min-height: 100svh; display:flex; justify-content:center; align-items:center; text-align:center; color:var(--cream); padding:130px 0 115px; background:radial-gradient(ellipse at 50% 42%,#864350 0%,#682b3b 44%,#431b29 100%); }
-.closing::before { content:""; position:absolute; inset:15px; border:1px solid rgba(216,177,110,.55); pointer-events:none; z-index:2; }
-.closing::after { content:""; position:absolute; inset:25px; border:1px solid rgba(216,177,110,.16); pointer-events:none; z-index:2; }
-.closing__aura { position:absolute; left:50%; top:43%; width:650px; height:650px; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle,rgba(241,199,131,.09),transparent 70%); }
-.closing__corner { position:absolute; z-index:3; width:clamp(120px,22vw,280px); color:var(--gold-light); opacity:.75; }
-.closing__corner--tl { top:28px; left:28px; }
-.closing__corner--tr { top:28px; right:28px; transform:scaleX(-1); }
-.closing__corner--bl { bottom:28px; left:28px; transform:scaleY(-1); }
-.closing__corner--br { bottom:28px; right:28px; transform:scale(-1); }
-.closing__content { max-width:650px; display:flex; flex-direction:column; align-items:center; }
-.closing__crest { width:153px; height:77px; color:var(--gold-light); margin-bottom:20px; }
-.closing__content .eyebrow { color:var(--gold-light); }
-.closing h2 { font:500 clamp(90px,12vw,140px)/.89 var(--display); letter-spacing:-.06em; margin:23px 0 27px; }
-.closing h2 em { font-weight:400; }
-.closing__message { margin:0 auto; font: 25px/1.55 var(--display); color:#f2e0d0; max-width:470px; }
-.closing__divider { width:235px; height:31px; color:var(--gold-light); margin:38px auto 10px; }
-.closing__signoff { font: italic 22px var(--display); color:#e3c4ba; margin:10px 0; }
-.closing__names { font:500 51px var(--display); margin:1px 0 0; color:#fff2e6; }
-.closing__extras { width:100%; margin-top:55px; display:flex; flex-direction:column; align-items:center; gap:31px; padding-top:34px; border-top:1px solid rgba(225,190,132,.28); }
-.closing__countdown { display:flex; flex-direction:column; align-items:center; gap:17px; }
-.countdown { display:flex; gap:clamp(17px,4vw,35px); justify-content:center; }
-.countdown__item { display:flex; flex-direction:column; align-items:center; min-width:55px; }
-.countdown__item strong { color:var(--cream); font:400 clamp(38px,6vw,57px)/1 var(--display); font-variant-numeric:tabular-nums; }
-.countdown__item span { margin-top:7px; color:#d8bc9e; font:600 8px var(--sans); letter-spacing:.23em; }
-.button--outline { background:transparent; color:#fff2e0; border-color:rgba(230,202,153,.7); }
-.button--outline:hover { background:#f8e5c8; color:var(--wine); }
-.closing__contact { color:var(--gold-light); margin-top:22px; font:700 10px var(--sans); text-underline-offset:5px; letter-spacing:.12em; }
-.closing__back { color:#e9cfa8; text-decoration:none; border-bottom:1px solid rgba(220,185,131,.45); padding: 0 0 7px; margin-top:42px; font:700 8px var(--sans); letter-spacing:.25em; }
-.closing__skyline { position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:min(1200px,100%); color:#dfbf86; opacity:.22; z-index:1; }
+/* SECTION 05 — ROYAL BLESSING: styles live in its CSS module. */
 .site-footer { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:21px clamp(25px,5vw,85px); color:#b39973; background:#371923; font:600 8px var(--sans); letter-spacing:.2em; }
 
 /* GALLERY VIEWER */
@@ -326,24 +297,6 @@ img, svg { max-width: 100%; }
   .gallery__expand { right:9px; top:6px; }
   .memories__end { margin-top:49px; }
   .memories__end p { font-size:19px; }
-  .closing { padding:118px 0 110px; }
-  .closing::before { inset:10px; }
-  .closing::after { inset:17px; }
-  .closing__corner { width:125px; opacity:.65; }
-  .closing__corner--tl { top:16px; left:14px; }
-  .closing__corner--tr { top:16px; right:14px; }
-  .closing__corner--bl { bottom:16px; left:14px; }
-  .closing__corner--br { bottom:16px; right:14px; }
-  .closing__crest { width:115px; height:58px; }
-  .closing h2 { font-size:101px; }
-  .closing__message { max-width:310px; font-size:23px; line-height:1.48; }
-  .closing__names { font-size:44px; }
-  .closing__extras { margin-top:46px; padding-top:28px; }
-  .countdown { gap:12px; }
-  .countdown__item { min-width:54px; }
-  .countdown__item strong { font-size:39px; }
-  .countdown__item span { font-size:7px; }
-  .closing__skyline { min-width:500px; }
   .site-footer { flex-direction:column; text-align:center; gap:9px; font-size:7px; }
   .lightbox { padding:68px 8px 50px; gap:4px; }
   .lightbox__figure { max-width:calc(100vw - 92px); }
