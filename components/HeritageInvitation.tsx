@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import HeritageHero from "@/components/HeritageHero";
+import VenueDetails from "@/components/gateway/VenueDetails";
 import CelebrationSection from "@/components/celebration/CelebrationSection";
 import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
@@ -203,28 +204,16 @@ export default function HeritageInvitation() {
         <CornerFlourish className="venue__corner venue__corner--left js-ornament-drift" />
         <CornerFlourish className="venue__corner venue__corner--right js-ornament-drift" />
         <div className="section-inner venue__inner">
-          <div className="section-heading section-heading--light js-reveal">
-            <span className="eyebrow">CHAPTER TWO <span className="eyebrow__diamond">◆</span> THE GATHERING PLACE</span>
-            <h2 id="venue-title">Where our story <em>unfolds.</em></h2>
-          </div>
-          <div className="venue__illustration-wrap js-reveal">
-            <div className="venue__arch-frame">
-              <div className="venue__arch-glow" aria-hidden="true" />
-              <VenueIllustration className="venue__illustration" />
-            </div>
-          </div>
-          <div className="venue__details js-reveal">
-            <div className="venue__pin" aria-hidden="true">⌖</div>
-            <p className="eyebrow">WE LOOK FORWARD TO SEEING YOU AT</p>
-            <h3>{invitation.venue.name}</h3>
-            <p>{invitation.venue.address}</p>
-            <p>{invitation.venue.city}</p>
-            {invitation.venue.directionsUrl ? (
-              <a className="button button--ivory" href={invitation.venue.directionsUrl} target="_blank" rel="noopener noreferrer">VIEW DIRECTIONS <span aria-hidden="true">↗</span></a>
-            ) : (
-              <div className="venue__map-note">Directions will be available when the venue is confirmed.</div>
-            )}
-          </div>
+          <VenueDetails
+            artwork={
+              <div className="venue__illustration-wrap">
+                <div className="venue__arch-frame">
+                  <div className="venue__arch-glow" aria-hidden="true" />
+                  <VenueIllustration className="venue__illustration" />
+                </div>
+              </div>
+            }
+          />
         </div>
       </section>
 
