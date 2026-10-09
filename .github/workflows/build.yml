@@ -19,5 +19,7 @@ jobs:
           node-version: "22"
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Audit uploaded button PNG dimensions and alpha\n        run: node scripts/audit-button-pngs.mjs\n      - name: Build Next.js site
+      - name: Audit uploaded button PNG dimensions and alpha
+        run: node scripts/audit-button-pngs.mjs
+      - name: Build Next.js site
         run: npm run build
