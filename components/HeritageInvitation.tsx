@@ -11,7 +11,6 @@ import RoyalGateway from "@/components/gateway/RoyalGateway";
 import JourneySection from "@/components/memories/JourneySection";
 import CelebrationSection from "@/components/celebration/CelebrationSection";
 import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
-import CourtyardMistTransition from "@/components/transitions/CourtyardMistTransition";
 import HeirloomBlessingTransition from "@/components/transitions/HeirloomBlessingTransition";
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
 import MotionStability from "@/components/MotionStability";
@@ -119,11 +118,7 @@ export default function HeritageInvitation() {
           <CelebrationSection />
         </div>
 
-        {/* 02 → 03 — the approved courtyard image dissolves into warm ivory,
-            then Section 03 continues the same scene with its existing curtains. */}
-        <CourtyardMistTransition />
-
-        {/* 03 — THE ROYAL GATEWAY — existing sticky choreography preserved */}
+        {/* 03 — THE ROYAL GATEWAY — approved choreography unchanged */}
         <RoyalGateway />
       </div>
       <MotionStability />
