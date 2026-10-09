@@ -15,7 +15,7 @@ import styles from "./CourtyardMistTransition.module.css";
  * The short CSS-sticky bridge uses natural scrolling and reverses automatically.
  */
 export default function CourtyardMistTransition() {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = ref.current;
