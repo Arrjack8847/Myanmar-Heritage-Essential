@@ -1,0 +1,17 @@
+/* Both ornaments are crops of public/heritage/lotus-ornaments.png
+   (941 × 1672); retain the approved metallic material on every section. */
+.motif { display: inline-block; position: relative; flex: none; pointer-events: none; overflow: hidden; }
+.marker { width: 44px; height: 34px; }
+.marker::before {
+  content: ""; display: block; position: absolute;
+  width: 80px; height: 143px; top: -106px; left: -18px;
+  background: url("/heritage/lotus-ornaments.png") left top / 80px 143px no-repeat;
+}
+.divider {
+  width: min(265px, 72vw);
+  height: 76px;
+  background: url("/heritage/lotus-ornaments.png") center 62% / 100% auto no-repeat;
+}
+@media (max-width: 360px) {
+  .divider { width: 220px; height: 64px; }
+}

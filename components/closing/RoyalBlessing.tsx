@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import HeritageAtmosphere from "@/components/HeritageAtmosphere";
-import { CornerFlourish, DividerMotif, HeritageCrest, PagodaSkyline } from "@/components/Decorations";
+import LotusMotif from "@/components/heritage/LotusMotif";
 import styles from "./RoyalBlessing.module.css";
 
 const ASSETS = "/heritage/";
@@ -99,7 +99,7 @@ function addWeddingToCalendar() {
 
 /**
  * Chapter 05: the royal invitation comes back to its parchment origins.
- * It reuses original architectural/floral layers and shared SVG ornaments.
+ * Reuses only the original Bagan, mist, florals and handcrafted PNG ornaments.
  * The content is normal flowing HTML, not a pinned scene: long names,
  * optional extras, shorter phone screens, and reduced motion all work.
  */
@@ -137,11 +137,9 @@ export default function RoyalBlessing() {
         });
       };
       drift("[data-blessing-layer='mist']", -52);
-      drift("[data-blessing-layer='arrival-mist']", -24);
       drift("[data-blessing-layer='sky']", -25);
       drift("[data-blessing-layer='flora-left']", -25, -12);
       drift("[data-blessing-layer='flora-right']", -31, 12);
-      drift("[data-blessing-layer='botanical']", -18, 9);
     }, section);
 
     return () => context.revert();
@@ -159,14 +157,6 @@ export default function RoyalBlessing() {
         skyClassName={styles.sky}
         mistClassName={styles.mist}
       />
-      {/* The same golden mist carries through from the final story milestone. */}
-      <div className={styles.arrivalMist} data-blessing-layer="arrival-mist" aria-hidden="true">
-        <Image src={ASSETS + "golden-mist.png"} alt="" fill sizes="100vw"
-          quality={65} loading="lazy" draggable={false} />
-      </div>
-      <div className={styles.botanical} data-blessing-layer="botanical" aria-hidden="true">
-        <Image src={ASSETS + "botanical-gold.png"} alt="" fill sizes="(max-width: 640px) 65vw, 440px" quality={70} />
-      </div>
       <div className={styles.floraLeft} data-blessing-layer="flora-left" aria-hidden="true">
         <Image src={ASSETS + "floral-left.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
       </div>
@@ -174,36 +164,19 @@ export default function RoyalBlessing() {
         <Image src={ASSETS + "floral-right.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
       </div>
       <div className={styles.readingLight} aria-hidden="true" />
-      <div className={styles.outerBorder} aria-hidden="true" />
-      <div className={styles.innerBorder} aria-hidden="true" />
-      <CornerFlourish className={styles.cornerTl} />
-      <CornerFlourish className={styles.cornerTr} />
-      <CornerFlourish className={styles.cornerBl} />
-      <CornerFlourish className={styles.cornerBr} />
 
       <div className={styles.content}>
-        <div className={styles.transition} aria-hidden="true">
-          <span className={styles.transitionRule} />
-          <div className={styles.transitionArt}>
-            <Image
-              src={ASSETS + "ceremony/royal-transition-ornament.png"}
-              alt=""
-              fill
-              sizes="150px"
-              quality={75}
-            />
-          </div>
-          <span className={styles.transitionRule} />
-        </div>
-
+        {/* Reused original transparent PNG, not another bespoke SVG ornament. */}
+        <Image className={styles.royalEmblem}
+          src={ASSETS + "ceremony/royal-transition-ornament.png"}
+          alt="" width={54} height={90} quality={72} data-blessing-reveal />
         <p className={styles.eyebrow} data-blessing-reveal>THE FINAL CHAPTER · A BLESSING</p>
-        <HeritageCrest className={styles.crest} data-blessing-reveal />
         <h2 id="closing-title" className={styles.title} data-blessing-reveal>
           <span>With love &amp;</span>
           <em>gratitude.</em>
         </h2>
         <p className={styles.message} data-blessing-reveal>{invitation.closing}</p>
-        <DividerMotif className={styles.divider} data-blessing-reveal />
+        <div data-blessing-reveal><LotusMotif variant="divider" className={styles.divider} /></div>
         <p className={styles.signoff} data-blessing-reveal>Until we celebrate together,</p>
         <p className={styles.names} data-blessing-reveal>{invitation.couple.signature}</p>
         <p className={styles.dateLine} data-blessing-reveal>
@@ -240,7 +213,6 @@ export default function RoyalBlessing() {
         </a>
       </div>
 
-      <PagodaSkyline className={styles.skyline} />
     </section>
   );
 }

@@ -5,110 +5,84 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
- * JN-W01 Section 04 — scoped, reversible native-scroll storytelling.
- * All content is readable before hydration, and no pin-spacers or scroll hijack
- * are introduced alongside the Hero, Ceremony and Royal Gateway controllers.
+ * Scroll animations stay scoped to Section 04. No pinning, horizontal scroll,
+ * or body-level controls compete with the Royal Gateway scene before it.
  */
 export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const section = root.current;
     if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
     gsap.registerPlugin(ScrollTrigger);
-    const context = gsap.context(() => {
-      const story = section.querySelector<HTMLElement>("[data-journey-story]");
-      const path = section.querySelector<SVGPathElement>("[data-journey-thread]");
-      if (story && path) {
-        const length = path.getTotalLength();
-        // All gold ornaments stay as separate responsive elements; only the
-        // thread is stroke-drawn. In reverse scroll it retracts naturally.
-        gsap.fromTo(path,
-          { strokeDasharray: length, strokeDashoffset: length },
-          {
-            strokeDashoffset: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: story,
-              start: "top 85%",
-              end: "bottom 30%",
-              scrub: 1.05,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-      }
 
+    const context = gsap.context(() => {
       const title = section.querySelector<HTMLElement>("[data-journey-title]");
       if (title) {
-        gsap.fromTo(title, { autoAlpha: 0.2, y: 28 },
-          { autoAlpha: 1, y: 0, ease: "power2.out",
-            scrollTrigger: { trigger: title, start: "top 95%", end: "top 57%", scrub: 0.7 } });
+        gsap.fromTo(title, { autoAlpha: .45, y: 25 }, {
+          autoAlpha: 1, y: 0, ease: "power2.out",
+          scrollTrigger: { trigger: title, start: "top 93%", end: "top 55%", scrub: .7 },
+        });
       }
 
-      const chapters = gsap.utils.toArray<HTMLElement>("[data-memory]");
-      chapters.forEach((chapter, index) => {
+      gsap.utils.toArray<HTMLElement>("[data-memory]").forEach((chapter) => {
         const photo = chapter.querySelector<HTMLElement>("[data-memory-photo]");
         const copy = chapter.querySelector<HTMLElement>("[data-memory-copy]");
-        const marker = section.querySelector<HTMLElement>(`[data-journey-marker="${index}"]`);
-        if (photo) {
-          gsap.fromTo(photo,
-            { autoAlpha: 0.28, y: 45, rotation: index === 1 ? 2.1 : -1.6, scale: 0.97 },
-            {
-              autoAlpha: 1, y: 0, rotation: 0, scale: 1, ease: "power2.out",
-              scrollTrigger: { trigger: chapter, start: "top 91%", end: "top 49%", scrub: 0.95 },
-            }
-          );
-        }
-        if (copy) {
-          gsap.fromTo(copy, { autoAlpha: 0.1, y: 32 },
-            {
-              autoAlpha: 1, y: 0, ease: "power2.out",
-              scrollTrigger: { trigger: copy, start: "top 97%", end: "top 68%", scrub: 0.7 },
-            }
-          );
+        const progress = chapter.querySelector<HTMLElement>("[data-journey-progress]");
+        const marker = chapter.querySelector<HTMLElement>("[data-journey-marker]");
+
+        if (progress) {
+          gsap.fromTo(progress, { scaleY: 0 }, {
+            scaleY: 1, ease: "none",
+            scrollTrigger: { trigger: chapter, start: "top 83%", end: "bottom 24%", scrub: .9 },
+          });
         }
         if (marker) {
-          gsap.fromTo(marker, { autoAlpha: 0.25, scale: 0.78 },
-            {
-              autoAlpha: 1, scale: 1, ease: "power2.out",
-              scrollTrigger: { trigger: chapter, start: "top 78%", end: "top 44%", scrub: 0.85 },
-            }
-          );
+          gsap.fromTo(marker, { autoAlpha: .2, scale: .82 }, {
+            autoAlpha: 1, scale: 1, ease: "power2.out",
+            scrollTrigger: { trigger: chapter, start: "top 81%", end: "top 44%", scrub: .7 },
+          });
+        }
+        if (photo) {
+          gsap.fromTo(photo, { autoAlpha: .55, y: 30, scale: .985 }, {
+            autoAlpha: 1, y: 0, scale: 1, ease: "power2.out",
+            scrollTrigger: { trigger: photo, start: "top 94%", end: "top 55%", scrub: .8 },
+          });
+        }
+        if (copy) {
+          gsap.fromTo(copy, { autoAlpha: .45, y: 20 }, {
+            autoAlpha: 1, y: 0, ease: "power2.out",
+            scrollTrigger: { trigger: copy, start: "top 93%", end: "top 63%", scrub: .65 },
+          });
         }
       });
 
-      // Layered smoke/pagoda parallax links the gateway to the love story;
-      // the exit mist bridges naturally into the ivory Royal Blessing.
-      const atmosphere = [
-        { name: "sky", from: 14, to: -26, trigger: section.querySelector<HTMLElement>("[data-journey-title]") },
-        { name: "mist", from: -12, to: 23, trigger: section.querySelector<HTMLElement>("[data-journey-title]") },
-        { name: "exit", from: 18, to: -23, trigger: section.querySelector<HTMLElement>("[data-journey-ending]") },
-      ];
-      atmosphere.forEach(({ name, from, to, trigger }) => {
+      // Parallax only on the large atmosphere layers, never the full section.
+      [
+        { id: "sky", from: 11, to: -20, trigger: "[data-journey-title]" },
+        { id: "mist", from: -10, to: 21, trigger: "[data-journey-title]" },
+        { id: "exit", from: 15, to: -16, trigger: "[data-journey-ending]" },
+      ].forEach(({ id, from, to, trigger }) => {
         const layer = section.querySelector<HTMLElement>(
-          `[data-journey-atmosphere="${name}"]`
+          '[data-journey-atmosphere="' + id + '"]'
         );
-        if (!layer || !trigger) return;
-        gsap.fromTo(layer, { y: from }, {
-          y: to, ease: "none",
-          scrollTrigger: { trigger, start: "top bottom", end: "bottom top", scrub: 1.55 },
-        });
+        const anchor = section.querySelector<HTMLElement>(trigger);
+        if (layer && anchor) {
+          gsap.fromTo(layer, { y: from }, {
+            y: to, ease: "none",
+            scrollTrigger: { trigger: anchor, start: "top bottom", end: "bottom top", scrub: 1.5 },
+          });
+        }
       });
 
-      const botanical = gsap.utils.toArray<HTMLElement>("[data-journey-botanical]");
-      botanical.forEach((piece, index) => {
-        gsap.fromTo(piece, { y: index % 2 ? -14 : 19 }, {
-          y: index % 2 ? 21 : -17, ease: "none",
-          scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 1.8 },
-        });
-      });
-
-      const flourish = section.querySelector<HTMLElement>("[data-journey-flourish]");
+      const botanical = section.querySelector<HTMLElement>("[data-journey-botanical]");
+      if (botanical) {
+        gsap.fromTo(botanical, { y: 12 }, { y: -17, ease: "none",
+          scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 1.6 } });
+      }
       const ending = section.querySelector<HTMLElement>("[data-journey-ending]");
-      if (flourish && ending) {
-        gsap.fromTo(flourish, { autoAlpha: 0.15, scale: 0.91 }, {
-          autoAlpha: 1, scale: 1, ease: "power2.out",
-          scrollTrigger: { trigger: ending, start: "top 89%", end: "top 58%", scrub: 0.8 },
+      if (ending) {
+        gsap.fromTo(ending, { autoAlpha: .52, y: 22 }, {
+          autoAlpha: 1, y: 0, ease: "power2.out",
+          scrollTrigger: { trigger: ending, start: "top 90%", end: "top 58%", scrub: .8 },
         });
       }
     }, section);
