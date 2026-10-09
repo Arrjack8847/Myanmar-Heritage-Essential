@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import HeritageHero from "@/components/HeritageHero";
-import VenueDetails from "@/components/gateway/VenueDetails";
+import RoyalGateway from "@/components/gateway/RoyalGateway";
 import CelebrationSection from "@/components/celebration/CelebrationSection";
 import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
@@ -18,7 +18,6 @@ import {
   GoldenThread,
   HeritageCrest,
   PagodaSkyline,
-  VenueIllustration,
 } from "@/components/Decorations";
 
 type TimeRemaining = {
@@ -198,24 +197,8 @@ export default function HeritageInvitation() {
       <MotionStability />
       <MotionDebug />
 
-      {/* 03 — THE VENUE */}
-      <section id="venue" className="venue section-panel" aria-labelledby="venue-title">
-        <div className="venue__pattern" aria-hidden="true" />
-        <CornerFlourish className="venue__corner venue__corner--left js-ornament-drift" />
-        <CornerFlourish className="venue__corner venue__corner--right js-ornament-drift" />
-        <div className="section-inner venue__inner">
-          <VenueDetails
-            artwork={
-              <div className="venue__illustration-wrap">
-                <div className="venue__arch-frame">
-                  <div className="venue__arch-glow" aria-hidden="true" />
-                  <VenueIllustration className="venue__illustration" />
-                </div>
-              </div>
-            }
-          />
-        </div>
-      </section>
+      {/* 03 — THE ROYAL GATEWAY — independently layered, sticky scroll */}
+      <RoyalGateway />
 
       {/* 04 — MEMORIES */}
       <section id="memories" className="memories section-panel" aria-labelledby="memories-title">

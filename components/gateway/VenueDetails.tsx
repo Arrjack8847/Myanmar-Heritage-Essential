@@ -5,6 +5,8 @@ import styles from "./VenueDetails.module.css";
 type VenueDetailsProps = {
   /** The existing venue illustration today; the animated gateway tomorrow. */
   artwork?: ReactNode;
+  /** Render inside the sticky Royal Gateway without competing reveal triggers. */
+  gateway?: boolean;
 };
 
 /**
@@ -41,7 +43,7 @@ function getDirectionsUrl(rawUrl: string): string | null {
  * can target data-gateway-reveal attributes for a scrubbed entrance;
  * this component creates no competing ScrollTrigger of its own.
  */
-export default function VenueDetails({ artwork }: VenueDetailsProps) {
+export default function VenueDetails({ artwork, gateway = false }: VenueDetailsProps) {
   const venue = invitation.venue;
   const directionsUrl = getDirectionsUrl(venue.directionsUrl);
   const hasStreetAddress =
@@ -49,8 +51,8 @@ export default function VenueDetails({ artwork }: VenueDetailsProps) {
     venue.address.trim().toLowerCase() !== "venue details will appear here";
 
   return (
-    <div className={styles.root}>
-      <header className={`${styles.heading} js-reveal`} data-gateway-reveal="heading">
+    <div className={`${styles.root}${gateway ? ` ${styles.gateway}` : ""}`}>
+      <header className={`${styles.heading}${gateway ? "" : " js-reveal"}`} data-gateway-reveal="heading">
         <p className={styles.chapter}>CHAPTER TWO · THE GATHERING PLACE</p>
         <h2 id="venue-title" className={styles.title}>
           Where We <em>Gather</em>
@@ -68,12 +70,12 @@ export default function VenueDetails({ artwork }: VenueDetailsProps) {
       </header>
 
       {artwork ? (
-        <div className={`${styles.artwork} js-reveal`} data-gateway-artwork>
+        <div className={`${styles.artwork}${gateway ? "" : " js-reveal"}`} data-gateway-artwork>
           {artwork}
         </div>
       ) : null}
 
-      <div className={`${styles.details} js-reveal`} data-gateway-reveal="details">
+      <div className={`${styles.details}${gateway ? "" : " js-reveal"}`} data-gateway-reveal="details">
         <p className={styles.welcome}>With joy, we welcome you to</p>
         <h3 className={styles.venueName} data-gateway-reveal="venue-name">
           {venue.name}

@@ -1,0 +1,205 @@
+/* JN-W01 — Royal Gateway · one sticky camera scene, native page scrolling. */
+.story {
+  position: relative;
+  isolation: isolate;
+  height: 380svh;
+  min-height: 2200px;
+  margin: 0;
+  background: #f7edde;
+  scroll-margin-top: 0;
+}
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f7edde;
+  overscroll-behavior: auto;
+}
+.parchment {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, #f7edde 0%, rgba(247,237,222,.6) 15%, transparent 37%),
+    url("/heritage/ivory-parchment.png") center / cover no-repeat;
+}
+.courtyard, .walkway, .mist, .rays, .crown,
+.pillarLeft, .pillarRight, .curtainLeft, .curtainRight,
+.lanterns, .floralLeft, .floralRight {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.courtyard {
+  z-index: 1;
+  inset: 0;
+}
+.courtyard img { object-position: center 54%; }
+.walkway {
+  z-index: 2;
+  bottom: -16%;
+  left: 50%;
+  translate: -50% 0;
+  width: min(116vw, 810px);
+  height: 79%;
+}
+.walkway img { object-position: center bottom; }
+.rays {
+  z-index: 3;
+  inset: -3% 0 0;
+  mix-blend-mode: screen;
+}
+.mist {
+  z-index: 4;
+  inset: 0;
+}
+.curtainLeft, .curtainRight {
+  z-index: 6;
+  top: 32%;
+  width: min(57vw, 330px);
+  height: 58%;
+}
+.curtainLeft {
+  left: calc(50% - min(46vw, 305px));
+}
+.curtainRight {
+  right: calc(50% - min(46vw, 305px));
+}
+.curtainLeft img { object-position: left top; }
+.curtainRight img { object-position: right top; }
+.lanterns {
+  z-index: 8;
+  width: min(89vw, 570px);
+  top: 17%;
+  left: 50%;
+  translate: -50% 0;
+  height: 63%;
+}
+.lanterns img { object-position: center top; }
+.pillarLeft, .pillarRight {
+  z-index: 9;
+  width: min(45vw, 245px);
+  top: 31%;
+  height: 68%;
+}
+.pillarLeft {
+  left: calc(50% - min(52vw, 353px));
+}
+.pillarRight {
+  right: calc(50% - min(52vw, 353px));
+}
+.pillarLeft img, .pillarRight img { object-position: center top; }
+.crown {
+  z-index: 10;
+  width: min(125vw, 690px);
+  aspect-ratio: 1448 / 1086;
+  top: 7%;
+  left: 50%;
+  translate: -50% 0;
+}
+.crown img { object-position: top center; }
+.floralLeft, .floralRight {
+  z-index: 11;
+  bottom: -9%;
+  width: min(59vw, 405px);
+  aspect-ratio: 1;
+}
+.floralLeft { left: calc(50% - min(54vw, 360px)); }
+.floralRight { right: calc(50% - min(54vw, 360px)); }
+.floralLeft img, .floralRight img { object-position: center bottom; }
+.mirrored { transform: scaleX(-1); }
+.readingScrim {
+  z-index: 14;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 79% 58% at 50% 52%, rgba(255,250,238,.98) 0%,
+      rgba(255,247,233,.91) 45%, rgba(248,237,217,.52) 72%, rgba(247,237,222,.14) 100%),
+    linear-gradient(180deg, rgba(255,249,235,.26), transparent 22%, rgba(248,236,216,.68));
+}
+.copy {
+  position: absolute;
+  z-index: 16;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(36px, env(safe-area-inset-top, 0px)) 20px max(32px, env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+}
+.copy a { pointer-events: auto; }
+.scrollCue {
+  position: absolute;
+  z-index: 12;
+  bottom: calc(21px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  color: #825243;
+  text-shadow: 0 1px 12px rgba(255,252,245,.9);
+  font: 700 9px/1.4 var(--sans);
+  letter-spacing: .22em;
+}
+.scrollCueLine {
+  display: block;
+  width: 1px;
+  height: 29px;
+  background: linear-gradient(#ae8650,transparent);
+}
+@media (min-width: 800px) {
+  .story { height: 345svh; }
+  .crown { top: 4%; width: min(66vw, 690px); }
+  .pillarLeft, .pillarRight { top: 29%; width: min(22vw, 245px); height: 74%; }
+  .curtainLeft, .curtainRight { top: 29%; width: min(27vw, 330px); height: 66%; }
+  .floralLeft, .floralRight { width: min(30vw, 405px); bottom: -13%; }
+  .lanterns { width: min(52vw, 570px); top: 14%; height: 70%; }
+  .walkway { width: min(72vw, 810px); bottom: -24%; }
+}
+@media (max-width: 420px) {
+  .crown { top: 9%; }
+  .pillarLeft, .pillarRight { top: 33%; }
+  .curtainLeft, .curtainRight { top: 35%; }
+  .lanterns { top: 20%; }
+  .walkway { height: 75%; }
+}
+@media (max-height: 700px) {
+  .crown { top: 2%; width: min(107vw, 600px); }
+  .pillarLeft, .pillarRight { top: 24%; width: min(40vw, 215px); }
+  .curtainLeft, .curtainRight { top: 27%; height: 66%; }
+  .lanterns { top: 12%; }
+  .floralLeft, .floralRight { bottom: -16%; }
+  .scrollCue { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story {
+    height: auto;
+    min-height: 100svh;
+  }
+  .stage {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    overflow: hidden;
+  }
+  .readingScrim { opacity: 1; }
+  .copy {
+    position: relative;
+    min-height: 100svh;
+    padding-block: 95px 85px;
+    pointer-events: auto;
+  }
+  .curtainLeft { translate: -28% 0; }
+  .curtainRight { translate: 28% 0; }
+  .scrollCue { display: none; }
+}
