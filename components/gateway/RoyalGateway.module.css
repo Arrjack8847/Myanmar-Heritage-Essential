@@ -203,3 +203,75 @@
   .curtainRight { translate: 28% 0; }
   .scrollCue { display: none; }
 }
+
+
+/* CINEMATIC CEREMONY → VENUE HANDOFF
+   The layered veil overlaps the final ceremony viewport. A soft mask avoids
+   the previous rectangular section edge; no large gold frame covers text. */
+.story { z-index: 2; }
+.handoff {
+  position: absolute;
+  z-index: 24;
+  top: -46svh;
+  left: 0;
+  right: 0;
+  height: 78svh;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg,
+      rgba(248,238,220,0) 0%,
+      rgba(248,238,220,.31) 13%,
+      rgba(248,238,220,.87) 48%,
+      rgba(248,238,220,.96) 66%,
+      rgba(248,238,220,.48) 86%,
+      rgba(248,238,220,0) 100%),
+    url("/heritage/gateway/gateway-mist.png") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent, #000 20%, #000 77%, transparent);
+  mask-image: linear-gradient(180deg,
+    transparent, #000 20%, #000 77%, transparent);
+}
+.handoffSky {
+  position: absolute;
+  inset: 5% 0 0;
+  opacity: .19;
+  background: url("/heritage/bagan-pagodas.png") center bottom / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 28%, #000 75%);
+  mask-image: linear-gradient(180deg, transparent 28%, #000 75%);
+}
+.handoffSigil {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #b08b52;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 2px 12px rgba(255,250,231,.7));
+}
+.handoffSigil svg { display: block; width: 61px; height: 52px; }
+.handoffThread {
+  display: block;
+  width: 1px;
+  height: min(13svh, 105px);
+  background: linear-gradient(180deg,
+    transparent 0%, #bd985e 35%, #b18b50 65%, transparent 100%);
+}
+.venueVeil {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,
+      #f8eedc 0%,
+      rgba(248,238,220,.99) 30%,
+      rgba(248,238,220,.96) 65%,
+      #f8eedc 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .handoff { display: none; }
+  .venueVeil { display: none; }
+}
