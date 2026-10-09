@@ -45,7 +45,8 @@
 .gatewayEcho {
   position: absolute;
   z-index: 4;
-  top: clamp(6px,2.5svh,24px);
+  /* Float across the chapter seam, safely clear of the intro eyebrow. */
+  top: -38px;
   left: 50%;
   width: 53px;
   height: 80px;
