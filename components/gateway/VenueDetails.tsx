@@ -93,7 +93,7 @@ export default function VenueDetails({ artwork, gateway = false }: VenueDetailsP
             aria-label={`View directions to ${venue.name} on Google Maps (opens in a new tab)`}
             data-gateway-reveal="venue-directions"
           >
-            VIEW DIRECTIONS <span aria-hidden="true">↗</span>
+            <span>VIEW DIRECTIONS</span> <span className="royal-action__arrow" aria-hidden="true">↗</span>
           </a>
         ) : (
           <p className={styles.pending}>Directions will be available once the venue is confirmed.</p>
