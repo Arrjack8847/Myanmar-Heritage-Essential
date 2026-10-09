@@ -242,7 +242,7 @@ export default function RoyalBlessing() {
             {invitation.standardAddOns.calendar && (
               <button type="button" className={`${styles.calendarButton} royal-action royal-action--wine`} onClick={addWeddingToCalendar}>
                 <span className={styles.calendarLabel}>SAVE OUR DATE</span>
-                <span aria-hidden="true" className="royal-action__arrow">↗</span>
+                <span className="royal-action__arrow" aria-hidden="true">↗</span>
               </button>
             )}
           </div>
