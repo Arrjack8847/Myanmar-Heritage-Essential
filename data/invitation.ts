@@ -28,10 +28,10 @@ export const invitation = {
     { tabLabel: "Blessings", time: "01:00 PM", title: "Blessings & photographs", detail: "Memories to cherish" },
   ],
   venue: {
-    name: "Our Wedding Venue",
-    address: "Venue details will appear here",
+    name: "The Strand Hotel Yangon",
+    address: "92 Strand Road",
     city: "Yangon, Myanmar",
-    directionsUrl: "",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Strand%20Hotel%20Yangon%2C%2092%20Strand%20Road%2C%20Yangon%2C%20Myanmar",
   },
   gallery: [
     {
