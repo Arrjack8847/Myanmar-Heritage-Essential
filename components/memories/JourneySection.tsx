@@ -83,7 +83,7 @@ export default function JourneySection({ onOpenPhoto }: Props) {
                       </span>
                       <span className={styles.photoCaption}>{photo.caption}</span>
                     </span>
-                    <span className={styles.photoAction}>VIEW PHOTOGRAPH</span>
+                    <span className={styles.photoAction} aria-hidden="true"><Image src="/heritage/buttons/view-photos.png" alt="" width={1780} height={414} sizes="(max-width:640px) 55vw, 240px" /></span>
                   </button>
                 </div>
               </div>
@@ -112,7 +112,7 @@ export default function JourneySection({ onOpenPhoto }: Props) {
                 onClick={() => onOpenPhoto(finale.galleryIndex)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={finalPhoto.src} alt={finalPhoto.alt} loading="lazy" decoding="async" />
-                <span className={styles.finaleAction} aria-hidden="true">VIEW PHOTOGRAPH <span>↗</span></span>
+                <span className={styles.finaleAction} aria-hidden="true"><Image src="/heritage/buttons/view-photos.png" alt="" width={1780} height={414} sizes="(max-width:640px) 44vw, 240px" /></span>
               </button>
               <span className={styles.finaleMat} data-finale-mat aria-hidden="true" />
             </div>

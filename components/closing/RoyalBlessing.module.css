@@ -382,3 +382,14 @@
     transform: none !important;
   }
 }
+
+
+/* Pixel-accurate uploaded button artwork: these wrappers add spacing only. */
+.calendarArt { margin-inline: auto; width: min(100%, 340px); }
+.contactArt { margin-top: 30px; width: min(100%, 312px); }
+.backArt { margin-top: 34px; width: min(100%, 264px); }
+@media (max-width:640px) {
+  .calendarArt { width: min(100%, 318px); }
+  .contactArt { margin-top: 23px; width: min(100%, 290px); }
+  .backArt { margin-top: 27px; width: min(100%, 257px); }
+}

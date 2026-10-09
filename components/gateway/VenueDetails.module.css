@@ -223,3 +223,11 @@
   .gateway .welcome { margin-bottom: 7px; }
   .gateway .directions { margin-top: 12px; }
 }
+
+
+/* The photographically rendered button already contains its own gold rim,
+   typography and lotus. Do not layer the old .directions CSS on top. */
+.directionsArt { margin-top: 19px; }
+@media (max-width: 390px), (max-height: 710px) {
+  .directionsArt { margin-top: 12px; }
+}

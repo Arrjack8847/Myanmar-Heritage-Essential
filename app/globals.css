@@ -885,3 +885,70 @@ img, svg { max-width: 100%; }
       0 8px 18px rgba(0,0,0,.25);
   }
 }
+
+
+/* Gallery controls use the exact uploaded circular gold PNG medallions,
+   with no second frame or CSS-drawn ornament obscuring the artwork. */
+.invitation-page .lightbox__nav,
+.invitation-page .lightbox__close {
+  padding: 0;
+  width: 56px;
+  height: 66px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  cursor: pointer;
+  transition: transform .26s ease, filter .26s ease;
+}
+.invitation-page .lightbox__nav { position: relative; }
+.invitation-page .lightbox__close {
+  position: absolute;
+  top: max(13px,env(safe-area-inset-top,0px));
+  right: max(13px,env(safe-area-inset-right,0px));
+  width: 51px;
+  height: 60px;
+}
+.invitation-page .lightbox__nav img,
+.invitation-page .lightbox__close img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+.invitation-page .lightbox__nav:focus-visible,
+.invitation-page .lightbox__close:focus-visible {
+  outline: 2px solid #f6dbac;
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+.invitation-page .lightbox__nav:active,
+.invitation-page .lightbox__close:active { transform: scale(.96); }
+@media (hover:hover) and (pointer:fine) {
+  .invitation-page .lightbox__nav:hover,
+  .invitation-page .lightbox__close:hover {
+    border: 0;
+    background: none;
+    box-shadow: none;
+    transform: translateY(-2px);
+    filter: brightness(1.11);
+  }
+}
+@media (max-width:640px) {
+  .invitation-page .lightbox__nav { width: 47px; height: 57px; }
+  .invitation-page .lightbox__close { width: 48px; height: 56px; }
+  .invitation-page .lightbox__figure { max-width: calc(100vw - 124px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .invitation-page .lightbox__nav,
+  .invitation-page .lightbox__close { transition: none !important; }
+  .invitation-page .lightbox__nav:hover,
+  .invitation-page .lightbox__close:hover,
+  .invitation-page .lightbox__nav:active,
+  .invitation-page .lightbox__close:active { transform: none !important; }
+}

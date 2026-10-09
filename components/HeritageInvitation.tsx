@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
+import Image from "next/image";
 import RoyalBlessing from "@/components/closing/RoyalBlessing";
 import HeritageHero from "@/components/HeritageHero";
 import RoyalGateway from "@/components/gateway/RoyalGateway";
@@ -136,14 +137,14 @@ export default function HeritageInvitation() {
 
       {lightbox !== null && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo gallery">
-          <button type="button" className="lightbox__close" aria-label="Close photo" onClick={() => setLightbox(null)}>×</button>
-          <button type="button" className="lightbox__nav lightbox__nav--prev" aria-label="Previous photo" onClick={() => setLightbox((lightbox + invitation.gallery.length - 1) % invitation.gallery.length)}>‹</button>
+          <button type="button" className="lightbox__close" aria-label="Close photo" onClick={() => setLightbox(null)}><Image src="/heritage/buttons/gallery-close.png" alt="" aria-hidden="true" width={510} height={600} /></button>
+          <button type="button" className="lightbox__nav lightbox__nav--prev" aria-label="Previous photo" onClick={() => setLightbox((lightbox + invitation.gallery.length - 1) % invitation.gallery.length)}><Image src="/heritage/buttons/gallery-previous.png" alt="" aria-hidden="true" width={513} height={594} /></button>
           <figure className="lightbox__figure">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={invitation.gallery[lightbox].src} alt={invitation.gallery[lightbox].alt} />
             <figcaption>{invitation.gallery[lightbox].caption} <span>{lightbox + 1} / {invitation.gallery.length}</span></figcaption>
           </figure>
-          <button type="button" className="lightbox__nav lightbox__nav--next" aria-label="Next photo" onClick={() => setLightbox((lightbox + 1) % invitation.gallery.length)}>›</button>
+          <button type="button" className="lightbox__nav lightbox__nav--next" aria-label="Next photo" onClick={() => setLightbox((lightbox + 1) % invitation.gallery.length)}><Image src="/heritage/buttons/gallery-next.png" alt="" aria-hidden="true" width={513} height={597} /></button>
         </div>
       )}
     </main>
