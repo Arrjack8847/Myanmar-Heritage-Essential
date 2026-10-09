@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { invitation } from "@/data/invitation";
+import LotusMotif from "@/components/heritage/LotusMotif";
 import styles from "./VenueDetails.module.css";
 
 type VenueDetailsProps = {
@@ -86,14 +87,16 @@ export default function VenueDetails({ artwork, gateway = false }: VenueDetailsP
         </address>
         {directionsUrl ? (
           <a
-            className={`${styles.directions} royal-action royal-action--wine`}
+            className={`${styles.directions} royal-action royal-action--ivory royal-action--lotus`}
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`View directions to ${venue.name} on Google Maps (opens in a new tab)`}
             data-gateway-reveal="venue-directions"
           >
-            <span>VIEW DIRECTIONS</span> <span className="royal-action__arrow" aria-hidden="true">↗</span>
+            <span className="royal-action__lotus"><LotusMotif variant="marker" /></span>
+            <span className="royal-action__label">VIEW DIRECTIONS</span>
+            <span className="royal-action__arrow" aria-hidden="true">↗</span>
           </a>
         ) : (
           <p className={styles.pending}>Directions will be available once the venue is confirmed.</p>
