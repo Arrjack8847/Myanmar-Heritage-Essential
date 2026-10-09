@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 240 1800" width="240" height="1800"
+     fill="none" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="jnw01-memory-thread-champagne" x1="96" y1="0" x2="151" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9F7D4B"/>
+      <stop offset="0.28" stop-color="#B9975B"/>
+      <stop offset="0.52" stop-color="#E5D5AF"/>
+      <stop offset="0.74" stop-color="#B9975B"/>
+      <stop offset="1" stop-color="#9F7D4B"/>
+    </linearGradient>
+  </defs>
+  <!-- A single drawable thread. Milestones: (114,340), (136,900), (110,1460).
+       Use this path's total length for GSAP stroke-dasharray/stroke-dashoffset.
+       The line enters and exits the viewBox without terminal ornaments. -->
+  <path id="memory-golden-thread-path"
+        d="M120 -24
+           C120 72 111 96 109 174
+           C107 238 114 278 114 340
+           C114 446 140 490 142 614
+           C144 736 136 792 136 900
+           C136 1023 101 1104 100 1210
+           C99 1342 110 1393 110 1460
+           C110 1560 130 1628 132 1688
+           C134 1757 122 1790 122 1828"
+        fill="none"
+        stroke="url(#jnw01-memory-thread-champagne)"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>
