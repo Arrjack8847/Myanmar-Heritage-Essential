@@ -1,296 +1,384 @@
-/* JN-W01 Section 05 — Ivory Royal Blessing.
-   The final page closes with approved real-image Myanmar heritage assets,
-   editorial hierarchy, and readable, flowing invitation controls. */
+/* JN-W01 · Section 05 — The Royal Blessing.
+   Final handcrafted ivory stationery chapter after the Royal Heirloom Album.
+   Approved PNG texture/Bagan/mist/foliage/royal emblem + LotusMotif PNG sprite.
+   Mobile-first, native scrolling, no emoji/stickers, no new SVG ornaments. */
+
 .story {
   position: relative;
+  z-index: 4;
   isolation: isolate;
-  overflow: clip;
+  overflow: visible;
   min-height: 100svh;
-  padding: 0;
-  color: #572d37;
-  background: #f7f0e4;
+  background: #f8f0e4;
+  color: #63343f;
   text-align: center;
   scroll-margin-top: 0;
 }
+
+/* Fine foil frame with NO hard horizontal top seam at the Section 04 handoff. */
 .story::before {
   content: "";
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
-  inset: clamp(10px,1.7vw,20px);
-  border: 1px solid rgba(173,132,77,.25);
+  inset: clamp(11px,1.55vw,20px);
+  border-left: 1px solid rgba(177,137,80,.27);
+  border-right: 1px solid rgba(177,137,80,.27);
+  border-bottom: 1px solid rgba(177,137,80,.27);
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.52) 17%,#000 30%);
+  mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.52) 17%,#000 30%);
 }
 .story::after {
   content: "";
-  pointer-events: none;
   position: absolute;
   z-index: 1;
-  top: 0;
+  pointer-events: none;
+  inset: 0 0 auto;
+  height: min(43svh,360px);
+  background: linear-gradient(180deg,
+    rgba(243,222,190,.15),rgba(249,241,227,.11) 37%,transparent);
+}
+.entryBridge {
+  position: absolute;
+  z-index: 2;
+  top: -17svh;
   left: 0;
   right: 0;
-  height: clamp(160px,25svh,270px);
-  background: linear-gradient(to bottom,rgba(248,240,228,.65),transparent);
-}
-.paper, .sky, .mist, .floraLeft, .floraRight, .readingLight {
-  position: absolute;
-  user-select: none;
+  height: 37svh;
   pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0%,rgba(242,220,188,.055) 19%,
+      rgba(246,232,210,.22) 40%,rgba(248,240,228,.68) 78%,#f8f0e4 100%),
+    url("/heritage/golden-mist.png") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.18) 21%,#000 55%,#000 100%);
+  mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.18) 21%,#000 55%,#000 100%);
+  opacity: .81;
 }
-.paper { inset: 0; z-index: -1; }
-.paper img { object-fit: cover; }
+.paper,.sky,.mist,.floraLeft,.floraRight,.readingLight {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.paper { z-index: 0; inset: 0; overflow: hidden; }
+.paper img { display: block; object-fit: cover; opacity: .48; }
 
 .sky {
   z-index: 1;
-  width: min(118%,1280px);
-  height: clamp(340px,53vw,660px);
+  width: min(122%,1370px);
   left: 0;
   right: 0;
-  bottom: -15px;
+  bottom: -6px;
+  height: clamp(330px,48vw,620px);
   margin-inline: auto;
-  opacity: .58;
-  -webkit-mask-image: linear-gradient(to bottom,transparent 0%,#000 37%,#000 100%);
-  mask-image: linear-gradient(to bottom,transparent 0%,#000 37%,#000 100%);
+  opacity: .37;
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.26) 23%,#000 67%);
+  mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.26) 23%,#000 67%);
 }
-.sky img {
-  object-fit: cover;
-  object-position: center bottom;
-}
+.sky img { object-fit: cover; object-position: center bottom; }
 .mist {
   z-index: 2;
+  bottom: -7px;
   left: -4%;
   width: 108%;
-  bottom: -12px;
-  height: clamp(240px,33vw,420px);
-  opacity: .31;
-  -webkit-mask-image: linear-gradient(to bottom,transparent,#000 65%);
-  mask-image: linear-gradient(to bottom,transparent,#000 65%);
+  height: clamp(200px,31vw,400px);
+  opacity: .24;
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.30) 39%,#000 76%);
+  mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.30) 39%,#000 76%);
 }
 .mist img { object-fit: cover; object-position: center bottom; }
-.floraLeft, .floraRight {
+
+/* Restrained corner foliage rather than decorative stickers or a heavy wreath. */
+.floraLeft,.floraRight {
   z-index: 2;
-  bottom: 12px;
-  width: clamp(180px,29vw,395px);
-  height: clamp(180px,34vw,440px);
-  opacity: .5;
+  bottom: 0;
+  width: clamp(175px,28vw,375px);
+  height: clamp(195px,33vw,430px);
+  opacity: .34;
+  -webkit-mask-image: linear-gradient(180deg,transparent 0%,#000 22%,#000 93%);
+  mask-image: linear-gradient(180deg,transparent 0%,#000 22%,#000 93%);
 }
-.floraLeft { left: max(-105px,calc((100vw - 1350px)/2)); }
-.floraRight { right: max(-105px,calc((100vw - 1350px)/2)); }
-.floraLeft img, .floraRight img {
+.floraLeft { left: max(-110px,calc((100vw - 1350px)/2)); }
+.floraRight { right: max(-110px,calc((100vw - 1350px)/2)); }
+.floraLeft img,.floraRight img {
   object-fit: contain;
   object-position: center bottom;
 }
 .readingLight {
-  z-index: 1;
+  z-index: 2;
   inset: 0;
   background:
-    radial-gradient(ellipse 46% 37% at 50% 35%,
-      rgba(255,253,244,.91),rgba(255,250,238,.54) 63%,transparent 100%),
-    linear-gradient(to bottom,rgba(255,250,238,.33) 0%,transparent 18%,transparent 68%,rgba(247,240,228,.07) 100%);
+    radial-gradient(ellipse 57% 33% at 50% 29%,
+      rgba(255,253,247,.90),rgba(255,250,240,.38) 68%,transparent),
+    linear-gradient(180deg,rgba(255,251,244,.36),transparent 24%,transparent 75%,rgba(248,240,228,.10));
 }
+
 .content {
   position: relative;
-  z-index: 3;
-  width: min(670px,calc(100% - 70px));
+  z-index: 4;
+  width: min(690px,calc(100% - 74px));
   margin-inline: auto;
-  padding: clamp(112px,11vw,162px) 0 clamp(315px,36vw,470px);
+  padding: clamp(84px,10svh,144px) 0 clamp(240px,29vw,370px);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.topRule {
+  display: block;
+  width: 1px;
+  height: 30px;
+  margin: 0 0 11px;
+  background: linear-gradient(180deg,transparent,#ba965b);
+}
 .royalEmblem {
   display: block;
-  width: clamp(33px,4.7vw,53px);
-  height: clamp(56px,7.9vw,88px);
+  width: clamp(37px,4.2vw,55px);
+  height: clamp(61px,6.9vw,90px);
   object-fit: contain;
-  margin-bottom: 29px;
-  filter: drop-shadow(0 3px 5px rgba(145,103,50,.12));
+  margin: 0 0 29px;
+  filter: drop-shadow(0 2px 4px rgba(155,115,58,.12));
 }
-.eyebrow, .extrasHeading {
+.eyebrow,.extrasHeading {
   margin: 0;
-  color: #956c41;
-  font: 700 10px/1.5 var(--sans);
-  letter-spacing: .28em;
+  color: #926b43;
+  font: 650 10px/1.65 var(--sans);
+  letter-spacing: .23em;
   text-transform: uppercase;
 }
 .title {
+  margin: 19px 0 0;
   width: 100%;
-  margin: 24px 0 0;
-  font: 500 clamp(70px,9.1vw,123px)/.88 var(--display);
-  letter-spacing: -.055em;
-  color: #5d2934;
+  font: 500 clamp(67px,9vw,122px)/.91 var(--display);
+  letter-spacing: -.05em;
+  color: #642e3a;
   text-wrap: balance;
 }
-.title span, .title em { display: block; }
+.title span,.title em { display: block; }
 .title em {
-  font-weight: 400;
-  color: #a47547;
+  color: #a37b49;
   font-style: italic;
-  line-height: 1.01;
+  font-weight: 400;
+  line-height: 1.06;
 }
 .message {
-  max-width: 505px;
-  margin: 28px 0 0;
-  color: #715153;
-  font: 400 clamp(23px,2.4vw,29px)/1.43 var(--display);
+  max-width: 535px;
+  margin: 28px auto 0;
+  color: #75575a;
+  font: 400 clamp(22px,2.55vw,29px)/1.4 var(--display);
   text-wrap: pretty;
 }
 .divider {
   display: block;
-  margin: 26px auto 14px;
-  opacity: .91;
+  margin: 27px auto 13px;
+  opacity: .84;
 }
 .signoff {
-  margin: 0 0 5px;
-  color: #927172;
-  font: italic 22px/1.25 var(--display);
+  margin: 13px 0 6px;
+  color: #876666;
+  font: italic 400 clamp(19px,2.6vw,24px)/1.32 var(--display);
 }
 .names {
+  max-width: 100%;
   margin: 0;
-  color: #65303c;
-  font: 500 clamp(44px,5.3vw,66px)/1.04 var(--display);
-  letter-spacing: -.04em;
+  color: #662f3d;
+  font: 500 clamp(44px,5.4vw,70px)/1.04 var(--display);
+  letter-spacing: -.047em;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 .dateLine {
-  margin: 19px 0 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
-  color: #896c62;
-  font: 600 9px/1.6 var(--sans);
-  letter-spacing: .16em;
+  column-gap: 11px;
+  row-gap: 6px;
+  max-width: 100%;
+  margin: 18px 0 0;
+  color: #85685e;
+  font: 600 10px/1.6 var(--sans);
+  letter-spacing: .145em;
   text-transform: uppercase;
 }
-.dateLine span { color: #a47e49; font-size: 8px; }
+.dateSeparator {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  flex: none;
+  border-radius: 50%;
+  background: #aa8450;
+}
 .extras {
-  width: min(468px,100%);
-  margin-top: 53px;
-  padding-top: 34px;
-  border-top: 1px solid rgba(162,120,75,.3);
+  position: relative;
+  width: min(478px,100%);
+  margin-top: 49px;
+  padding: 36px 0 0;
+  border-top: 1px solid rgba(171,134,78,.31);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 27px;
+  gap: 31px;
+}
+.extras::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: calc(50% - 24px);
+  width: 48px;
+  height: 3px;
+  background: #f8f0e4;
+  border-top: 1px solid rgba(174,133,76,.65);
 }
 .countdownWrap { width: 100%; }
-.extrasHeading { font-size: 9px; letter-spacing: .23em; }
+.extrasHeading {
+  font-size: 9px;
+  letter-spacing: .21em;
+}
 .countdown {
   display: grid;
   width: 100%;
-  margin-top: 18px;
+  margin: 20px 0 0;
   grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 8px;
+  gap: 0;
 }
-.countdownUnit { min-width: 0; display: flex; flex-direction: column; align-items: center; }
+.countdownUnit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 5px;
+}
+.countdownUnit + .countdownUnit::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  height: 49px;
+  width: 1px;
+  background: linear-gradient(180deg,transparent,rgba(179,138,85,.37),transparent);
+}
 .countdownNumber {
-  color: #642d39;
-  font: 500 clamp(36px,4.9vw,52px)/1 var(--display);
+  color: #652f3b;
+  font: 500 clamp(36px,5.2vw,55px)/1 var(--display);
   font-variant-numeric: tabular-nums;
 }
 .countdownLabel {
-  color: #9b7961;
-  font: 700 8px/1.4 var(--sans);
-  margin-top: 7px;
-  letter-spacing: .14em;
+  margin-top: 8px;
+  color: #987a66;
+  font: 650 8px/1.4 var(--sans);
+  letter-spacing: .13em;
+  text-transform: uppercase;
 }
 .calendarButton {
+  position: relative;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  min-height: 52px;
-  min-width: min(100%,268px);
-  gap: 20px;
-  padding: 12px 22px;
-  background: #682e3c;
-  border: 1px solid #754650;
-  border-radius: 2px;
-  color: #fff8eb;
-  font: 700 10px/1.35 var(--sans);
-  letter-spacing: .18em;
+  width: min(100%,298px);
+  min-height: 54px;
+  margin: 0;
+  padding: 15px 24px;
+  border: 1px solid rgba(125,66,74,.78);
+  border-radius: 1px;
+  background: #683441;
+  box-shadow: 0 9px 22px rgba(83,45,45,.10);
+  color: #fff7e9;
   cursor: pointer;
+  font: 650 10px/1.4 var(--sans);
+  letter-spacing: .18em;
   transition: background .25s ease,transform .25s ease,box-shadow .25s ease;
 }
+.calendarButton::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(251,234,202,.26);
+  pointer-events: none;
+}
 .calendarButton:hover {
-  background: #824450;
+  background: #7b3c4b;
   transform: translateY(-2px);
-  box-shadow: 0 9px 20px rgba(89,45,51,.12);
+  box-shadow: 0 13px 25px rgba(83,45,45,.15);
 }
-.calendarButton:focus-visible, .contact:focus-visible, .backToTop:focus-visible {
-  outline: 2px solid #986930; outline-offset: 5px;
+.calendarLabel { position: relative; z-index: 1; }
+.calendarButton:focus-visible,.contact:focus-visible,.backToTop:focus-visible {
+  outline: 2px solid #a7804c;
+  outline-offset: 5px;
 }
-.calendarIcon { font-size: 19px; font-weight: 400; line-height: 1; }
-.calendarArrow { font-size: 17px; line-height: 1; }
 .contact {
-  margin-top: 29px;
-  font: 700 10px/1.4 var(--sans);
+  margin-top: 32px;
+  color: #70464c;
+  font: 650 10px/1.4 var(--sans);
   letter-spacing: .16em;
-  color: #713e46;
-  text-underline-offset: 6px;
+  text-decoration: underline;
+  text-underline-offset: 7px;
 }
 .backToTop {
-  margin-top: 42px;
-  color: #825d55;
+  margin-top: 38px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid rgba(165,123,77,.46);
+  color: #785b58;
+  font: 650 9px/1.55 var(--sans);
+  letter-spacing: .20em;
   text-decoration: none;
-  font: 700 9px/1.6 var(--sans);
-  letter-spacing: .22em;
-  border-bottom: 1px solid rgba(166,122,73,.52);
-  padding-bottom: 7px;
 }
-.backToTop span { margin-right: 8px; font-size: 14px; color: #a67a48; }
-.backToTop:hover { color: #642d39; }
-@media (max-width: 640px) {
-  .story::before { inset: 10px; border-color: rgba(173,132,77,.21); }
+.backToTop:hover { color: #632f3a; }
+
+@media (max-width:640px) {
+  .story::before { inset: 10px; border-color: rgba(173,132,77,.20); }
+  .entryBridge { top: -14svh; height: 34svh; }
   .content {
-    width: calc(100% - 54px);
-    padding: 106px 0 315px;
+    width: calc(100% - 58px);
+    padding: clamp(78px,9svh,107px) 0 250px;
   }
-  .royalEmblem { margin-bottom: 21px; width: 38px; height: 64px; }
-  .eyebrow { font-size: 8px; letter-spacing: .2em; }
-  .title {
-    margin-top: 23px;
-    font-size: clamp(54px,13.6vw,80px);
-    line-height: .94;
-  }
-  .message { max-width: 345px; font-size: clamp(22px,5.8vw,27px); margin-top: 24px; }
-  .divider { margin: 21px auto 12px; }
+  .topRule { height: 25px; margin-bottom: 9px; }
+  .royalEmblem { width: 38px; height: 65px; margin-bottom: 21px; }
+  .eyebrow { font-size: 8px; letter-spacing: .17em; }
+  .title { font-size: clamp(52px,13vw,82px); line-height: .94; margin-top: 19px; }
+  .message { max-width: 354px; font-size: clamp(21px,5.6vw,27px); margin-top: 24px; }
+  .divider { margin: 23px auto 9px; }
   .signoff { font-size: 20px; }
-  .names { font-size: clamp(40px,10.3vw,54px); }
-  .dateLine { font-size: 8px; gap: 9px; max-width: 300px; }
-  .extras { margin-top: 40px; padding-top: 27px; gap: 25px; }
-  .countdown { gap: 3px; }
-  .countdownNumber { font-size: clamp(31px,9vw,44px); }
+  .names { font-size: clamp(42px,10.2vw,55px); }
+  .dateLine { max-width: 295px; font-size: 8px; gap: 7px; letter-spacing: .12em; }
+  .extras { margin-top: 39px; padding-top: 29px; gap: 26px; }
+  .countdown { margin-top: 17px; }
+  .countdownNumber { font-size: clamp(31px,8.9vw,43px); }
   .countdownLabel { font-size: 7px; letter-spacing: .09em; }
-  .backToTop { font-size: 8px; letter-spacing: .16em; margin-top: 30px; }
-  .sky {
-    width: 152%;
-    left: -26%;
-    right: auto;
-    height: 335px;
-    bottom: -10px;
-    opacity: .54;
-  }
-  .mist { bottom: -10px; left: -14%; width: 128%; height: 235px; opacity: .28; }
-  .floraLeft, .floraRight {
-    width: 53vw;
-    height: 222px;
-    opacity: .35;
-    bottom: 3px;
-  }
-  .floraLeft { left: -24%; }
-  .floraRight { right: -24%; }
+  .countdownUnit + .countdownUnit::before { height: 42px; }
+  .calendarButton { min-height: 52px; width: min(100%,280px); }
+  .sky { width: 150%; left: -25%; right: auto; height: 325px; opacity: .42; }
+  .mist { left: -12%; width: 124%; height: 235px; opacity: .25; }
+  .floraLeft,.floraRight { bottom: -2px; width: 49vw; height: 220px; opacity: .27; }
+  .floraLeft { left: -21%; }
+  .floraRight { right: -21%; }
   .readingLight {
-    background: radial-gradient(ellipse 78% 38% at 50% 34%,
-      rgba(255,252,242,.9),rgba(255,250,238,.5) 67%,transparent 100%);
+    background: radial-gradient(ellipse 80% 35% at 50% 28%,
+      rgba(255,252,242,.89),rgba(255,250,239,.35) 72%,transparent);
   }
+  .backToTop { font-size: 8px; margin-top: 32px; letter-spacing: .16em; }
 }
-@media (max-width: 355px) {
-  .content { width: calc(100% - 45px); }
+@media (max-width:355px) {
+  .content { width: calc(100% - 50px); }
   .title { font-size: 49px; }
-  .message { font-size: 21px; }
-  .dateLine { gap: 6px; }
+  .message { font-size: 20px; }
+  .names { font-size: 40px; }
+  .dateLine { column-gap: 6px; }
+  .countdownNumber { font-size: 30px; }
+  .calendarButton { font-size: 9px; }
 }
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
+  .entryBridge { display: none; }
   .calendarButton { transition: none; }
-  .calendarButton:hover { transform: none; }
+  .calendarButton:hover { transform: none; box-shadow: none; }
+  .intro [data-blessing-intro-item],[data-blessing-reveal] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
 }

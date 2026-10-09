@@ -46,13 +46,13 @@ function WeddingCountdown() {
   ] as const;
 
   return (
-    <div className={styles.countdown} role="timer" aria-label="Time remaining until the wedding">
+    <div className={styles.countdown} role="timer" aria-live="off" aria-label="Time remaining until the wedding">
       {units.map(([label, count]) => (
         <div key={label} className={styles.countdownUnit}>
-          <span className={styles.countdownNumber} aria-hidden="true">
+          <span className={styles.countdownNumber}>
             {count === undefined ? "–" : String(count).padStart(2, "0")}
           </span>
-          <span className={styles.countdownLabel} aria-hidden="true">{label}</span>
+          <span className={styles.countdownLabel}>{label}</span>
         </div>
       ))}
     </div>
@@ -112,43 +112,59 @@ export default function RoyalBlessing() {
 
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
-      const reveal = gsap.utils.toArray<HTMLElement>("[data-blessing-reveal]", section);
-      gsap.from(reveal, {
-        autoAlpha: 0,
-        y: 23,
-        duration: 0.85,
-        stagger: 0.095,
-        ease: "power2.out",
-        clearProps: "opacity,visibility,transform",
-        scrollTrigger: { trigger: section, start: "top 76%", once: true },
+      // The final blessing is a quiet editorial reveal, not another sticky scene.
+      // Animate the header rhythm separately; reveal later interactive controls
+      // when THEY enter the viewport, instead of firing everything at once.
+      const intro = section.querySelector<HTMLElement>("[data-blessing-intro]");
+      if (intro) {
+        const items = gsap.utils.toArray<HTMLElement>("[data-blessing-intro-item]", intro);
+        gsap.fromTo(items, {
+          autoAlpha: 0.42, y: 20,
+        }, {
+          autoAlpha: 1, y: 0,
+          stagger: 0.14, duration: 1.04, ease: "power2.out",
+          scrollTrigger: { trigger: intro, start: "top 84%", once: true },
+        });
+      }
+
+      gsap.utils.toArray<HTMLElement>("[data-blessing-reveal]", section).forEach((item) => {
+        gsap.fromTo(item, { autoAlpha: 0.52, y: 17 }, {
+          autoAlpha: 1, y: 0, duration: .85, ease: "power2.out",
+          scrollTrigger: { trigger: item, start: "top 91%", once: true },
+        });
       });
 
+      // Small layer deltas preserve the approved PNG's realistic materials.
+      // No blur filters, heavy background animations, or pinning on iPhone.
       const drift = (selector: string, y: number, x = 0) => {
         const element = section.querySelector<HTMLElement>(selector);
         if (!element) return;
         gsap.fromTo(element, { x: 0, y: 0 }, {
           x, y, ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.4,
-          },
+          scrollTrigger: { trigger: section, start: "top bottom",
+            end: "bottom top", scrub: 1.5 },
         });
       };
-      drift("[data-blessing-layer='mist']", -52);
-      drift("[data-blessing-layer='sky']", -25);
-      drift("[data-blessing-layer='flora-left']", -25, -12);
-      drift("[data-blessing-layer='flora-right']", -31, 12);
+      drift("[data-blessing-layer='mist']", -33);
+      drift("[data-blessing-layer='sky']", -18);
+      drift("[data-blessing-layer='flora-left']", -24, -10);
+      drift("[data-blessing-layer='flora-right']", -26, 10);
     }, section);
 
-    return () => context.revert();
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh, { once: true });
+    return () => {
+      window.removeEventListener("load", refresh);
+      context.revert();
+    };
   }, []);
 
   const hasExtras = invitation.standardAddOns.countdown || invitation.standardAddOns.calendar;
 
   return (
     <section id="with-love" ref={sectionRef} className={styles.story} aria-labelledby="closing-title">
+      {/* Soft parchment/mist handoff overlaps the end of the Section 04 album. */}
+      <div className={styles.entryBridge} aria-hidden="true" />
       <div className={styles.paper} aria-hidden="true">
         <Image src={ASSETS + "ivory-parchment.png"} alt="" fill sizes="100vw" quality={76} />
       </div>
@@ -166,22 +182,27 @@ export default function RoyalBlessing() {
       <div className={styles.readingLight} aria-hidden="true" />
 
       <div className={styles.content}>
-        {/* Reused original transparent PNG, not another bespoke SVG ornament. */}
-        <Image className={styles.royalEmblem}
-          src={ASSETS + "ceremony/royal-transition-ornament.png"}
-          alt="" width={54} height={90} quality={72} data-blessing-reveal />
-        <p className={styles.eyebrow} data-blessing-reveal>THE FINAL CHAPTER · A BLESSING</p>
-        <h2 id="closing-title" className={styles.title} data-blessing-reveal>
-          <span>With love &amp;</span>
-          <em>gratitude.</em>
-        </h2>
-        <p className={styles.message} data-blessing-reveal>{invitation.closing}</p>
-        <div data-blessing-reveal><LotusMotif variant="divider" className={styles.divider} /></div>
+        <div className={styles.intro} data-blessing-intro>
+          <span className={styles.topRule} aria-hidden="true" data-blessing-intro-item />
+          {/* Reused original transparent PNG emblem — no SVG or stickers. */}
+          <Image className={styles.royalEmblem}
+            src={ASSETS + "ceremony/royal-transition-ornament.png"}
+            alt="" width={54} height={90} quality={72} data-blessing-intro-item />
+          <p className={styles.eyebrow} data-blessing-intro-item>THE FINAL CHAPTER · A BLESSING</p>
+          <h2 id="closing-title" className={styles.title} data-blessing-intro-item>
+            <span>With love &amp;</span>
+            <em>gratitude.</em>
+          </h2>
+          <p className={styles.message} data-blessing-intro-item>{invitation.closing}</p>
+          <div data-blessing-intro-item>
+            <LotusMotif variant="divider" className={styles.divider} />
+          </div>
+        </div>
         <p className={styles.signoff} data-blessing-reveal>Until we celebrate together,</p>
         <p className={styles.names} data-blessing-reveal>{invitation.couple.signature}</p>
         <p className={styles.dateLine} data-blessing-reveal>
           {invitation.displayDay} {invitation.displayMonth} {invitation.displayYear}
-          <span aria-hidden="true">✦</span>
+          <span className={styles.dateSeparator} aria-hidden="true" />
           {invitation.venue.city}
         </p>
 
@@ -195,9 +216,7 @@ export default function RoyalBlessing() {
             )}
             {invitation.standardAddOns.calendar && (
               <button type="button" className={styles.calendarButton} onClick={addWeddingToCalendar}>
-                <span aria-hidden="true" className={styles.calendarIcon}>＋</span>
-                SAVE OUR DATE
-                <span aria-hidden="true" className={styles.calendarArrow}>↗</span>
+                <span className={styles.calendarLabel}>SAVE OUR DATE</span>
               </button>
             )}
           </div>
@@ -205,11 +224,11 @@ export default function RoyalBlessing() {
 
         {invitation.contactEmail && (
           <a className={styles.contact} href={"mailto:" + invitation.contactEmail}>
-            CONTACT US <span aria-hidden="true">↗</span>
+            CONTACT US
           </a>
         )}
         <a className={styles.backToTop} href="#welcome">
-          <span aria-hidden="true">↑</span> BACK TO THE BEGINNING
+          BACK TO THE BEGINNING
         </a>
       </div>
 
