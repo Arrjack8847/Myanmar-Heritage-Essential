@@ -240,20 +240,21 @@ export default function RoyalBlessing() {
               </div>
             )}
             {invitation.standardAddOns.calendar && (
-              <button type="button" className={styles.calendarButton} onClick={addWeddingToCalendar}>
+              <button type="button" className={`${styles.calendarButton} royal-action royal-action--wine`} onClick={addWeddingToCalendar}>
                 <span className={styles.calendarLabel}>SAVE OUR DATE</span>
+                <span className="royal-action__arrow" aria-hidden="true">↗</span>
               </button>
             )}
           </div>
         )}
 
         {invitation.contactEmail && (
-          <a className={styles.contact} href={"mailto:" + invitation.contactEmail}>
-            CONTACT US
+          <a className={`${styles.contact} royal-action royal-action--outline`} href={"mailto:" + invitation.contactEmail}>
+            <span>CONTACT US</span><span aria-hidden="true">↗</span>
           </a>
         )}
-        <a className={styles.backToTop} href="#welcome">
-          BACK TO THE BEGINNING
+        <a className={`${styles.backToTop} royal-action royal-action--quiet`} href="#welcome">
+          <span aria-hidden="true">↑</span><span>BACK TO THE BEGINNING</span>
         </a>
       </div>
 

@@ -561,3 +561,236 @@ img, svg { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .heritage-scene__petal { will-change: auto; opacity: .48; }
 }
+
+
+/* ================================================================
+   JN-W01 · Royal Controls
+   A reusable, accessible luxury treatment for invitation actions.
+   Every style is scoped to the actual invitation (not the debug UI).
+   ================================================================ */
+.invitation-page .royal-action {
+  --royal-foil: #c8a36a;
+  --royal-foil-bright: #edd6a8;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-width: min(100%, 218px);
+  min-height: 52px;
+  padding: 15px 26px;
+  border: 1px solid var(--royal-foil);
+  border-radius: 2px;
+  color: #613140;
+  background: linear-gradient(125deg,#fffcf4 0%,#f7ebd8 52%,#fffbf2 100%);
+  box-shadow:
+    0 9px 21px rgba(83,52,44,.11),
+    inset 0 1px 0 rgba(255,255,255,.87);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font: 700 10px/1.5 var(--sans);
+  letter-spacing: .19em;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform .33s cubic-bezier(.2,.7,.2,1),
+    background .33s ease,
+    color .33s ease,
+    border-color .33s ease,
+    box-shadow .33s ease;
+}
+.invitation-page .royal-action::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 4px;
+  border: 1px solid rgba(151,110,61,.32);
+  border-radius: 1px;
+  pointer-events: none;
+}
+.invitation-page .royal-action::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -40% auto -40% -90%;
+  width: 50%;
+  transform: skewX(-22deg);
+  background: linear-gradient(90deg,transparent,rgba(255,252,238,.24),transparent);
+  pointer-events: none;
+  transition: left .58s ease;
+}
+.invitation-page .royal-action > span {
+  position: relative;
+  z-index: 1;
+}
+.invitation-page .royal-action.royal-action--wine {
+  min-width: min(100%, 244px);
+  color: #fff8ed;
+  border-color: #ba945c;
+  background: linear-gradient(125deg,#4e2230 0%,#753a49 53%,#552630 100%);
+  box-shadow:
+    0 13px 29px rgba(79,39,49,.18),
+    inset 0 1px 0 rgba(255,234,191,.11);
+}
+.invitation-page .royal-action.royal-action--wine::before {
+  border-color: rgba(248,218,164,.44);
+}
+.invitation-page .royal-action.royal-action--outline {
+  color: #63313e;
+  background: rgba(255,250,239,.75);
+  border-color: #b8925c;
+  box-shadow: 0 7px 19px rgba(83,52,44,.065);
+}
+.invitation-page .royal-action.royal-action--quiet {
+  min-width: min(100%,208px);
+  min-height: 48px;
+  padding: 12px 20px;
+  background: rgba(255,252,245,.42);
+  border-color: rgba(171,129,77,.63);
+  box-shadow: none;
+  color: #775048;
+  font-size: 9px;
+}
+.invitation-page .royal-action.royal-action--quiet::before {
+  border-color: rgba(171,129,77,.16);
+}
+.invitation-page .royal-action:focus-visible {
+  outline: 2px solid #8d642f;
+  outline-offset: 5px;
+}
+.invitation-page .royal-action:active {
+  transform: translateY(1px) scale(.985);
+  box-shadow: 0 3px 10px rgba(83,52,44,.13);
+}
+@media (hover:hover) and (pointer:fine) {
+  .invitation-page .royal-action:hover {
+    transform: translateY(-3px);
+    border-color: #a57b44;
+    box-shadow: 0 16px 30px rgba(83,52,44,.16);
+  }
+  .invitation-page .royal-action.royal-action--wine:hover {
+    color: #fffaf0;
+    border-color: #e1bd7d;
+    background: linear-gradient(125deg,#633043,#854759 52%,#63313e);
+    box-shadow: 0 17px 34px rgba(79,39,49,.25);
+  }
+  .invitation-page .royal-action:hover::after { left: 145%; }
+  .invitation-page .royal-action.royal-action--quiet:hover {
+    background: rgba(255,250,237,.9);
+    box-shadow: 0 7px 20px rgba(83,52,44,.08);
+  }
+}
+/* A gold-lined, accessible skip action without any permanent navigation. */
+.invitation-page .skip-link {
+  top: -110px;
+  left: 15px;
+  z-index: 170;
+  padding: 13px 19px;
+  min-height: 48px;
+  background: #fffaf0;
+  color: #60303b;
+  border: 1px solid #af8850;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 4px #fffaf0, inset 0 0 0 5px rgba(175,136,80,.38),
+    0 8px 20px rgba(63,31,32,.13);
+  font: 700 10px/1.4 var(--sans);
+  letter-spacing: .11em;
+}
+.invitation-page .skip-link:focus-visible {
+  top: 14px;
+  outline: 2px solid #915f30;
+  outline-offset: 3px;
+}
+/* Gallery's icon controls are jewelry-like, not full-size CTA panels. */
+.invitation-page .lightbox__nav,
+.invitation-page .lightbox__close {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 54px;
+  border: 1px solid rgba(226,193,130,.68);
+  border-radius: 2px;
+  background: linear-gradient(145deg,rgba(136,98,78,.20),rgba(52,25,35,.65));
+  color: #ffeccc;
+  box-shadow: inset 0 0 0 4px rgba(39,19,27,.85),
+    inset 0 0 0 5px rgba(216,181,124,.34);
+  transition: background .3s ease, border-color .3s ease,
+    transform .3s ease, box-shadow .3s ease;
+  font: 400 33px/1 var(--display);
+  cursor: pointer;
+}
+.invitation-page .lightbox__close {
+  position: absolute;
+  top: max(16px,env(safe-area-inset-top,0px));
+  right: max(16px,env(safe-area-inset-right,0px));
+  width: 46px;
+  height: 46px;
+  font-size: 29px;
+}
+.invitation-page .lightbox__nav:focus-visible,
+.invitation-page .lightbox__close:focus-visible {
+  outline: 2px solid #ffe1aa;
+  outline-offset: 5px;
+}
+.invitation-page .lightbox__nav:active,
+.invitation-page .lightbox__close:active {
+  transform: scale(.95);
+}
+@media (hover:hover) and (pointer:fine) {
+  .invitation-page .lightbox__nav:hover,
+  .invitation-page .lightbox__close:hover {
+    background: linear-gradient(145deg,rgba(174,129,93,.40),rgba(89,45,59,.86));
+    border-color: #f3d5a4;
+    box-shadow: inset 0 0 0 4px rgba(39,19,27,.76),
+      inset 0 0 0 5px rgba(233,201,149,.66),
+      0 7px 22px rgba(0,0,0,.28);
+  }
+}
+@media (max-width: 640px) {
+  .invitation-page .royal-action { min-height: 50px; padding: 14px 20px; gap: 12px; }
+  .invitation-page .royal-action.royal-action--quiet { min-height: 46px; }
+  .invitation-page .lightbox__nav {
+    width: 44px;
+    height: 52px;
+  }
+  .invitation-page .lightbox__figure { max-width: calc(100vw - 113px); }
+  .invitation-page .lightbox { gap: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .invitation-page .royal-action,
+  .invitation-page .royal-action::after,
+  .invitation-page .lightbox__nav,
+  .invitation-page .lightbox__close { transition: none !important; }
+  .invitation-page .royal-action:hover,
+  .invitation-page .royal-action:active,
+  .invitation-page .lightbox__nav:active,
+  .invitation-page .lightbox__close:active { transform: none !important; }
+  .invitation-page .royal-action:hover::after { left: -90%; }
+}
+
+
+/* Refined gold directional accents remain actual text with decorative arrows. */
+.invitation-page .royal-action .royal-action__arrow {
+  flex: none;
+  display: inline-block;
+  color: #e9c993;
+  font: 400 19px/1 var(--display);
+  letter-spacing: 0;
+  transition: transform .3s ease;
+}
+.invitation-page .royal-action--outline .royal-action__arrow,
+.invitation-page .royal-action--quiet .royal-action__arrow {
+  color: #a47a47;
+}
+@media (hover:hover) and (pointer:fine) {
+  .invitation-page .royal-action:hover .royal-action__arrow { transform: translate(2px,-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .invitation-page .royal-action .royal-action__arrow { transition: none !important; }
+  .invitation-page .royal-action:hover .royal-action__arrow { transform: none !important; }
+}
