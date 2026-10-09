@@ -2,8 +2,7 @@
 .story {
   position: relative;
   isolation: isolate;
-  height: 380svh;
-  min-height: 2200px;
+  height: 292svh;
   margin: 0;
   background: #f7edde;
   scroll-margin-top: 0;
@@ -158,7 +157,7 @@
   background: linear-gradient(#ae8650,transparent);
 }
 @media (min-width: 800px) {
-  .story { height: 345svh; }
+  .story { height: 268svh; }
   .crown { top: 4%; width: min(66vw, 690px); }
   .pillarLeft, .pillarRight { top: 29%; width: min(22vw, 245px); height: 74%; }
   .curtainLeft, .curtainRight { top: 29%; width: min(27vw, 330px); height: 66%; }
@@ -205,73 +204,63 @@
 }
 
 
-/* CINEMATIC CEREMONY → VENUE HANDOFF
+/* CONTINUOUS CEREMONY → VENUE HANDOFF
    The layered veil overlaps the final ceremony viewport. A soft mask avoids
    the previous rectangular section edge; no large gold frame covers text. */
 .story { z-index: 2; }
 .handoff {
   position: absolute;
   z-index: 24;
-  top: -46svh;
+  top: -31svh;
   left: 0;
   right: 0;
-  height: 78svh;
+  height: 52svh;
   pointer-events: none;
   overflow: hidden;
   background:
     linear-gradient(180deg,
       rgba(248,238,220,0) 0%,
-      rgba(248,238,220,.31) 13%,
-      rgba(248,238,220,.87) 48%,
-      rgba(248,238,220,.96) 66%,
-      rgba(248,238,220,.48) 86%,
+      rgba(248,238,220,.05) 25%,
+      rgba(248,238,220,.13) 62%,
       rgba(248,238,220,0) 100%),
-    url("/heritage/gateway/gateway-mist.png") center / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg,
-    transparent, #000 20%, #000 77%, transparent);
-  mask-image: linear-gradient(180deg,
-    transparent, #000 20%, #000 77%, transparent);
+    url("/heritage/gateway/venue-courtyard.png") center 39% / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 29%, #000 73%, transparent);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 29%, #000 73%, transparent);
 }
 .handoffSky {
   position: absolute;
-  inset: 5% 0 0;
-  opacity: .19;
-  background: url("/heritage/bagan-pagodas.png") center bottom / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, transparent 28%, #000 75%);
-  mask-image: linear-gradient(180deg, transparent 28%, #000 75%);
+  inset: 0;
+  opacity: .22;
+  background: url("/heritage/gateway/gateway-mist.png") center / cover no-repeat;
 }
 .handoffSigil {
   position: absolute;
-  top: 52%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #b08b52;
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 2px 12px rgba(255,250,231,.7));
+  filter: drop-shadow(0 2px 10px rgba(255,250,231,.85));
 }
-.handoffSigil svg { display: block; width: 61px; height: 52px; }
+.handoffSigil svg { display: block; width: 48px; height: 42px; }
 .handoffThread {
   display: block;
   width: 1px;
-  height: min(13svh, 105px);
+  height: min(7svh, 60px);
   background: linear-gradient(180deg,
     transparent 0%, #bd985e 35%, #b18b50 65%, transparent 100%);
 }
-.venueVeil {
-  position: absolute;
-  z-index: 5;
-  inset: 0;
-  pointer-events: none;
+/* At the end, preserve the golden courtyard around the readable text. */
+.readingScrim {
   background:
-    linear-gradient(180deg,
-      #f8eedc 0%,
-      rgba(248,238,220,.99) 30%,
-      rgba(248,238,220,.96) 65%,
-      #f8eedc 100%);
+    radial-gradient(ellipse 69% 46% at 50% 51%,
+      rgba(255,250,237,.88) 0%,
+      rgba(255,248,232,.71) 46%,
+      rgba(248,237,217,.24) 80%,
+      transparent 100%);
 }
 @media (prefers-reduced-motion: reduce) {
   .handoff { display: none; }
-  .venueVeil { display: none; }
 }
