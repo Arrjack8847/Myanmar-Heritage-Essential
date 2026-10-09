@@ -10,6 +10,7 @@ import RoyalGateway from "@/components/gateway/RoyalGateway";
 import JourneySection from "@/components/memories/JourneySection";
 import CelebrationSection from "@/components/celebration/CelebrationSection";
 import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
+import HeirloomBlessingTransition from "@/components/transitions/HeirloomBlessingTransition";
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
 import MotionStability from "@/components/MotionStability";
 import MotionDebug from "@/components/MotionDebug";
@@ -124,6 +125,9 @@ export default function HeritageInvitation() {
 
       {/* 04 — EDITORIAL LOVE STORY — natural scroll + golden thread */}
       <JourneySection onOpenPhoto={setLightbox} />
+
+      {/* The same golden thread, mist and foil emblem carry the album into the blessing. */}
+      <HeirloomBlessingTransition />
 
       {/* 05 — ROYAL BLESSING · REUSED HERITAGE LAYERS */}
       <RoyalBlessing />
