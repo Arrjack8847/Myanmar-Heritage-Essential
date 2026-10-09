@@ -25,7 +25,11 @@ export default function JourneySection({ onOpenPhoto }: Props) {
   return (
     <section id="memories" ref={root} className={styles.section} aria-labelledby="memories-title">
       <div className={styles.paper} aria-hidden="true" />
-      <div className={styles.entryGlow} aria-hidden="true" />
+      <div className={styles.entryGlow} data-journey-entry aria-hidden="true" />
+      <div className={styles.gatewayEcho} data-journey-gateway-mark aria-hidden="true">
+        <Image src="/heritage/ceremony/royal-transition-ornament.png" alt=""
+          width={49} height={79} quality={74} loading="lazy" />
+      </div>
       <HeritageAtmosphere
         scene="journey"
         skyClassName={styles.pagodaHorizon}
