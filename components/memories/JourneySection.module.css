@@ -711,3 +711,55 @@
   .photoAction { padding: 10px 16px; }
   .finaleAction { padding: 10px 15px; min-height: 44px; }
 }
+
+
+/* Actual customer-supplied gold button PNGs replace the old text and faux foil. */
+.photoAction {
+  display: block;
+  width: min(61%,235px);
+  min-height: 0;
+  margin: 15px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+.photoAction::after { content: none; }
+.photoAction img,.finaleAction img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+}
+.finaleAction {
+  display: block;
+  top: calc(20px + env(safe-area-inset-top,0px));
+  right: clamp(17px,4vw,54px);
+  width: min(38vw,240px);
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+@media (hover:hover) and (pointer:fine) {
+  .photoButton:hover .photoAction,
+  .finalePhotoButton:hover .finaleAction {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    filter: brightness(1.07);
+  }
+}
+@media (max-width:640px) {
+  .photoAction { width: min(73%,230px); margin-top: 12px; }
+  .finaleAction { top: calc(14px + env(safe-area-inset-top,0px)); right: 11px; width: min(49vw,190px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photoAction,.finaleAction { transition: none !important; }
+}
