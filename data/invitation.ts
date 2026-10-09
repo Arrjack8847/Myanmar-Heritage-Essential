@@ -33,6 +33,21 @@ export const invitation = {
     city: "Yangon, Myanmar",
     directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Strand%20Hotel%20Yangon%2C%2092%20Strand%20Road%2C%20Yangon%2C%20Myanmar",
   },
+  /**
+   * Section 04 — editable DEMO love-story captions. Use approved client
+   * photography by editing gallery; galleryIndex is zero based.
+   */
+  journey: [
+    { number: "01", chapter: "THE BEGINNING", title: "When We Met",
+      description: "The first chapter of something beautiful. A chance meeting that changed everything.",
+      galleryIndex: 0 },
+    { number: "02", chapter: "GROWING TOGETHER", title: "Our Memories",
+      description: "The little moments that made us who we are. Through every season, we chose each other.",
+      galleryIndex: 1 },
+    { number: "03", chapter: "OUR NEXT CHAPTER", title: "And Forever Begins",
+      description: "Every beautiful journey leads us here. A future filled with love, adventure and home.",
+      galleryIndex: 3 },
+  ],
   gallery: [
     {
       src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=85",

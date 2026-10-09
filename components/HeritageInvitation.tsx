@@ -7,14 +7,13 @@ import { invitation } from "@/data/invitation";
 import RoyalBlessing from "@/components/closing/RoyalBlessing";
 import HeritageHero from "@/components/HeritageHero";
 import RoyalGateway from "@/components/gateway/RoyalGateway";
+import JourneySection from "@/components/memories/JourneySection";
 import CelebrationSection from "@/components/celebration/CelebrationSection";
 import RoyalUnfoldTransition from "@/components/transitions/RoyalUnfoldTransition";
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
 import MotionStability from "@/components/MotionStability";
 import MotionDebug from "@/components/MotionDebug";
 import {
-  DividerMotif,
-  FloralSprig,
   GoldenThread,
   HeritageCrest,
 } from "@/components/Decorations";
@@ -121,37 +120,8 @@ export default function HeritageInvitation() {
       {/* 03 — THE ROYAL GATEWAY — independently layered, sticky scroll */}
       <RoyalGateway />
 
-      {/* 04 — MEMORIES */}
-      <section id="memories" className="memories section-panel" aria-labelledby="memories-title">
-        <div className="memories__sprig memories__sprig--left js-ornament-drift"><FloralSprig /></div>
-        <div className="memories__sprig memories__sprig--right js-ornament-drift"><FloralSprig /></div>
-        <div className="section-inner">
-          <div className="section-heading js-reveal">
-            <span className="eyebrow">CHAPTER THREE <span className="eyebrow__diamond">◆</span> THE LITTLE MOMENTS</span>
-            <HeritageCrest className="section-heading__crest" />
-            <h2 id="memories-title">Our precious <em>moments.</em></h2>
-            <p>A collection of memories, laughter, and the love that brought us here.</p>
-          </div>
-          <div className="gallery js-reveal">
-            {invitation.gallery.map((photo, index) => (
-              <button
-                className={"gallery__tile gallery__tile--" + (index + 1)}
-                type="button"
-                key={photo.src}
-                onClick={() => setLightbox(index)}
-                aria-label={"Open gallery photo " + (index + 1) + ": " + photo.caption}
-              >
-                {/* Sample image URL is replaced in the data file with approved couple photography. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-                <span className="gallery__caption"><span>{String(index + 1).padStart(2, "0")}</span>{photo.caption}</span>
-                <span className="gallery__expand" aria-hidden="true">↗</span>
-              </button>
-            ))}
-          </div>
-          <div className="memories__end js-reveal"><DividerMotif /><p>Every beautiful story is made of little moments.</p></div>
-        </div>
-      </section>
+      {/* 04 — EDITORIAL LOVE STORY — natural scroll + golden thread */}
+      <JourneySection onOpenPhoto={setLightbox} />
 
       {/* 05 — ROYAL BLESSING · REUSED HERITAGE LAYERS */}
       <RoyalBlessing />
