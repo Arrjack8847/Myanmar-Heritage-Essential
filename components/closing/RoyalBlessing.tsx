@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import HeritageAtmosphere from "@/components/HeritageAtmosphere";
 import LotusMotif from "@/components/heritage/LotusMotif";
+import { RoyalImageButton, RoyalImageLink } from "@/components/buttons/RoyalImageControl";
 import styles from "./RoyalBlessing.module.css";
 
 const ASSETS = "/heritage/";
@@ -240,23 +241,37 @@ export default function RoyalBlessing() {
               </div>
             )}
             {invitation.standardAddOns.calendar && (
-              <button type="button" className={`${styles.calendarButton} royal-action royal-action--wine royal-action--lotus`} onClick={addWeddingToCalendar}>
-                <span className="royal-action__lotus"><LotusMotif variant="marker" /></span>
-                <span className={`${styles.calendarLabel} royal-action__label`}>SAVE OUR DATE</span>
-                <span className="royal-action__arrow" aria-hidden="true">↗</span>
-              </button>
+              <RoyalImageButton
+                className={styles.calendarArt}
+                asset="save-our-date-default"
+                mobileAsset="save-our-date-mobile"
+                hoverAsset="save-our-date-hover"
+                pressedAsset="save-our-date-press"
+                focusAsset="save-our-date-focus"
+                tone="primary"
+                label="Save our date to your calendar"
+                onClick={addWeddingToCalendar}
+              />
             )}
           </div>
         )}
 
         {invitation.contactEmail && (
-          <a className={`${styles.contact} royal-action royal-action--ivory`} href={"mailto:" + invitation.contactEmail}>
-            <span className="royal-action__label">CONTACT US</span><span className="royal-action__arrow" aria-hidden="true">↗</span>
-          </a>
+          <RoyalImageLink
+            className={styles.contactArt}
+            asset="contact-us"
+            tone="secondary"
+            label="Contact us by email"
+            href={"mailto:" + invitation.contactEmail}
+          />
         )}
-        <a className={`${styles.backToTop} royal-action royal-action--quiet`} href="#welcome">
-          <span aria-hidden="true">↑</span><span className="royal-action__label">BACK TO THE BEGINNING</span>
-        </a>
+        <RoyalImageLink
+          className={styles.backArt}
+          asset="back-to-beginning"
+          tone="quiet"
+          label="Back to the beginning"
+          href="#welcome"
+        />
       </div>
 
     </section>
