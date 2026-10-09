@@ -121,6 +121,28 @@
       rgba(255,247,233,.91) 45%, rgba(248,237,217,.52) 72%, rgba(247,237,222,.14) 100%),
     linear-gradient(180deg, rgba(255,249,235,.26), transparent 22%, rgba(248,236,216,.68));
 }
+/* 03 → 04: the last gateway frame becomes the album's warm ivory page.
+   Only the scenery is softened; venue copy and its Directions control remain
+   above this veil at z-index 16. Reuses the existing scroll hold. */
+.exitMist {
+  position: absolute;
+  z-index: 15;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,
+      transparent 0%,
+      rgba(248,240,228,.04) 22%,
+      rgba(248,240,228,.24) 43%,
+      rgba(248,240,228,.67) 67%,
+      rgba(248,240,228,.94) 86%,
+      #f8f0e4 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .exitMist { opacity: 1; }
+}
+
 .copy {
   position: absolute;
   z-index: 16;

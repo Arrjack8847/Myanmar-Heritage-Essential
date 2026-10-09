@@ -73,6 +73,7 @@ export default function RoyalGateway() {
       const lanterns = element("lanterns");
       const scrim = element("scrim");
       const copy = element("copy");
+      const exitMist = element("exit-mist");
       const cue = element("cue");
 
       if (!handoff || !sigil || !entryHaze || !veil || !courtyard || !walkway || !mist || !rays || !crown ||
@@ -119,6 +120,7 @@ export default function RoyalGateway() {
       gsap.set(scrim, { opacity: 0 });
       gsap.set(copy, { autoAlpha: 0, y: 16 });
       gsap.set(cue, { autoAlpha: 1 });
+      if (exitMist) gsap.set(exitMist, { opacity: 0 });
 
       // Five calm beats across a 3.1-viewport native scroll:
       // 0–15% atmosphere; 15–35% architecture; 35–60% silk reveal;
@@ -186,6 +188,13 @@ export default function RoyalGateway() {
       // 75–100%: hold the completed courtyard and editable venue text
       // still long enough for guests to read the destination and directions.
       timeline.to({}, { duration: 2.5 }, 7.5);
+
+      // The last portion of the existing reading hold melts the lower
+      // courtyard into Section 04 parchment. No extra pinned scene/spacer.
+      // Preserve the editable venue copy and clickable directions above it.
+      if (exitMist) timeline.to(exitMist, {
+        opacity: 1, duration: 0.88, ease: "none",
+      }, 9.12);
     }, section);
 
     // The previous chapter has its own triggers; a single refresh is sufficient
@@ -237,6 +246,7 @@ export default function RoyalGateway() {
           sizes="(max-width: 700px) 54vw, 420px" mirrored />
 
         <div className={styles.readingScrim} data-gw="scrim" aria-hidden="true" />
+        <div className={styles.exitMist} data-gw="exit-mist" aria-hidden="true" />
         <div className={styles.copy} data-gw="copy">
           <VenueDetails gateway />
         </div>

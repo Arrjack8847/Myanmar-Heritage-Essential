@@ -41,10 +41,10 @@
 .entryBridge {
   position: absolute;
   z-index: 2;
-  top: -17svh;
+  top: -10svh;
   left: 0;
   right: 0;
-  height: 37svh;
+  height: 24svh;
   pointer-events: none;
   background:
     linear-gradient(180deg, transparent 0%,rgba(242,220,188,.055) 19%,
@@ -52,7 +52,7 @@
     url("/heritage/golden-mist.png") center / cover no-repeat;
   -webkit-mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.18) 21%,#000 55%,#000 100%);
   mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,.18) 21%,#000 55%,#000 100%);
-  opacity: .81;
+  opacity: .47;
 }
 .paper,.sky,.mist,.floraLeft,.floraRight,.readingLight {
   position: absolute;
@@ -332,7 +332,7 @@
 
 @media (max-width:640px) {
   .story::before { inset: 10px; border-color: rgba(173,132,77,.20); }
-  .entryBridge { top: -14svh; height: 34svh; }
+  .entryBridge { top: -9svh; height: 23svh; }
   .content {
     width: calc(100% - 58px);
     padding: clamp(78px,9svh,107px) 0 250px;
