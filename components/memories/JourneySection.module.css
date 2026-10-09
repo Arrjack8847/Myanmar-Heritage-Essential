@@ -326,3 +326,170 @@
     opacity: 1 !important; visibility: visible !important;
   }
 }
+
+
+/* SECTION 04 V2 — HYBRID ROYAL ALBUM. Reuses PNG layers + LotusMotif PNG
+   sprite; editorial card corners and continuous gold line are CSS, not SVG. */
+.section { z-index: 3; overflow: visible; }
+.entryGlow {
+  position: absolute;
+  z-index: 2;
+  top: -19svh; left: 0; right: 0;
+  height: 49svh;
+  pointer-events: none;
+  background: linear-gradient(180deg,transparent 0%,rgba(244,222,189,.1) 19%,
+    rgba(246,231,211,.34) 51%,rgba(248,240,228,.84) 82%,#f8f0e4 100%);
+  -webkit-mask-image: linear-gradient(180deg,transparent,#000 43%,#000);
+  mask-image: linear-gradient(180deg,transparent,#000 43%,#000);
+}
+.intro { padding: clamp(88px,11svh,132px) 22px 30px; }
+.title { font-size: clamp(59px,8.4vw,106px); }
+.headingRule { margin-top: 23px; }
+.story { position: relative; padding-top: 4px; }
+.globalThread {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 1px; z-index: 3; pointer-events: none;
+  background: rgba(176,135,82,.18);
+}
+.globalThreadFill {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,rgba(178,139,77,.38),#b99556 45%,rgba(186,147,84,.6));
+  transform-origin: top center;
+}
+.memory { min-height: clamp(590px,82svh,870px); }
+.timeline { background: transparent; width: 1px; }
+.timelineProgress { display: none; }
+.timelineMarker { z-index: 8; }
+.photoPaper { border-color: rgba(181,142,88,.31); }
+.photoPaper::before,.photoPaper::after {
+  content: ""; position: absolute; z-index: 2;
+  width: 43px; height: 43px; pointer-events: none; opacity: .85;
+}
+.photoPaper::before { top: 2px; left: 2px; border-top: 1px solid #b99556; border-left: 1px solid #b99556; }
+.photoPaper::after { bottom: 2px; right: 2px; border-bottom: 1px solid #b99556; border-right: 1px solid #b99556; }
+.photoWindow img { will-change: transform; }
+.photoCaption {
+  display: block; text-align: right;
+  color: #96785e; margin: 11px 5px 0;
+  font: italic 15px/1.15 var(--display);
+}
+.finaleLead {
+  position: relative; z-index: 6;
+  display: flex; align-items: center; flex-direction: column;
+  gap: 10px; color: #ae8754; padding: 10px 0 48px;
+}
+.finaleLeadRule {
+  display: block; width: 1px; height: 50px;
+  background: linear-gradient(180deg,transparent,#b99556);
+}
+.finaleLead > span:last-child {
+  font: 600 9px/1.5 var(--sans);
+  letter-spacing: .21em;
+}
+.finaleRunway { position: relative; height: 205svh; z-index: 6; background: #eee0cc; }
+.finaleStage {
+  position: sticky; top: 0; height: 100svh;
+  width: 100%; isolation: isolate; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%,#fff8e9,#e8d5ba);
+}
+.finaleMount {
+  position: absolute; z-index: 1; inset: 0;
+  transform-origin: center center;
+  box-shadow: 0 22px 85px rgba(66,41,35,.18);
+}
+.finalePhotoButton {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  padding: 0; margin: 0; border: 0; background: #b6a38d;
+  cursor: zoom-in;
+}
+.finalePhotoButton img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 43%;
+}
+.finalePhotoButton:focus-visible { outline: 3px solid #b99556; outline-offset: -7px; }
+.finaleMat {
+  position: absolute; inset: 0;
+  border: clamp(13px,3.5vw,24px) solid #fffaf1;
+  outline: 1px solid rgba(176,132,80,.5);
+  z-index: 2; pointer-events: none;
+}
+.finaleShade {
+  position: absolute; z-index: 2; inset: 0;
+  pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg,transparent 28%,rgba(35,24,24,.19) 51%,rgba(42,25,27,.78) 100%);
+}
+.finaleCopy {
+  position: absolute; z-index: 4;
+  left: 0; right: 0; bottom: max(10svh,env(safe-area-inset-bottom,0px));
+  padding: 0 max(22px,6vw); text-align: center;
+  pointer-events: none; color: #fff9ec;
+  text-shadow: 0 2px 15px rgba(36,25,26,.38);
+}
+.finaleChapter {
+  margin: 0 0 11px;
+  color: #f3ddba;
+  font: 650 10px/1.4 var(--sans);
+  letter-spacing: .18em; text-transform: uppercase;
+}
+.finaleCopy h3 {
+  margin: 0 auto; max-width: 870px;
+  font: italic 400 clamp(62px,10vw,120px)/.94 var(--display);
+  letter-spacing: -.047em; text-wrap: balance;
+}
+.finaleDescription {
+  margin: 16px auto 0; max-width: 530px;
+  font: 400 clamp(20px,2.5vw,28px)/1.26 var(--display);
+}
+.finaleWash {
+  position: absolute; z-index: 5; inset: 0; opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,rgba(248,240,228,.18),rgba(248,240,228,.49) 36%,
+    rgba(248,240,228,.93) 79%,#f8f0e4 100%);
+}
+.ending {
+  min-height: 245px; padding: 68px 20px 104px;
+  background: #f8f0e4;
+}
+@media (max-width:800px) {
+  .intro { padding: 86px 18px 25px; }
+  .title { font-size: clamp(58px,12.5vw,80px); }
+  .story { width: min(100% - 18px,610px); }
+  .globalThread { left: 11px; }
+  .timeline { left: 11px; }
+  .timelineMarker { top: 23%; }
+  .memory,.reverse {
+    min-height: 88svh;
+    padding: 39px 12px 58px 34px;
+  }
+  .photoPaper { padding: 9px 9px 14px; }
+  .memoryTitle { font-size: clamp(47px,10vw,66px); }
+  .memoryDescription { font-size: clamp(21px,5.2vw,27px); }
+  .finaleRunway { height: 192svh; }
+  .finaleCopy h3 { font-size: clamp(57px,13vw,83px); }
+  .finaleDescription { font-size: clamp(19px,5.1vw,24px); max-width: 340px; }
+  .finaleCopy { bottom: max(9svh,env(safe-area-inset-bottom,0px)); }
+  .ending { padding: 58px 18px 96px; }
+}
+@media (max-width:360px) {
+  .title { font-size: 52px; }
+  .memory,.reverse { padding-left: 30px; padding-right: 9px; }
+  .globalThread,.timeline { left: 9px; }
+  .finaleCopy h3 { font-size: 54px; }
+}
+@media (max-height:650px) and (max-width:800px) {
+  .memory { min-height: 685px; }
+  .finaleCopy { bottom: 32px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .entryGlow { display:none; }
+  .globalThreadFill { transform: none !important; }
+  .finaleRunway { height: auto; }
+  .finaleStage { position: relative; height: min(100svh,790px); min-height: 520px; }
+  .finaleMount { transform: none !important; }
+  .finaleMat { opacity: 0; }
+  .finaleShade { opacity: 1; }
+  .finaleCopy { opacity: 1 !important; visibility: visible !important;transform:none !important; }
+  .finaleWash { opacity: 0 !important; }
+  .photoWindow img { transform: none !important; }
+}
