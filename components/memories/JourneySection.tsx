@@ -112,6 +112,7 @@ export default function JourneySection({ onOpenPhoto }: Props) {
                 onClick={() => onOpenPhoto(finale.galleryIndex)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={finalPhoto.src} alt={finalPhoto.alt} loading="lazy" decoding="async" />
+                <span className={styles.finaleAction} aria-hidden="true">VIEW PHOTOGRAPH <span>↗</span></span>
               </button>
               <span className={styles.finaleMat} data-finale-mat aria-hidden="true" />
             </div>
