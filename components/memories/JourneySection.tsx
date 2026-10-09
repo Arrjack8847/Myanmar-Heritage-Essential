@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { invitation } from "@/data/invitation";
 import JourneyTimeline from "./JourneyTimeline";
+import HeritageAtmosphere from "@/components/HeritageAtmosphere";
 import useJourneyMotion from "./JourneyMotion";
 import styles from "./JourneySection.module.css";
 
@@ -27,6 +28,12 @@ export default function JourneySection({ onOpenPhoto }: Props) {
       aria-labelledby="memories-title">
       <div className={styles.paper} aria-hidden="true" />
       <div className={styles.gatewayMist} aria-hidden="true" />
+      {/* Reuse the original Bagan skyline and golden smoke from our earlier chapters. */}
+      <HeritageAtmosphere
+        scene="journey"
+        skyClassName={styles.pagodaHorizon}
+        mistClassName={styles.mistVeil}
+      />
       <div className={styles.botanical + " " + styles.botanicalTop}
         data-journey-botanical aria-hidden="true">
         <Image src="/heritage/floral-left.png" alt="" fill sizes="(max-width: 650px) 170px, 360px" />
@@ -111,7 +118,11 @@ export default function JourneySection({ onOpenPhoto }: Props) {
         <p className={styles.closingQuote}>Every beautiful journey leads us here.</p>
         <span className={styles.closingSignoff}>TO BE CONTINUED · WITH LOVE</span>
       </div>
-      <div className={styles.burgundyBridge} aria-hidden="true" />
+      {/* A misty ivory handoff to Section 05, which reuses these same assets. */}
+      <div className={styles.mistBridge} data-journey-atmosphere="exit" aria-hidden="true">
+        <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw"
+          quality={65} loading="lazy" draggable={false} />
+      </div>
     </section>
   );
 }

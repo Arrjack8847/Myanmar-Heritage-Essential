@@ -77,6 +77,24 @@ export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
         }
       });
 
+      // Layered smoke/pagoda parallax links the gateway to the love story;
+      // the exit mist bridges naturally into the ivory Royal Blessing.
+      const atmosphere = [
+        { name: "sky", from: 14, to: -26, trigger: section.querySelector<HTMLElement>("[data-journey-title]") },
+        { name: "mist", from: -12, to: 23, trigger: section.querySelector<HTMLElement>("[data-journey-title]") },
+        { name: "exit", from: 18, to: -23, trigger: section.querySelector<HTMLElement>("[data-journey-ending]") },
+      ];
+      atmosphere.forEach(({ name, from, to, trigger }) => {
+        const layer = section.querySelector<HTMLElement>(
+          `[data-journey-atmosphere="${name}"]`
+        );
+        if (!layer || !trigger) return;
+        gsap.fromTo(layer, { y: from }, {
+          y: to, ease: "none",
+          scrollTrigger: { trigger, start: "top bottom", end: "bottom top", scrub: 1.55 },
+        });
+      });
+
       const botanical = gsap.utils.toArray<HTMLElement>("[data-journey-botanical]");
       botanical.forEach((piece, index) => {
         gsap.fromTo(piece, { y: index % 2 ? -14 : 19 }, {

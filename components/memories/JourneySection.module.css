@@ -297,15 +297,62 @@
   text-wrap: balance;
 }
 .closingSignoff { color: #927047; }
-.burgundyBridge {
+/* Atmospheric Bagan skyline from the existing first-chapter art. Behind all
+   editorial photography and headings; used for continuity, not distraction. */
+.pagodaHorizon,
+.mistVeil {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+.pagodaHorizon {
+  z-index: 0;
+  top: 1%;
+  left: 50%;
+  translate: -50% 0;
+  width: min(108vw, 1160px);
+  height: clamp(255px, 45svh, 520px);
+  opacity: .2;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.85) 0%, #000 38%, transparent 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.85) 0%, #000 38%, transparent 100%);
+}
+.pagodaHorizon img {
+  object-fit: contain;
+  object-position: center bottom;
+}
+.mistVeil {
+  z-index: 1;
+  top: 0;
+  left: -7%;
+  width: 114%;
+  height: clamp(230px, 42svh, 465px);
+  opacity: .27;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.77) 35%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.77) 35%, transparent 100%);
+}
+.mistVeil img { object-fit: cover; object-position: center 30%; }
+.mistBridge {
   position: absolute;
   z-index: 2;
   pointer-events: none;
-  inset-inline: 0;
+  user-select: none;
+  left: -8%;
+  right: -8%;
   bottom: 0;
-  height: 300px;
-  background: linear-gradient(to bottom,transparent 0%,rgba(126,73,69,.13) 25%,rgba(112,56,64,.55) 65%,#682b3b 100%);
+  height: clamp(240px, 42svh, 430px);
+  opacity: .22;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 60%, rgba(0,0,0,.7) 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 60%, rgba(0,0,0,.7) 100%);
 }
+.mistBridge img { object-fit: cover; object-position: center bottom; }
+.mistBridge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 18%, rgba(247,240,228,.3) 75%, #f7f0e4 100%);
+}
+
 @media (max-width: 800px) {
   .story { width: min(100%, 690px); }
   .timeline { left: 8px; width: 47px; transform: none; }
@@ -343,6 +390,9 @@
   .botanicalTop { opacity: .28; left: -80px; width: 210px; height: 230px; }
   .botanicalSide { opacity: .2; right: -88px; width: 175px; }
   .ending { padding-bottom: 205px; min-height: 400px; }
+  .pagodaHorizon { width: 140vw; top: 0; height: 310px; opacity: .13; }
+  .mistVeil { height: 275px; opacity: .19; }
+  .mistBridge { height: 270px; opacity: .16; }
 }
 @media (max-width: 390px) {
   .title { font-size: clamp(55px, 13.7vw, 66px); }
@@ -358,6 +408,7 @@
   .intro { padding-top: 125px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .pagodaHorizon, .mistVeil, .mistBridge { transform: none !important; }
   .photoWindow img { transition: none; }
   .photoButton:hover .photoWindow img { transform: none; }
   .timelinePath path { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }

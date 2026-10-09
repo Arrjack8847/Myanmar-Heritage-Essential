@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
+import HeritageAtmosphere from "@/components/HeritageAtmosphere";
 import { CornerFlourish, DividerMotif, HeritageCrest, PagodaSkyline } from "@/components/Decorations";
 import styles from "./RoyalBlessing.module.css";
 
@@ -136,6 +137,7 @@ export default function RoyalBlessing() {
         });
       };
       drift("[data-blessing-layer='mist']", -52);
+      drift("[data-blessing-layer='arrival-mist']", -24);
       drift("[data-blessing-layer='sky']", -25);
       drift("[data-blessing-layer='flora-left']", -25, -12);
       drift("[data-blessing-layer='flora-right']", -31, 12);
@@ -152,11 +154,15 @@ export default function RoyalBlessing() {
       <div className={styles.paper} aria-hidden="true">
         <Image src={ASSETS + "ivory-parchment.png"} alt="" fill sizes="100vw" quality={76} />
       </div>
-      <div className={styles.sky} data-blessing-layer="sky" aria-hidden="true">
-        <Image src={ASSETS + "bagan-pagodas.png"} alt="" fill sizes="(max-width: 640px) 110vw, 1040px" quality={72} />
-      </div>
-      <div className={styles.mist} data-blessing-layer="mist" aria-hidden="true">
-        <Image src={ASSETS + "golden-mist.png"} alt="" fill sizes="100vw" quality={70} />
+      <HeritageAtmosphere
+        scene="blessing"
+        skyClassName={styles.sky}
+        mistClassName={styles.mist}
+      />
+      {/* The same golden mist carries through from the final story milestone. */}
+      <div className={styles.arrivalMist} data-blessing-layer="arrival-mist" aria-hidden="true">
+        <Image src={ASSETS + "golden-mist.png"} alt="" fill sizes="100vw"
+          quality={65} loading="lazy" draggable={false} />
       </div>
       <div className={styles.botanical} data-blessing-layer="botanical" aria-hidden="true">
         <Image src={ASSETS + "botanical-gold.png"} alt="" fill sizes="(max-width: 640px) 65vw, 440px" quality={70} />
