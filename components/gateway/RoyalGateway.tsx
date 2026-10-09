@@ -29,7 +29,7 @@ function Layer({ name, file, className, sizes, cover = false, mirrored = false }
         fill
         sizes={sizes}
         quality={75}
-        loading={name === "courtyard" ? "eager" : "lazy"}
+        loading={name === "courtyard" || name === "crown" ? "eager" : "lazy"}
         draggable={false}
         className={mirrored ? styles.mirrored : undefined}
         style={{ objectFit: cover ? "cover" : "contain" }}
@@ -57,6 +57,7 @@ export default function RoyalGateway() {
 
       const handoff = element("handoff");
       const sigil = element("handoff-sigil");
+      const veil = element("veil");
       const courtyard = element("courtyard");
       const walkway = element("walkway");
       const mist = element("mist");
@@ -73,97 +74,113 @@ export default function RoyalGateway() {
       const copy = element("copy");
       const cue = element("cue");
 
-      if (!handoff || !sigil || !courtyard || !walkway || !mist || !rays || !crown ||
+      if (!handoff || !sigil || !veil || !courtyard || !walkway || !mist || !rays || !crown ||
           !leftPillar || !rightPillar || !leftCurtain || !rightCurtain ||
           !leftFlowers || !rightFlowers || !lanterns || !scrim || !copy || !cue) return;
 
-      // A see-through landscape handoff overlaps the end of the ceremony.
-      // The scene behind it is NEVER an opaque parchment or empty canvas.
-      gsap.fromTo(handoff, { y: 24, opacity: 0.5 }, {
-        y: -8, opacity: 1, ease: "none",
-        scrollTrigger: {
-          trigger: section, start: "top bottom", end: "top top", scrub: 0.55,
-        },
-      });
-      gsap.fromTo(sigil, { opacity: 0.4, y: 14, scale: 0.91 }, {
-        opacity: 1, y: 0, scale: 1, ease: "none",
-        scrollTrigger: {
-          trigger: section, start: "top 91%", end: "top 21%", scrub: 0.6,
-        },
-      });
+      // A soft parchment-to-landscape bridge; scenic silhouettes remain
+      // visible. The handoff uses its own scroll range, no competing veil.
+      gsap.fromTo(handoff,
+        { autoAlpha: 0.36, y: 20 },
+        {
+          autoAlpha: 0.8, y: -6, ease: "none",
+          scrollTrigger: {
+            trigger: section, start: "top bottom",
+            end: "top top", scrub: 0.6,
+          },
+        });
+      gsap.fromTo(sigil,
+        { autoAlpha: 0.2, scale: 0.88, y: 16 },
+        {
+          autoAlpha: 0.78, scale: 1, y: 0, ease: "none",
+          scrollTrigger: {
+            trigger: section, start: "top 86%",
+            end: "top 24%", scrub: 0.6,
+          },
+        });
 
-      // From the very first frame we can see the destination, distant crown,
-      // pillars and curtains. The GSAP scene only increases depth and scale.
-      gsap.set(courtyard, { opacity: 1, scale: 1.015, transformOrigin: "center 52%" });
-      gsap.set(walkway, { opacity: 0.66, yPercent: 4, scale: 0.92, transformOrigin: "center 90%" });
+      // The older theatrical sequence, refined: never hide every scenic
+      // layer together. The golden courtyard and distant gate are present
+      // from the first frame, though they remain quiet until the reveal.
+      gsap.set(veil, { opacity: 0.22 });
+      gsap.set(courtyard, { opacity: 0.8, scale: 1.01, transformOrigin: "center center" });
+      gsap.set(walkway, { opacity: 0.25, scale: 0.96, yPercent: 5, transformOrigin: "center 90%" });
       gsap.set([crown, leftPillar, rightPillar], {
-        opacity: 0.78, y: 21, scale: 0.81, transformOrigin: "center 62%",
+        opacity: 0.23, y: 29, scale: 0.94, transformOrigin: "center 68%",
       });
-      gsap.set(leftCurtain, { opacity: 0.86, xPercent: 9, transformOrigin: "left top" });
-      gsap.set(rightCurtain, { opacity: 0.86, xPercent: -9, transformOrigin: "right top" });
-      gsap.set([leftFlowers, rightFlowers], { opacity: 0.46, y: 23 });
-      gsap.set(lanterns, { opacity: 0.46, y: -12 });
-      gsap.set(mist, { opacity: 0.34, yPercent: 0 });
-      gsap.set(rays, { opacity: 0.13, scale: 1, transformOrigin: "center top" });
+      gsap.set(leftCurtain, { autoAlpha: 0, xPercent: 10, transformOrigin: "left top" });
+      gsap.set(rightCurtain, { autoAlpha: 0, xPercent: -10, transformOrigin: "right top" });
+      gsap.set([leftFlowers, rightFlowers], { autoAlpha: 0, y: 28 });
+      gsap.set(lanterns, { autoAlpha: 0, y: -16 });
+      gsap.set(mist, { opacity: 0.46, yPercent: 0 });
+      gsap.set(rays, { opacity: 0.07, scale: 1, transformOrigin: "center top" });
       gsap.set(scrim, { opacity: 0 });
       gsap.set(copy, { autoAlpha: 0, y: 16 });
       gsap.set(cue, { autoAlpha: 1 });
 
-      // A shorter 2-viewport native scroll: approaching the gate, opening
-      // the silk and reading the venue. Scroll remains fully reversible.
+      // Five calm beats across a 3.1-viewport native scroll:
+      // 0–15% atmosphere; 15–35% architecture; 35–60% silk reveal;
+      // 60–75% courtyard arrival; 75–100% quiet reading hold.
       const timeline = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.55,
+          scrub: 0.68,
           invalidateOnRefresh: true,
         },
       });
 
-      // 00–25%: approach from a distance through a *visible* courtyard.
+      // 0–15%: air and landscape already exist; only soft depth changes.
       timeline
-        .to(courtyard, { scale: 1.065, duration: 2.5 }, 0)
-        .to(walkway, { scale: 1.02, opacity: 0.86, yPercent: 0, duration: 2.5 }, 0)
+        .to(courtyard, { opacity: 0.9, scale: 1.025, duration: 1.5 }, 0)
+        .to(walkway, { opacity: 0.38, scale: 0.985, yPercent: 2, duration: 1.5 }, 0)
+        .to(veil, { opacity: 0.13, duration: 1.5 }, 0)
+        .to(mist, { opacity: 0.44, yPercent: 2, duration: 1.5 }, 0);
+
+      // 15–35%: the gold crown and pillars slowly emerge as one focal point.
+      timeline
         .to([crown, leftPillar, rightPillar], {
-          y: 0, scale: 0.96, opacity: 1, duration: 2.5,
-        }, 0)
-        .to([leftFlowers, rightFlowers], { y: 0, opacity: 0.76, duration: 2.5 }, 0)
-        .to(lanterns, { opacity: 0.75, y: 0, duration: 2.3 }, 0)
-        .to(mist, { opacity: 0.27, yPercent: 5, duration: 2.5 }, 0)
-        .to(cue, { autoAlpha: 0, duration: 0.8 }, 1.7);
+          opacity: 1, y: 0, scale: 1, duration: 2,
+        }, 1.5)
+        .to(walkway, { opacity: 0.7, scale: 1.03, yPercent: 0, duration: 2 }, 1.5)
+        .to(courtyard, { scale: 1.07, duration: 2 }, 1.5)
+        .to(veil, { opacity: 0.02, duration: 2 }, 1.5)
+        .to(mist, { opacity: 0.32, yPercent: 6, duration: 2 }, 1.5)
+        .to(cue, { autoAlpha: 0, duration: 0.75 }, 2.6);
 
-      // 25–48%: gentle forward camera push, the crown reaches full scale.
+      // 35–60%: curtains become visible only after the gateway is
+      // established, then open with a deliberate theatrical rhythm.
       timeline
-        .to(courtyard, { scale: 1.115, duration: 2.3 }, 2.5)
-        .to(walkway, { scale: 1.1, duration: 2.3 }, 2.5)
-        .to([crown, leftPillar, rightPillar], { scale: 1.055, duration: 2.3 }, 2.5)
-        .to(rays, { opacity: 0.23, duration: 2 }, 2.7);
+        .to([leftCurtain, rightCurtain], { autoAlpha: 1, duration: 0.4 }, 3.5)
+        .to(leftCurtain, { xPercent: -60, rotation: -1, duration: 2.2 }, 3.8)
+        .to(rightCurtain, { xPercent: 60, rotation: 1, duration: 2.2 }, 3.8)
+        .to([leftFlowers, rightFlowers], { autoAlpha: 0.7, y: 0, duration: 1.7 }, 3.85)
+        .to(lanterns, { autoAlpha: 0.72, y: 0, duration: 1.8 }, 3.8)
+        .to(rays, { opacity: 0.24, scale: 1.04, duration: 1.6 }, 4.15)
+        .to(mist, { opacity: 0.21, yPercent: 9, duration: 2 }, 3.9)
+        .to(courtyard, { scale: 1.105, duration: 2 }, 4);
 
-      // 48–68%: curtains genuinely open while flowers move in parallax.
+      // 60–75%: a restrained approach, with architecture moving toward
+      // the margins while the text area gains a local reading gradient.
       timeline
-        .to(leftCurtain, { xPercent: -77, rotation: -1.1, opacity: 0.8, duration: 2 }, 4.8)
-        .to(rightCurtain, { xPercent: 77, rotation: 1.1, opacity: 0.8, duration: 2 }, 4.8)
-        .to(leftFlowers, { xPercent: -19, scale: 1.09, duration: 2 }, 4.8)
-        .to(rightFlowers, { xPercent: 19, scale: 1.09, duration: 2 }, 4.8)
-        .to(courtyard, { scale: 1.17, duration: 2 }, 4.8)
-        .to(walkway, { scale: 1.2, yPercent: 9, duration: 2 }, 4.8)
-        .to(mist, { opacity: 0.15, duration: 2 }, 4.8);
+        .to(courtyard, { scale: 1.15, duration: 1.5 }, 6)
+        .to(walkway, { scale: 1.13, yPercent: 10, opacity: 0.55, duration: 1.5 }, 6)
+        .to(crown, { scale: 1.1, yPercent: -15, opacity: 0.36, duration: 1.5 }, 6)
+        .to(leftPillar, { xPercent: -27, opacity: 0.38, duration: 1.5 }, 6)
+        .to(rightPillar, { xPercent: 27, opacity: 0.38, duration: 1.5 }, 6)
+        .to(leftCurtain, { xPercent: -77, opacity: 0.16, duration: 1.5 }, 6)
+        .to(rightCurtain, { xPercent: 77, opacity: 0.16, duration: 1.5 }, 6)
+        .to([leftFlowers, rightFlowers], { opacity: 0.26, duration: 1.5 }, 6)
+        .to(lanterns, { opacity: 0.18, duration: 1.5 }, 6)
+        .to(mist, { opacity: 0.14, duration: 1.5 }, 6)
+        .to(scrim, { opacity: 0.9, duration: 1.4 }, 6.1)
+        .to(copy, { autoAlpha: 1, y: 0, duration: 1.15, ease: "power2.out" }, 6.35);
 
-      // 68–81%: pass under the crown, with a LOCAL reading gradient that
-      // softens only the centre instead of washing out the full environment.
-      timeline
-        .to(crown, { scale: 1.14, yPercent: -12, opacity: 0.4, duration: 1.3 }, 6.8)
-        .to(leftPillar, { xPercent: -24, opacity: 0.4, duration: 1.3 }, 6.8)
-        .to(rightPillar, { xPercent: 24, opacity: 0.4, duration: 1.3 }, 6.8)
-        .to([leftCurtain, rightCurtain], { opacity: 0.35, duration: 1.3 }, 6.8)
-        .to([leftFlowers, rightFlowers], { opacity: 0.43, duration: 1.3 }, 6.8)
-        .to(scrim, { opacity: 1, duration: 1.3 }, 6.8)
-        .to(copy, { autoAlpha: 1, y: 0, duration: 1.1, ease: "power2.out" }, 7.05);
-
-      // 81–100%: hold the completely editable venue details for reading.
-      timeline.to({}, { duration: 1.9 }, 8.1);
+      // 75–100%: hold the completed courtyard and editable venue text
+      // still long enough for guests to read the destination and directions.
+      timeline.to({}, { duration: 2.5 }, 7.5);
     }, section);
 
     // The previous chapter has its own triggers; a single refresh is sufficient
@@ -193,6 +210,7 @@ export default function RoyalGateway() {
           sizes="100vw" cover />
         <Layer name="mist" file="gateway-mist.png" className={styles.mist}
           sizes="100vw" cover />
+        <div className={styles.venueVeil} data-gw="veil" aria-hidden="true" />
 
         <Layer name="curtain-left" file="curtain-left.png" className={styles.curtainLeft}
           sizes="(max-width: 700px) 58vw, 390px" />

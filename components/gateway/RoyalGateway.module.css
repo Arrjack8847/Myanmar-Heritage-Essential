@@ -2,7 +2,7 @@
 .story {
   position: relative;
   isolation: isolate;
-  height: 292svh;
+  height: 310svh;
   margin: 0;
   background: #f7edde;
   scroll-margin-top: 0;
@@ -157,7 +157,7 @@
   background: linear-gradient(#ae8650,transparent);
 }
 @media (min-width: 800px) {
-  .story { height: 268svh; }
+  .story { height: 290svh; }
   .crown { top: 4%; width: min(66vw, 690px); }
   .pillarLeft, .pillarRight { top: 29%; width: min(22vw, 245px); height: 74%; }
   .curtainLeft, .curtainRight { top: 29%; width: min(27vw, 330px); height: 66%; }
@@ -204,63 +204,77 @@
 }
 
 
-/* CONTINUOUS CEREMONY → VENUE HANDOFF
-   The layered veil overlaps the final ceremony viewport. A soft mask avoids
-   the previous rectangular section edge; no large gold frame covers text. */
+/* JN-W01 · restrained cinematic bridge: no opaque blank interval. */
 .story { z-index: 2; }
 .handoff {
   position: absolute;
   z-index: 24;
-  top: -31svh;
+  top: -34svh;
   left: 0;
   right: 0;
-  height: 52svh;
+  height: 53svh;
   pointer-events: none;
   overflow: hidden;
-  background:
-    linear-gradient(180deg,
-      rgba(248,238,220,0) 0%,
-      rgba(248,238,220,.05) 25%,
-      rgba(248,238,220,.13) 62%,
-      rgba(248,238,220,0) 100%),
-    url("/heritage/gateway/venue-courtyard.png") center 39% / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 29%, #000 73%, transparent);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 29%, #000 73%, transparent);
+  /* Only atmosphere: do not repeat the courtyard illustration. */
+  background: linear-gradient(180deg,
+    transparent 0%, rgba(248,238,220,.04) 28%,
+    rgba(248,238,220,.15) 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 77%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 77%, transparent 100%);
+}
+.handoff::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .34;
+  background: url("/heritage/gateway/gateway-mist.png") center / cover no-repeat;
 }
 .handoffSky {
   position: absolute;
   inset: 0;
-  opacity: .22;
-  background: url("/heritage/gateway/gateway-mist.png") center / cover no-repeat;
+  opacity: .28;
+  background: url("/heritage/bagan-pagodas.png") center bottom / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 15%, black 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 15%, black 70%, transparent 100%);
 }
 .handoffSigil {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  color: #b08b52;
+  top: 49%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 2px 10px rgba(255,250,231,.85));
+  color: #ad8951;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1px 3px rgba(255,252,242,.75));
 }
-.handoffSigil svg { display: block; width: 48px; height: 42px; }
+.handoffSigil svg { display: block; width: 48px; height: 40px; }
 .handoffThread {
   display: block;
   width: 1px;
-  height: min(7svh, 60px);
-  background: linear-gradient(180deg,
-    transparent 0%, #bd985e 35%, #b18b50 65%, transparent 100%);
+  height: min(8svh, 68px);
+  background: linear-gradient(180deg, transparent,#b99556 48%,transparent);
 }
-/* At the end, preserve the golden courtyard around the readable text. */
+.venueVeil {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(248,238,220,.8) 0%, rgba(248,238,220,.94) 52%,
+    rgba(248,238,220,.66) 100%);
+}
+/* Keep the location legible without bleaching the entire gold courtyard. */
 .readingScrim {
-  background:
-    radial-gradient(ellipse 69% 46% at 50% 51%,
-      rgba(255,250,237,.88) 0%,
-      rgba(255,248,232,.71) 46%,
-      rgba(248,237,217,.24) 80%,
-      transparent 100%);
+  background: radial-gradient(
+    ellipse 72% 52% at 50% 51%,
+    rgba(255,251,239,.94) 0%,
+    rgba(255,248,234,.77) 45%,
+    rgba(248,237,217,.3) 78%,
+    rgba(248,237,217,.03) 100%
+  );
 }
 @media (prefers-reduced-motion: reduce) {
   .handoff { display: none; }
+  .venueVeil { display: none; }
 }
