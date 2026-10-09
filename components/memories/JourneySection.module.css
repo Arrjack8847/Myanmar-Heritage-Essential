@@ -557,3 +557,111 @@
   .finaleCopy { opacity: 1 !important; visibility: visible !important; transform: none !important; }
   .finaleWash { opacity: 0 !important; }
 }
+
+
+/* The album's controls feel like fine stationery, never generic UI buttons.
+   Animate inner paper details; GSAP owns the outer photo transform. */
+.photoPaper {
+  transition: box-shadow .35s ease, border-color .35s ease;
+}
+.photoAction {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 44px;
+  margin: 16px 3px 0;
+  padding: 12px 17px;
+  color: #744a40;
+  background: linear-gradient(110deg,rgba(255,252,245,.98),rgba(239,224,199,.72));
+  border: 1px solid rgba(174,129,70,.76);
+  box-shadow: inset 0 0 0 3px rgba(255,250,238,.84),
+    inset 0 0 0 4px rgba(178,137,79,.23),
+    0 5px 13px rgba(95,62,50,.075);
+  border-radius: 1px;
+  font: 700 9px/1.4 var(--sans);
+  letter-spacing: .18em;
+  transition: color .3s ease, border-color .3s ease,
+    background .3s ease, box-shadow .3s ease;
+}
+.photoAction::after {
+  content: "↗";
+  color: #a77940;
+  font: 400 16px/1 var(--display);
+  letter-spacing: 0;
+  transition: transform .3s ease;
+}
+.finaleAction {
+  position: absolute;
+  z-index: 2;
+  top: calc(28px + env(safe-area-inset-top,0px));
+  right: clamp(17px,5vw,62px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 46px;
+  padding: 12px 17px;
+  border: 1px solid rgba(245,211,150,.8);
+  border-radius: 1px;
+  color: #fff8ea;
+  background: linear-gradient(120deg,rgba(55,28,36,.83),rgba(102,54,62,.77));
+  box-shadow: inset 0 0 0 3px rgba(42,23,30,.6),
+    inset 0 0 0 4px rgba(234,200,140,.35),
+    0 7px 18px rgba(28,13,19,.21);
+  font: 700 9px/1.4 var(--sans);
+  letter-spacing: .17em;
+  pointer-events: none;
+  transition: border-color .3s ease, background .3s ease;
+}
+.finaleAction > span {
+  color: #f3d1a1;
+  font: 400 18px/1 var(--display);
+  transition: transform .3s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .photoButton:hover .photoPaper {
+    border-color: rgba(159,110,57,.70);
+    box-shadow:
+      inset 0 0 0 3px rgba(239,226,204,.62),
+      inset 0 0 0 4px rgba(185,150,99,.2),
+      0 27px 54px rgba(83,57,48,.17),
+      0 3px 10px rgba(85,58,44,.08);
+  }
+  .photoButton:hover .photoAction {
+    color: #582c38;
+    border-color: #9d6f3f;
+    background: #fff9ee;
+    box-shadow: inset 0 0 0 3px rgba(255,250,238,.90),
+      inset 0 0 0 4px rgba(178,137,79,.3),
+      0 9px 19px rgba(95,62,50,.14);
+  }
+  .photoButton:hover .photoAction::after { transform: translate(2px,-2px); }
+  .finalePhotoButton:hover .finaleAction {
+    border-color: #ffe0aa;
+    background: rgba(92,45,55,.95);
+  }
+  .finalePhotoButton:hover .finaleAction > span { transform: translate(2px,-2px); }
+}
+.photoButton:active .photoAction { background: #eee1ce; }
+.finalePhotoButton:active .finaleAction { background: #572b38; }
+@media (max-width: 640px) {
+  .photoAction { letter-spacing: .14em; font-size: 9px; }
+  .finaleAction {
+    top: calc(16px + env(safe-area-inset-top,0px));
+    right: 15px;
+    padding: 10px 13px;
+    min-height: 44px;
+    gap: 10px;
+    font-size: 8px;
+    letter-spacing: .12em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photoPaper,.photoAction,.photoAction::after,.finaleAction,.finaleAction > span {
+    transition: none !important;
+  }
+  .photoButton:hover .photoAction::after,
+  .finalePhotoButton:hover .finaleAction > span { transform: none !important; }
+}
