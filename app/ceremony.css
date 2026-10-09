@@ -611,13 +611,17 @@
     rgba(235,207,165,.13) 85%,
     rgba(225,190,141,.31) 100%
   );
+  /* Feather the lower atmosphere gradually for the last ~170px on phones.
+     Only this decorative scene layer is masked; live text stays perfectly sharp. */
   -webkit-mask-image: linear-gradient(
-    180deg, transparent 0%, transparent 66%,
-    rgba(0,0,0,.18) 77%, rgba(0,0,0,.74) 91%, #000 100%
+    180deg, transparent 0%, transparent 62%,
+    rgba(0,0,0,.08) 69%, rgba(0,0,0,.29) 79%,
+    rgba(0,0,0,.68) 92%, rgba(0,0,0,.88) 100%
   );
   mask-image: linear-gradient(
-    180deg, transparent 0%, transparent 66%,
-    rgba(0,0,0,.18) 77%, rgba(0,0,0,.74) 91%, #000 100%
+    180deg, transparent 0%, transparent 62%,
+    rgba(0,0,0,.08) 69%, rgba(0,0,0,.29) 79%,
+    rgba(0,0,0,.68) 92%, rgba(0,0,0,.88) 100%
   );
 }
 .ceremony-scene__mist-bridge::before {

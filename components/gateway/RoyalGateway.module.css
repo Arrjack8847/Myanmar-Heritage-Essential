@@ -216,27 +216,46 @@
   pointer-events: none;
   overflow: hidden;
   /* Only atmosphere: do not repeat the courtyard illustration. */
+  /* Longer vertical feather across the actual section boundary. Avoid a
+     broad opaque ivory bar: the gateway stays visible under tinted mist. */
   background: linear-gradient(180deg,
-    transparent 0%, rgba(248,237,219,.07) 23%,
-    rgba(239,216,182,.17) 53%, rgba(225,193,148,.18) 70%,
+    transparent 0%, rgba(248,237,219,.06) 17%,
+    rgba(244,227,201,.19) 38%, rgba(238,215,183,.37) 58%,
+    rgba(232,205,164,.40) 73%, rgba(237,214,182,.21) 88%,
     transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 77%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 77%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%, rgba(0,0,0,.23) 17%, rgba(0,0,0,.78) 35%,
+    #000 49%, #000 72%, rgba(0,0,0,.65) 86%, transparent 100%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%, rgba(0,0,0,.23) 17%, rgba(0,0,0,.78) 35%,
+    #000 49%, #000 72%, rgba(0,0,0,.65) 86%, transparent 100%);
 }
 .handoff::before {
   content: "";
   position: absolute;
-  inset: 0;
-  opacity: .45;
+  inset: -9px -3%;
+  opacity: .39;
   background: url("/heritage/gateway/gateway-mist.png") center / cover no-repeat;
+  /* Only the atmospheric texture gets softened — not the gateway artwork. */
+  filter: blur(8px);
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%, rgba(0,0,0,.45) 21%, #000 45%,
+    #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%, rgba(0,0,0,.45) 21%, #000 45%,
+    #000 70%, transparent 100%);
 }
 .handoffSky {
   position: absolute;
   inset: 0;
   opacity: .22;
   background: url("/heritage/bagan-pagodas.png") center bottom / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, transparent 15%, black 70%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 15%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%,
+    rgba(0,0,0,.18) 22%, rgba(0,0,0,.65) 48%, black 67%,
+    rgba(0,0,0,.4) 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%,
+    rgba(0,0,0,.18) 22%, rgba(0,0,0,.65) 48%, black 67%,
+    rgba(0,0,0,.4) 84%, transparent 100%);
 }
 .handoffSigil {
   position: absolute;
@@ -323,8 +342,14 @@
   background-size: contain;
   opacity: .23;
   filter: saturate(.75) sepia(.14);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
+  /* Radial feather eliminates visible rectangular edges of each cutout.
+     The central crown and headings remain untouched. */
+  -webkit-mask-image: radial-gradient(ellipse 74% 72% at 50% 49%,
+    #000 18%, rgba(0,0,0,.83) 45%, rgba(0,0,0,.34) 72%,
+    transparent 100%);
+  mask-image: radial-gradient(ellipse 74% 72% at 50% 49%,
+    #000 18%, rgba(0,0,0,.83) 45%, rgba(0,0,0,.34) 72%,
+    transparent 100%);
 }
 .handoffCanopy::before {
   left: -10%;
