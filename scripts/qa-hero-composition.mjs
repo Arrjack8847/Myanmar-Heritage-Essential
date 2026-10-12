@@ -25,6 +25,19 @@ try {
         return {hero:get(".heritage-scene"),heirloom:get(".royal-heirloom"),inner:get(".royal-heirloom__card"),original:get(".heritage-scene__card"),pagodas:get(".heritage-scene__pagodas")};
       });
       console.log("HERO_DIAG "+JSON.stringify({viewport:w+"x"+h,progress,...metrics}));
+      // A complete settled heirloom must fit within the same viewport at
+      // desktop and iPhone dimensions. The actual scroll amount is immaterial.
+      if(progress===.49 || progress===.7 || progress===.78){
+        const card=metrics.heirloom;
+        const fits=card && card.opacity==="1" && card.visibility==="visible" &&
+          card.top>=8 && card.bottom<=h-8 &&
+          Math.abs((card.left+card.right)/2-w/2)<=3;
+        if(!fits)throw new Error("Hero card cropped or off-center: "+JSON.stringify({w,h,progress,card}));
+      }
+      if(progress===.7 && w===1653){
+        const mask=await page.evaluate(()=>getComputedStyle(document.querySelector(".heritage-scene__pagodas")).maskImage);
+        if(mask==="none")throw new Error("Bagan panorama still has hard, unmasked edges");
+      }
       if(w===1653 && progress===.7)await page.screenshot({path:"device-qa-screenshots/hero-composition-1653.png",animations:"disabled"});
     }
     await context.close();

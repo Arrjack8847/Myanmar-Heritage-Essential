@@ -245,3 +245,23 @@
   .heritage-scene__card { top: clamp(31px, 5svh, 65px); width: min(410px, 43svh); }
   .heritage-scene__signoff { bottom: 85px; }
 }
+
+/* Remove the visible vertical/rectangular cutout edges from the existing Bagan
+   pagoda panorama. Feather only the scenery plane—NOT the finely detailed
+   gold invitation, portraits or separate petal artworks. */
+.heritage-scene__pagodas {
+  -webkit-mask-image: radial-gradient(
+    ellipse 72% 82% at 50% 46%,
+    #000 39%,
+    rgba(0,0,0,.94) 55%,
+    rgba(0,0,0,.46) 78%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 72% 82% at 50% 46%,
+    #000 39%,
+    rgba(0,0,0,.94) 55%,
+    rgba(0,0,0,.46) 78%,
+    transparent 100%
+  );
+}
