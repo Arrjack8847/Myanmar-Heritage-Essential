@@ -3,139 +3,182 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { invitation } from "@/data/invitation";
-import HeritageAtmosphere from "@/components/HeritageAtmosphere";
-import LotusMotif from "@/components/heritage/LotusMotif";
-import JourneyTimeline from "./JourneyTimeline";
 import useJourneyMotion from "./JourneyMotion";
 import styles from "./JourneySection.module.css";
 
 type Props = { onOpenPhoto: (galleryIndex: number) => void };
 
+const ASSETS = "/heritage/memories/chronicle";
+const ROMAN = ["I", "II", "III"] as const;
+
 /**
- * Royal Heirloom Album — two handmade photo memories and one cinematic finale.
- * Decorations reuse approved heritage PNGs / CSS foil details, never SVG assets.
- * All captions, photos and story text remain editable in data/invitation.ts.
+ * Section 04 — Royal Myanmar Love Chronicle.
+ * The actual photographs and story copy always come from data/invitation.ts.
+ * All ornamental artwork is an independent transparent layer, never embedded
+ * in the photographs or in the editable HTML content.
  */
 export default function JourneySection({ onOpenPhoto }: Props) {
   const root = useRef<HTMLElement>(null);
   useJourneyMotion(root);
-  const finale = invitation.journey[2];
-  const finalPhoto = finale ? invitation.gallery[finale.galleryIndex] : undefined;
+
+  const finalMemory = invitation.journey[2];
+  const finalPhoto = finalMemory ? invitation.gallery[finalMemory.galleryIndex] : undefined;
 
   return (
-    <section id="memories" ref={root} className={styles.section} aria-labelledby="memories-title">
-      <div className={styles.paper} aria-hidden="true" />
-      <div className={styles.entryGlow} data-journey-entry aria-hidden="true" />
-      <div className={styles.gatewayEcho} data-journey-gateway-mark aria-hidden="true">
-        <Image src="/heritage/ceremony/royal-transition-ornament.png" alt=""
-          width={49} height={79} quality={74} loading="lazy" />
-      </div>
-      <HeritageAtmosphere
-        scene="journey"
-        skyClassName={styles.pagodaHorizon}
-        mistClassName={styles.mistVeil}
-      />
-      <div className={styles.hangingFlowers} data-journey-botanical aria-hidden="true">
-        <Image src="/heritage/hanging-magnolias.png" alt="" fill
-          sizes="(max-width: 700px) 180px, 320px" quality={70} />
+    <section ref={root} id="memories" className={styles.section} aria-labelledby="memories-title">
+      <div className={styles.paper} aria-hidden="true">
+        <Image src={ASSETS + "/01-royal-manuscript-background-desktop.png"} alt=""
+          fill sizes="100vw" quality={72} loading="lazy" className={styles.canvasDesktop} />
+        <Image src={ASSETS + "/01-royal-manuscript-background-mobile.png"} alt=""
+          fill sizes="100vw" quality={72} loading="lazy" className={styles.canvasMobile} />
       </div>
 
-      <header className={styles.intro} data-journey-title>
-        <p className={styles.eyebrow} data-journey-eyebrow>CHAPTER THREE · THE STORY OF US</p>
-        <h2 id="memories-title" className={styles.title}>
-          <span data-journey-title-main>Our Journey</span>
-          <em data-journey-title-accent>Together</em>
+      <div className={styles.entryMist} data-chronicle-entry aria-hidden="true">
+        <Image src={ASSETS + "/02-royal-entrance-mist.png"} alt=""
+          fill sizes="100vw" quality={70} loading="lazy" />
+      </div>
+
+      <div className={styles.hangingFlowers} data-chronicle-flower aria-hidden="true">
+        <Image src="/heritage/hanging-magnolias.png" alt="" fill
+          sizes="(max-width:640px) 120px, 300px" quality={68} loading="lazy" />
+      </div>
+      <div className={styles.flowerLeft} data-chronicle-flower aria-hidden="true">
+        <Image src={ASSETS + "/11a-floral-parallax-left.png"} alt="" fill
+          sizes="(max-width:640px) 150px, 320px" quality={65} loading="lazy" />
+      </div>
+      <div className={styles.flowerRight} data-chronicle-flower aria-hidden="true">
+        <Image src={ASSETS + "/11b-floral-parallax-right.png"} alt="" fill
+          sizes="(max-width:640px) 150px, 320px" quality={65} loading="lazy" />
+      </div>
+
+      <header className={styles.intro} data-chronicle-intro>
+        <div className={styles.headingCrest} data-chronicle-crest aria-hidden="true">
+          <Image src={ASSETS + "/03-royal-heading-ornament.png"} alt="" fill
+            sizes="(max-width:640px) 300px, 510px" quality={77} loading="lazy" />
+        </div>
+        <p className={styles.eyebrow} data-chronicle-reveal>THE ROYAL CHRONICLE</p>
+        <h2 className={styles.title} id="memories-title">
+          <span data-chronicle-reveal>Our Journey</span>
+          <em data-chronicle-reveal>Together</em>
         </h2>
-        <p className={styles.lead} data-journey-lead>
+        <p className={styles.introCopy} data-chronicle-reveal>
           Before the celebration, there was a story. Ours was written in the little moments that brought us here.
         </p>
-        <span className={styles.headingRule} aria-hidden="true" />
+        <div className={styles.titleDivider} aria-hidden="true">
+          <Image src={ASSETS + "/10-royal-closing-transition.png"} alt="" fill
+            sizes="(max-width:640px) 220px, 320px" quality={68} loading="lazy" />
+        </div>
       </header>
 
-      <div className={styles.story} data-journey-story>
-        <span className={styles.globalThread} aria-hidden="true">
-          <span className={styles.globalThreadFill} data-gold-progress />
+      <div className={styles.chronicle} data-chronicle-story>
+        <span className={styles.timeline} aria-hidden="true">
+          <span className={styles.timelineDraw} data-chronicle-thread>
+            <Image src={ASSETS + "/06-golden-timeline-ornament.png"} alt="" fill
+              sizes="(max-width:640px) 58px, 146px" quality={72} loading="lazy" />
+          </span>
         </span>
-        {invitation.journey.slice(0, 2).map((memory, index) => {
+
+        {invitation.journey.map((memory, index) => {
           const photo = invitation.gallery[memory.galleryIndex];
           if (!photo) return null;
           return (
             <article
+              className={[styles.chapter, index % 2 === 1 ? styles.chapterReverse : ""].join(" ")}
+              data-chronicle-chapter
               key={memory.number}
-              className={[styles.memory, index === 1 ? styles.reverse : ""].join(" ")}
-              data-memory
             >
-              <JourneyTimeline
-                className={styles.timeline}
-                progressClassName={styles.timelineProgress}
-                markerClassName={styles.timelineMarker}
-              />
-              <div className={styles.photoColumn}>
-                <div className={styles.photoMotion} data-memory-photo>
-                  <button className={styles.photoButton} type="button"
-                    onClick={() => onOpenPhoto(memory.galleryIndex)}
-                    aria-label={"View photograph: " + photo.alt}>
-                    <span className={styles.photoPaper}>
-                      <span className={styles.photoWindow}>
-                        {/* Keep original client photograph unchanged. */}
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-                      </span>
-                      <span className={styles.photoCaption}>{photo.caption}</span>
-                    </span>
-                    <span className={styles.photoAction} aria-hidden="true"><Image src="/heritage/buttons/view-photos.png" alt="" width={1780} height={414} sizes="(max-width:640px) 55vw, 240px" /></span>
-                  </button>
-                </div>
+              <span className={styles.timelineMarker} data-chronicle-marker aria-hidden="true">
+                <Image src="/heritage/memories/memory-lotus-marker.svg" alt=""
+                  width={44} height={44} />
+              </span>
+
+              <div className={styles.chapterArtwork} data-chronicle-photo>
+                {index === 0 && (
+                  <div className={styles.archHalo} aria-hidden="true">
+                    <Image src={ASSETS + "/04-royal-chapter-frame.png"} alt="" fill
+                      sizes="(max-width:640px) 310px, 450px" quality={75} loading="lazy" />
+                  </div>
+                )}
+                <button className={styles.photoButton} type="button"
+                  onClick={() => onOpenPhoto(memory.galleryIndex)}
+                  aria-label={"View photograph: " + photo.alt}>
+                  <span className={styles.photoWindow}>
+                    {/* Keep the original client photograph unmodified. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                  </span>
+                  <span className={styles.photoFrame} aria-hidden="true">
+                    <Image src={ASSETS + "/05-royal-photo-frame.png"} alt="" fill
+                      sizes="(max-width:640px) 88vw, 440px" quality={80} loading="lazy" />
+                  </span>
+                  <span className={styles.photoCaption}>{photo.caption}</span>
+                  <span className={styles.viewPhoto} aria-hidden="true">
+                    <Image src="/heritage/buttons/view-photos.png" alt=""
+                      width={1780} height={414} sizes="(max-width:640px) 135px, 164px" />
+                  </span>
+                </button>
               </div>
-              <div className={styles.copyColumn} data-memory-copy>
-                <p className={styles.chapter}>{memory.number} · {memory.chapter}</p>
-                <h3 className={styles.memoryTitle}>{memory.title}</h3>
-                <p className={styles.memoryDescription}>{memory.description}</p>
+
+              <div className={styles.chapterCopy} data-chronicle-copy>
+                <div className={styles.badge}>
+                  <Image src={ASSETS + "/07-royal-chapter-badge.png"} alt=""
+                    fill sizes="(max-width:640px) 190px, 230px" quality={76} loading="lazy" />
+                  <span>CHAPTER {ROMAN[index] ?? memory.number}</span>
+                </div>
+                <p className={styles.chapterKicker}>{memory.chapter}</p>
+                <h3>{memory.title}</h3>
+                <p className={styles.chapterDescription}>{memory.description}</p>
+                <div className={styles.chapterSeparator} aria-hidden="true">
+                  <Image src={ASSETS + "/09a-royal-lotus-central.png"} alt=""
+                    fill sizes="130px" quality={70} loading="lazy" />
+                </div>
               </div>
             </article>
           );
         })}
       </div>
 
-      <div className={styles.finaleLead} aria-hidden="true">
-        <span className={styles.finaleLeadRule} />
-        <LotusMotif variant="marker" />
-        <span>OUR NEXT CHAPTER</span>
-      </div>
-
-      {finale && finalPhoto && (
-        <div className={styles.finaleRunway} data-finale-runway>
+      {finalMemory && finalPhoto && (
+        <div className={styles.finaleRunway} data-chronicle-finale>
           <div className={styles.finaleStage}>
-            <div className={styles.finaleMount} data-finale-mount>
+            <div className={styles.finaleMount} data-chronicle-mount>
               <button className={styles.finalePhotoButton} type="button"
-                aria-label={"View final memory photograph: " + finalPhoto.alt}
-                onClick={() => onOpenPhoto(finale.galleryIndex)}>
+                onClick={() => onOpenPhoto(finalMemory.galleryIndex)}
+                aria-label={"View final memory photograph: " + finalPhoto.alt}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={finalPhoto.src} alt={finalPhoto.alt} loading="lazy" decoding="async" />
-                <span className={styles.finaleAction} aria-hidden="true"><Image src="/heritage/buttons/view-photos.png" alt="" width={1780} height={414} sizes="(max-width:640px) 44vw, 240px" /></span>
               </button>
-              <span className={styles.finaleMat} data-finale-mat aria-hidden="true" />
+              <span className={styles.finaleMat} data-chronicle-mat aria-hidden="true" />
             </div>
-            <div className={styles.finaleShade} data-finale-shade aria-hidden="true" />
-            <div className={styles.finaleCopy} data-finale-copy>
-              <p className={styles.finaleChapter}>{finale.number} · {finale.chapter}</p>
-              <h3>{finale.title}</h3>
-              <p className={styles.finaleDescription}>{finale.description}</p>
+            <div className={styles.finaleShade} data-chronicle-shade aria-hidden="true" />
+            <div className={styles.finalePetals} data-chronicle-petals aria-hidden="true">
+              <Image src={ASSETS + "/12b-floating-royal-petals.png"} alt=""
+                fill sizes="100vw" quality={66} loading="lazy" />
             </div>
-            <div className={styles.finaleWash} data-finale-wash aria-hidden="true" />
+            <div className={styles.finaleWords} data-chronicle-words>
+              <p>OUR NEXT CHAPTER</p>
+              <h3>{finalMemory.title}</h3>
+              <span>{finalMemory.description}</span>
+              <button className={styles.finaleView} type="button"
+                onClick={() => onOpenPhoto(finalMemory.galleryIndex)}
+                aria-label={"View photograph: " + finalPhoto.alt}>
+                <Image src="/heritage/buttons/view-photos.png" alt="View photos"
+                  width={1780} height={414} sizes="(max-width:640px) 152px, 192px" />
+              </button>
+            </div>
+            <div className={styles.finaleWash} data-chronicle-wash aria-hidden="true" />
           </div>
         </div>
       )}
 
-      <div className={styles.ending} data-journey-ending>
-        <span className={styles.endRule} aria-hidden="true" />
-        <LotusMotif variant="divider" className={styles.endingLotus} />
-        <p className={styles.closingSignoff}>EVERY STORY IS MORE BEAUTIFUL WHEN SHARED</p>
+      <div className={styles.ending} data-chronicle-ending>
+        <div className={styles.endingOrnament} aria-hidden="true">
+          <Image src={ASSETS + "/10-royal-closing-transition.png"} alt=""
+            fill sizes="(max-width:640px) 88vw, 620px" quality={76} loading="lazy" />
+        </div>
+        <p className={styles.endingEyebrow}>A STORY WRITTEN WITH LOVE</p>
         <p className={styles.closingQuote}>Our next chapter begins with the people we hold dear.</p>
-      </div>
-      <div className={styles.mistBridge} data-journey-atmosphere="exit" aria-hidden="true">
-        <Image src="/heritage/golden-mist.png" alt="" fill
-          sizes="100vw" quality={65} loading="lazy" draggable={false} />
+        <span className={styles.endingLine} aria-hidden="true" />
       </div>
     </section>
   );
