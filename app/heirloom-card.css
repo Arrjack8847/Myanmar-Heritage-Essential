@@ -250,3 +250,9 @@
   .heritage-story__intro { height: 100svh; }
   .royal-unfold { top: calc(100svh - 88px); }
 }
+
+/* Consistent 44px physical touch target on the second invitation card,
+   including short iPhones where the legacy 38px rule previously won. */
+@media (max-width: 480px) and (orientation: portrait) {
+  .invitation-page .royal-heirloom__button.royal-action { min-height: 44px; }
+}
