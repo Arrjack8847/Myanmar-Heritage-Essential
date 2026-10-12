@@ -15,7 +15,7 @@ export default function MotionStability() {
     ScrollTrigger.config({ ignoreMobileResize: true });
 
     let raf = 0;
-    let delay: ReturnType<typeof setTimeout> | undefined;
+    let delay: number | undefined;
     let cancelled = false;
     let viewportWidth = window.innerWidth;
     let viewportHeight = window.innerHeight;
