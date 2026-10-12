@@ -93,9 +93,9 @@ export default function RoyalHeirloomCard() {
           />
         </div>
 
-        {/* CSS hairlines stand in for the one decorative divider PNG not yet uploaded. */}
+        {/* The client's actual transparent gold divider; independent and replaceable. */}
         <div className="royal-heirloom__blessing" lang="my">
-          <span className="royal-heirloom__blessing-divider" aria-hidden="true"><i /></span>
+          <Ornament file="name-divider-ornament" className="royal-heirloom__blessing-divider" />
           <p>{card.blessing}</p>
         </div>
         <div className="royal-heirloom__cta">

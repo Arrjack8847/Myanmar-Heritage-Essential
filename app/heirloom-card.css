@@ -28,7 +28,8 @@
 .royal-heirloom__crown,
 .royal-heirloom__portrait-frame,
 .royal-heirloom__rings-art,
-.royal-heirloom__accent {
+.royal-heirloom__accent,
+.royal-heirloom__blessing-divider {
   position: absolute;
   display: block;
   pointer-events: none;
@@ -45,7 +46,8 @@
 .royal-heirloom__crown img,
 .royal-heirloom__portrait-frame img,
 .royal-heirloom__rings-art img,
-.royal-heirloom__accent img { object-fit: contain; }
+.royal-heirloom__accent img,
+.royal-heirloom__blessing-divider img { object-fit: contain; }
 
 .royal-heirloom__eyebrow {
   position: absolute;
@@ -154,23 +156,13 @@
   display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
 .royal-heirloom__blessing-divider {
-  display: flex;
-  align-items: center;
-  width: 45%;
-  gap: 6px;
-  margin-bottom: 2%;
-}
-.royal-heirloom__blessing-divider::before,
-.royal-heirloom__blessing-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg,transparent,#c5a06b,transparent);
-}
-.royal-heirloom__blessing-divider i {
-  width: 5px; height: 5px; flex: none;
-  border: 1px solid #bb9858;
-  transform: rotate(45deg);
+  display: block;
+  position: relative;
+  width: 49%;
+  height: 15%;
+  min-height: 8px;
+  margin-bottom: 1.6%;
+  flex: none;
 }
 .royal-heirloom__blessing p {
   margin: 0;
