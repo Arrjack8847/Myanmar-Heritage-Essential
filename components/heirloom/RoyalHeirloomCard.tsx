@@ -16,6 +16,22 @@ function Ornament({ file, className }: OrnamentProps) {
   );
 }
 
+/**
+ * The supplied corner artwork is a single square transparent PNG containing
+ * four separate corner motifs. Crop each QUADRANT without stretching or
+ * duplicating the pixels, then position its motif in the card's actual corner.
+ */
+function RoyalCardCorners() {
+  return (
+    <div className="royal-heirloom__corners" aria-hidden="true">
+      <span className="royal-heirloom__corner royal-heirloom__corner--tl" />
+      <span className="royal-heirloom__corner royal-heirloom__corner--tr" />
+      <span className="royal-heirloom__corner royal-heirloom__corner--bl" />
+      <span className="royal-heirloom__corner royal-heirloom__corner--br" />
+    </div>
+  );
+}
+
 function Portrait({ src, alt, frame, className }: {
   src: string;
   alt: string;
@@ -46,7 +62,7 @@ export default function RoyalHeirloomCard() {
       <div className="royal-heirloom__card">
         <Ornament file="heirloom-card-paper" className="royal-heirloom__paper" />
         <Ornament file="heirloom-card-frame" className="royal-heirloom__frame" />
-        <Ornament file="heirloom-card-corners" className="royal-heirloom__corners" />
+        <RoyalCardCorners />
         <Ornament file="heirloom-card-crown" className="royal-heirloom__crown" />
 
         <p className="royal-heirloom__eyebrow" lang="my">မင်္ဂလာဖိတ်ကြားလွှာ</p>
