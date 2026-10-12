@@ -1,0 +1,377 @@
+{
+  "project": "Myanmar Heritage Essential JN-W01",
+  "section": "Section 5 — With Love",
+  "pack_version": "visual prototype 1.0",
+  "asset_count": 17,
+  "important_disclosure": "Visual PROTOTYPE. 15 individual transparent PNGs were computationally separated from the image-generation contact sheet and enlarged through interpolation; they are not independent original full-resolution renders as requested, and some matte edges remain imperfect. The scenic background and final preview are enlarged contact-sheet imagery; the closing typography and calendar control in the preview are illustrative, not functional. Use as a layout/animation prototype, replace with native-resolution originals for production.",
+  "source_image": "a_clean_high_resolution_asset_sheet_on_a_transpar.png",
+  "source_image_dimensions": [
+    1536,
+    1024
+  ],
+  "website_usage": "Use PNG assets for layout prototyping and replace with independently generated transparent full-resolution versions before shipping. Preserve HTML/CSS closing copy, countdown and Add to Calendar action.",
+  "assets": [
+    {
+      "id": 1,
+      "path": "01_Architecture/01_royal_arch_top.png",
+      "dimensions": [
+        3136,
+        1750
+      ],
+      "native_source_crop_size": [
+        491,
+        274
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.8096434037900875,
+        "fraction_opaque": 0.20469278425655976
+      },
+      "recommended_layer_order": 1,
+      "animation": "Reveal from upper edge; subtle parallax",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 2,
+      "path": "01_Architecture/02_royal_pillar_left.png",
+      "dimensions": [
+        1200,
+        2910
+      ],
+      "native_source_crop_size": [
+        113,
+        274
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6266930126002291,
+        "fraction_opaque": 0.4124845360824742
+      },
+      "recommended_layer_order": 3,
+      "animation": "Reveal from left",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 3,
+      "path": "01_Architecture/03_royal_pillar_right.png",
+      "dimensions": [
+        1200,
+        2529
+      ],
+      "native_source_crop_size": [
+        130,
+        274
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6133705680769738,
+        "fraction_opaque": 0.42158989060234614
+      },
+      "recommended_layer_order": 3,
+      "animation": "Reveal from right",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 4,
+      "path": "01_Architecture/04_golden_balustrade.png",
+      "dimensions": [
+        2710,
+        1000
+      ],
+      "native_source_crop_size": [
+        355,
+        131
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6194819188191882,
+        "fraction_opaque": 0.4166073800738007
+      },
+      "recommended_layer_order": 9,
+      "animation": "Subtle rise from bottom",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 5,
+      "path": "02_Fabric/05_flowing_ivory_silk.png",
+      "dimensions": [
+        2123,
+        1400
+      ],
+      "native_source_crop_size": [
+        326,
+        215
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.5041195074355697,
+        "fraction_opaque": 0.5009881569207995
+      },
+      "recommended_layer_order": 5,
+      "animation": "Gentle floating transform",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 6,
+      "path": "03_Flowers/06_floral_top_left.png",
+      "dimensions": [
+        1800,
+        1554
+      ],
+      "native_source_crop_size": [
+        249,
+        215
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6550489775489775,
+        "fraction_opaque": 0.39794008294008293
+      },
+      "recommended_layer_order": 7,
+      "animation": "Very subtle corner drift",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 7,
+      "path": "03_Flowers/07_floral_top_right.png",
+      "dimensions": [
+        1758,
+        1800
+      ],
+      "native_source_crop_size": [
+        210,
+        215
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6512201365187713,
+        "fraction_opaque": 0.4027733535583365
+      },
+      "recommended_layer_order": 7,
+      "animation": "Very subtle corner drift",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 8,
+      "path": "03_Flowers/08_jasmine_garland_left.png",
+      "dimensions": [
+        750,
+        2271
+      ],
+      "native_source_crop_size": [
+        71,
+        215
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6351158080140907,
+        "fraction_opaque": 0.40981652722735945
+      },
+      "recommended_layer_order": 8,
+      "animation": "Rotate around top anchor 1–2 degrees",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 9,
+      "path": "03_Flowers/09_jasmine_garland_right.png",
+      "dimensions": [
+        750,
+        1344
+      ],
+      "native_source_crop_size": [
+        120,
+        215
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.7921259920634921,
+        "fraction_opaque": 0.23574404761904763
+      },
+      "recommended_layer_order": 8,
+      "animation": "Rotate around top anchor 1–2 degrees",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 10,
+      "path": "04_Ornaments/10_hanging_lotus_pendant.png",
+      "dimensions": [
+        900,
+        1235
+      ],
+      "native_source_crop_size": [
+        121,
+        166
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.6583067926225821,
+        "fraction_opaque": 0.3626036887089519
+      },
+      "recommended_layer_order": 6,
+      "animation": "Short ease-down then near-static soft sway",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 11,
+      "path": "04_Ornaments/11_golden_lotus_divider.png",
+      "dimensions": [
+        1592,
+        350
+      ],
+      "native_source_crop_size": [
+        432,
+        95
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.8680922469490309,
+        "fraction_opaque": 0.14240667623833453
+      },
+      "recommended_layer_order": 6,
+      "animation": "Reveal from center",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 12,
+      "path": "03_Flowers/12_floating_petals.png",
+      "dimensions": [
+        2400,
+        897
+      ],
+      "native_source_crop_size": [
+        431,
+        161
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.7515240616871052,
+        "fraction_opaque": 0.26682320698625045
+      },
+      "recommended_layer_order": 10,
+      "animation": "Treat as sprite sheet; use separately for staggered drift",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 13,
+      "path": "03_Flowers/13_lotus_cluster_left.png",
+      "dimensions": [
+        1800,
+        1876
+      ],
+      "native_source_crop_size": [
+        237,
+        247
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.5499937810945273,
+        "fraction_opaque": 0.5038352878464819
+      },
+      "recommended_layer_order": 11,
+      "animation": "Soft low-amplitude parallax",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 14,
+      "path": "03_Flowers/14_lotus_cluster_right.png",
+      "dimensions": [
+        1733,
+        2000
+      ],
+      "native_source_crop_size": [
+        214,
+        247
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.5941959030582804,
+        "fraction_opaque": 0.4533730525100981
+      },
+      "recommended_layer_order": 11,
+      "animation": "Soft low-amplitude parallax",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 15,
+      "path": "05_Scenery/15_river_boat_foreground.png",
+      "dimensions": [
+        735,
+        800
+      ],
+      "native_source_crop_size": [
+        227,
+        247
+      ],
+      "has_alpha": true,
+      "alpha_stats": {
+        "min": 0,
+        "max": 255,
+        "fraction_transparent": 0.8164846938775511,
+        "fraction_opaque": 0.19993197278911565
+      },
+      "recommended_layer_order": 4,
+      "animation": "Slow horizontal drift, respect reduced motion",
+      "source_type": "reference contact sheet extraction and approximate matte"
+    },
+    {
+      "id": 16,
+      "path": "05_Scenery/16_bagan_sunset_background.png",
+      "dimensions": [
+        3840,
+        2191
+      ],
+      "native_source_crop_size": [
+        433,
+        247
+      ],
+      "has_alpha": false,
+      "recommended_layer_order": 0,
+      "animation": "Subtle slower-than-foreground parallax",
+      "source_type": "reference contact sheet crop; upscaled, not native-resolution scene"
+    },
+    {
+      "id": 17,
+      "path": "06_Preview/17_final_composition_preview.png",
+      "dimensions": [
+        1536,
+        3985
+      ],
+      "native_source_crop_size": [
+        382,
+        991
+      ],
+      "has_alpha": false,
+      "recommended_layer_order": 99,
+      "animation": "Static compositional reference only",
+      "source_type": "Reference contact sheet preview with newly overlaid static mockup typography; not an independently generated high-res composition"
+    }
+  ]
+}
