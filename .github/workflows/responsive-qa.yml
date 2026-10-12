@@ -48,6 +48,12 @@ jobs:
         run: node scripts/qa-iphone-consistency.mjs
         env:
           QA_BASE_URL: http://127.0.0.1:3000
+      - name: Diagnose hero card centering and image layer boundaries
+        if: matrix.browser == 'chromium'
+        run: node scripts/qa-hero-composition.mjs
+        env:
+          QA_BROWSER: chromium
+          QA_BASE_URL: http://127.0.0.1:3000
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
