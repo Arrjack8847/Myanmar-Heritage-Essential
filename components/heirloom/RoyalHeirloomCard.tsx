@@ -58,7 +58,8 @@ function Portrait({ src, alt, frame, className }: {
 export default function RoyalHeirloomCard() {
   const card = invitation.heirloom;
   return (
-    <article className="royal-heirloom" aria-label="Royal heirloom portrait invitation">
+    <div className="royal-heirloom-anchor">
+      <article className="royal-heirloom" aria-label="Royal heirloom portrait invitation">
       <div className="royal-heirloom__card">
         <Ornament file="heirloom-card-paper" className="royal-heirloom__paper" />
         <Ornament file="heirloom-card-frame" className="royal-heirloom__frame" />
@@ -122,6 +123,7 @@ export default function RoyalHeirloomCard() {
           </a>
         </div>
       </div>
-    </article>
+      </article>
+    </div>
   );
 }
