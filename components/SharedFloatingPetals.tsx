@@ -123,7 +123,8 @@ export default function SharedFloatingPetals() {
             src={"/heritage/petals/" + petal.file}
             alt=""
             fill
-            loading={index < 3 ? "eager" : "lazy"}\n            quality={80}
+            loading={index < 3 ? "eager" : "lazy"}
+            quality={80}
             sizes="(max-width: 759px) 96px, 120px"
           />
         </div>
