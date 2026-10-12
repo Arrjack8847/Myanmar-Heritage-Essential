@@ -4,152 +4,171 @@ import { useEffect, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/** Calm, reversible album motion scoped to Section 04 only. */
+/**
+ * Royal Chronicle: scroll-native, reversible motion scoped to Section 04.
+ * No scroll-jacking, forced snapping, animated layout properties or pinned
+ * individual chapters. Still content remains visible when JS/motion is off.
+ */
 export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const section = root.current;
     if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     gsap.registerPlugin(ScrollTrigger);
-
     const ctx = gsap.context(() => {
-      // The royal gateway hands its golden haze and ornament into the album.
-      // Both transitions are scrubbed and reversible on native mobile scroll.
-      const entry = section.querySelector<HTMLElement>("[data-journey-entry]");
-      const gatewayMark = section.querySelector<HTMLElement>("[data-journey-gateway-mark]");
-      if (entry) gsap.fromTo(entry, { opacity: 0.15, y: 32 }, {
-        opacity: 1, y: 0, ease: "none",
-        scrollTrigger: {
-          trigger: section, start: "top bottom", end: "top 39%", scrub: 0.8,
-        },
-      });
-      if (gatewayMark) gsap.fromTo(gatewayMark,
-        { autoAlpha: 0.18, y: 32, scale: 0.84 },
-        { autoAlpha: 0.85, y: 0, scale: 1, ease: "none",
+      const intro = section.querySelector<HTMLElement>("[data-chronicle-intro]");
+      const mist = section.querySelector<HTMLElement>("[data-chronicle-entry]");
+      const crest = section.querySelector<HTMLElement>("[data-chronicle-crest]");
+      const story = section.querySelector<HTMLElement>("[data-chronicle-story]");
+      const thread = section.querySelector<HTMLElement>("[data-chronicle-thread]");
+
+      if (mist) {
+        gsap.fromTo(mist, { opacity: 0.28, y: 28 }, {
+          opacity: 0.92, y: 0, ease: "none",
           scrollTrigger: {
-            trigger: section, start: "top 96%", end: "top 36%", scrub: 0.7,
-          },
-        });
-
-      const title = section.querySelector<HTMLElement>("[data-journey-title]");
-      if (title) {
-        const eyebrow = title.querySelector<HTMLElement>("[data-journey-eyebrow]");
-        const first = title.querySelector<HTMLElement>("[data-journey-title-main]");
-        const accent = title.querySelector<HTMLElement>("[data-journey-title-accent]");
-        const lead = title.querySelector<HTMLElement>("[data-journey-lead]");
-
-        if (eyebrow) gsap.fromTo(eyebrow, { autoAlpha: .5, y: 10 }, {
-          autoAlpha: 1, y: 0, ease: "power2.out",
-          scrollTrigger: { trigger: title, start: "top 93%", end: "top 74%", scrub: .65 },
-        });
-        if (first) gsap.fromTo(first, { autoAlpha: .55, y: 21 }, {
-          autoAlpha: 1, y: 0, ease: "power2.out",
-          scrollTrigger: { trigger: title, start: "top 85%", end: "top 58%", scrub: .65 },
-        });
-        if (accent) gsap.fromTo(accent, { autoAlpha: .5, y: 27 }, {
-          autoAlpha: 1, y: 0, ease: "power2.out",
-          scrollTrigger: { trigger: title, start: "top 79%", end: "top 47%", scrub: .75 },
-        });
-        if (lead) gsap.fromTo(lead, { autoAlpha: .52, y: 13 }, {
-          autoAlpha: 1, y: 0, ease: "power2.out",
-          scrollTrigger: { trigger: title, start: "top 72%", end: "top 39%", scrub: .75 },
-        });
-      }
-
-      const story = section.querySelector<HTMLElement>("[data-journey-story]");
-      const line = section.querySelector<HTMLElement>("[data-gold-progress]");
-      if (story && line) {
-        gsap.fromTo(line, { scaleY: 0 }, {
-          scaleY: 1, transformOrigin: "top center", ease: "none",
-          scrollTrigger: {
-            trigger: story, start: "top 86%", end: "bottom 34%", scrub: .7,
-            invalidateOnRefresh: true,
+            trigger: section, start: "top bottom", end: "top 30%", scrub: 0.8,
           },
         });
       }
 
-      gsap.utils.toArray<HTMLElement>("[data-memory]", section).forEach((chapter, i) => {
-        const photo = chapter.querySelector<HTMLElement>("[data-memory-photo]");
-        const copy = chapter.querySelector<HTMLElement>("[data-memory-copy]");
-        const marker = chapter.querySelector<HTMLElement>("[data-journey-marker]");
-        const img = photo?.querySelector<HTMLImageElement>("img");
-        if (photo) gsap.fromTo(photo,
-          { autoAlpha: .68, y: 30, rotation: i === 0 ? -1.55 : 1.3, scale: .982 },
-          {
-            autoAlpha: 1, y: 0, rotation: i === 0 ? -.5 : .58, scale: 1,
-            ease: "power2.out",
-            scrollTrigger: { trigger: photo, start: "top 95%", end: "top 56%", scrub: .75 },
+      if (intro) {
+        if (crest) {
+          gsap.fromTo(crest, { autoAlpha: 0.6, y: 23, scale: 0.96 }, {
+            autoAlpha: 1, y: 0, scale: 1, ease: "power2.out",
+            scrollTrigger: {
+              trigger: intro, start: "top 92%", end: "top 54%", scrub: 0.75,
+            },
           });
-        if (img) gsap.fromTo(img, { yPercent: -2, scale: 1.045 }, {
-          yPercent: 2, scale: 1.045, ease: "none",
-          scrollTrigger: { trigger: chapter, start: "top bottom", end: "bottom top", scrub: 1.4 },
+        }
+        gsap.utils.toArray<HTMLElement>("[data-chronicle-reveal]", intro).forEach((el, i) => {
+          gsap.fromTo(el, { autoAlpha: 0.42, y: 17 + i * 3 }, {
+            autoAlpha: 1, y: 0, ease: "power2.out",
+            scrollTrigger: {
+              trigger: intro,
+              start: "top " + (85 - i * 6) + "%",
+              end: "top " + (49 - i * 6) + "%",
+              scrub: 0.65,
+            },
+          });
         });
-        if (copy) gsap.fromTo(copy, { autoAlpha: .55, y: 18 }, {
-          autoAlpha: 1, y: 0, ease: "power2.out",
-          scrollTrigger: { trigger: copy, start: "top 93%", end: "top 62%", scrub: .7 },
+      }
+
+      if (story && thread) {
+        // Reveal the ornamental vine from top to bottom without squashing it.
+        gsap.fromTo(thread, { clipPath: "inset(0 0 100% 0)" }, {
+          clipPath: "inset(0 0 0% 0)", ease: "none",
+          scrollTrigger: {
+            trigger: story, start: "top 76%", end: "bottom 43%",
+            scrub: 0.85, invalidateOnRefresh: true,
+          },
         });
-        if (marker) gsap.fromTo(marker, { autoAlpha: .32, scale: .9 }, {
-          autoAlpha: 1, scale: 1, ease: "power2.out",
-          scrollTrigger: { trigger: chapter, start: "top 82%", end: "top 48%", scrub: .65 },
+      }
+
+      gsap.utils.toArray<HTMLElement>("[data-chronicle-chapter]", section)
+        .forEach((chapter) => {
+          const photo = chapter.querySelector<HTMLElement>("[data-chronicle-photo]");
+          const copy = chapter.querySelector<HTMLElement>("[data-chronicle-copy]");
+          const marker = chapter.querySelector<HTMLElement>("[data-chronicle-marker]");
+          const photograph = photo?.querySelector<HTMLImageElement>("[data-chronicle-original-photo]");
+
+          if (photo) {
+            gsap.fromTo(photo, { autoAlpha: 0.7, y: 38, scale: 0.97 }, {
+              autoAlpha: 1, y: 0, scale: 1, ease: "power2.out",
+              scrollTrigger: {
+                trigger: chapter, start: "top 88%", end: "top 46%", scrub: 0.8,
+              },
+            });
+          }
+          if (copy) {
+            gsap.fromTo(copy, { autoAlpha: 0.48, y: 28 }, {
+              autoAlpha: 1, y: 0, ease: "power2.out",
+              scrollTrigger: {
+                trigger: chapter, start: "top 78%", end: "top 38%", scrub: 0.75,
+              },
+            });
+          }
+          if (marker) {
+            gsap.fromTo(marker, { autoAlpha: 0.4, scale: 0.87 }, {
+              autoAlpha: 1, scale: 1, ease: "power2.out",
+              scrollTrigger: {
+                trigger: chapter, start: "top 78%", end: "top 40%", scrub: 0.6,
+              },
+            });
+          }
+          // Move only the photo within its clipping window, not its gold frame.
+          if (photograph) {
+            gsap.fromTo(photograph,
+              { scale: 1.06, yPercent: -1.2 },
+              { scale: 1.06, yPercent: 1.2, ease: "none",
+                scrollTrigger: {
+                  trigger: chapter, start: "top bottom", end: "bottom top", scrub: 1.5,
+                },
+              });
+          }
+        });
+
+      gsap.utils.toArray<HTMLElement>("[data-chronicle-flower]", section).forEach((layer, i) => {
+        gsap.fromTo(layer, { y: i % 2 === 0 ? 8 : -10 }, {
+          y: i % 2 === 0 ? -12 : 12, ease: "none",
+          scrollTrigger: {
+            trigger: section, start: "top bottom", end: "bottom top", scrub: 1.5,
+          },
         });
       });
 
-      // One sticky, transform-only expansion. The couple's original image is
-      // never changed; its paper mount yields to the immersive final frame.
-      const runway = section.querySelector<HTMLElement>("[data-finale-runway]");
-      const mount = runway?.querySelector<HTMLElement>("[data-finale-mount]");
-      const mat = runway?.querySelector<HTMLElement>("[data-finale-mat]");
-      const shade = runway?.querySelector<HTMLElement>("[data-finale-shade]");
-      const caption = runway?.querySelector<HTMLElement>("[data-finale-copy]");
-      const wash = runway?.querySelector<HTMLElement>("[data-finale-wash]");
-      if (runway && mount && mat && shade && caption && wash) {
-        gsap.set(mount, { scale: .79, yPercent: 4, transformOrigin: "center center" });
+      // One memorable sticky expansion, then a complete ivory wash into
+      // the existing 04 -> 05 bridge. Never mutate the original photo.
+      const runway = section.querySelector<HTMLElement>("[data-chronicle-finale]");
+      const mount = runway?.querySelector<HTMLElement>("[data-chronicle-mount]");
+      const mat = runway?.querySelector<HTMLElement>("[data-chronicle-mat]");
+      const shade = runway?.querySelector<HTMLElement>("[data-chronicle-shade]");
+      const words = runway?.querySelector<HTMLElement>("[data-chronicle-words]");
+      const wash = runway?.querySelector<HTMLElement>("[data-chronicle-wash]");
+      const petals = runway?.querySelector<HTMLElement>("[data-chronicle-petals]");
+
+      if (runway && mount && mat && shade && words && wash) {
+        gsap.set(mount, { scale: 0.83, yPercent: 3, transformOrigin: "center" });
         gsap.set(mat, { opacity: 1 });
         gsap.set(shade, { opacity: 0 });
-        gsap.set(caption, { autoAlpha: 0, y: 23 });
+        gsap.set(words, { autoAlpha: 0, y: 22 });
         gsap.set(wash, { opacity: 0 });
+        if (petals) gsap.set(petals, { opacity: 0.12 });
 
-        gsap.timeline({
+        const timeline = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: runway, start: "top top", end: "bottom bottom",
-            scrub: .7, invalidateOnRefresh: true,
+            scrub: 0.85, invalidateOnRefresh: true,
           },
-        })
-          .to(mount, { scale: .84, yPercent: 0, duration: 2.3 }, 0)
-          .to(mount, { scale: 1, duration: 2.8 }, 2.3)
-          .to(mat, { opacity: 0, duration: 2.3 }, 2.5)
-          .to(shade, { opacity: 1, duration: 1.6 }, 5.1)
-          .to(caption, { autoAlpha: 1, y: 0, ease: "power2.out", duration: 1.45 }, 5.45)
-          .to({}, { duration: 1.15 }, 7.35)
-          .to(caption, { autoAlpha: 0, y: -12, duration: .8 }, 8.5)
-          .to(wash, { opacity: 1, duration: 1.5 }, 8.5);
+        });
+        timeline
+          .to(mount, { scale: 1, yPercent: 0, duration: 3.3 }, 0)
+          .to(mat, { opacity: 0, duration: 2.2 }, 1.1)
+          .to(shade, { opacity: 1, duration: 1.4 }, 2.9)
+          .to(words, { autoAlpha: 1, y: 0, ease: "power2.out", duration: 1.2 }, 3.7)
+          .to({}, { duration: 1.7 }, 5.1)
+          .to(words, { autoAlpha: 0, y: -14, duration: 0.9 }, 6.8)
+          .to(wash, { opacity: 1, duration: 2.05 }, 6.8);
+        if (petals) timeline.to(petals, { opacity: 0.33, duration: 3 }, 2.2);
       }
 
-      [
-        { id: "sky", start: 10, end: -16, point: "[data-journey-title]" },
-        { id: "mist", start: -9, end: 15, point: "[data-journey-title]" },
-        { id: "exit", start: 12, end: -12, point: "[data-journey-ending]" },
-      ].forEach(({ id, start, end, point }) => {
-        const layer = section.querySelector<HTMLElement>('[data-journey-atmosphere="' + id + '"]');
-        const anchor = section.querySelector<HTMLElement>(point);
-        if (layer && anchor) gsap.fromTo(layer, { y: start }, {
-          y: end, ease: "none",
-          scrollTrigger: { trigger: anchor, start: "top bottom", end: "bottom top", scrub: 1.5 },
+      const ending = section.querySelector<HTMLElement>("[data-chronicle-ending]");
+      if (ending) {
+        gsap.fromTo(ending, { autoAlpha: 0.68, y: 13 }, {
+          autoAlpha: 1, y: 0, ease: "power2.out",
+          scrollTrigger: {
+            trigger: ending, start: "top 92%", end: "top 60%", scrub: 0.7,
+          },
         });
-      });
-      const botanical = section.querySelector<HTMLElement>("[data-journey-botanical]");
-      if (botanical) gsap.fromTo(botanical, { y: 10 }, {
-        y: -13, ease: "none",
-        scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 1.6 },
-      });
-      const ending = section.querySelector<HTMLElement>("[data-journey-ending]");
-      if (ending) gsap.fromTo(ending, { autoAlpha: .58, y: 16 }, {
-        autoAlpha: 1, y: 0, ease: "power2.out",
-        scrollTrigger: { trigger: ending, start: "top 93%", end: "top 60%", scrub: .7 },
-      });
+      }
     }, section);
 
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
     ScrollTrigger.refresh();
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener("load", refresh);
+      ctx.revert();
+    };
   }, [root]);
 }
