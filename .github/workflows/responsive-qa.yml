@@ -1,0 +1,53 @@
+name: Responsive viewport QA
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  device-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install project
+        run: npm install --no-audit --no-fund
+      - name: Build production website
+        run: npm run build
+      - name: Install Playwright smoke dependencies
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Launch production preview
+        run: |
+          npm run start -- --hostname 127.0.0.1 --port 3000 > /tmp/myanmar-next.log 2>&1 &
+          echo $! > /tmp/myanmar-next.pid
+          for i in $(seq 1 45); do
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/myanmar-next.log
+          exit 1
+      - name: Test phone, tablet, laptop and desktop viewports
+        run: node scripts/qa-device-matrix.mjs
+        env:
+          QA_BROWSER: ${{ matrix.browser }}
+          QA_BASE_URL: http://127.0.0.1:3000
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: device-qa-${{ matrix.browser }}
+          path: device-qa-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7

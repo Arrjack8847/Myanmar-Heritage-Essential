@@ -994,3 +994,22 @@ html, body { width: 100%; min-width: 0; }
   .invitation-page .lightbox__close { top: 4px; right: 4px; }
   .invitation-page .lightbox__figure figcaption { font-size: 14px; }
 }
+
+
+/* Universal viewport support: iPad Split View, high-DPI laptops, portrait
+   monitors and browser zoom use available CSS pixels rather than device labels. */
+html, body { max-width: 100%; }
+@supports (height: 100dvh) {
+  .invitation-page .lightbox { height: 100dvh; }
+}
+/* The exact-size image controls remain touch-friendly on hybrid tablets. */
+@media (pointer: coarse) {
+  .invitation-page .lightbox__nav,
+  .invitation-page .lightbox__close { min-width: 44px; min-height: 44px; }
+  .invitation-page :where(.royal-action) { min-height: 44px; }
+}
+@media (min-width: 1600px) {
+  .section-inner { max-width: 1180px; }
+  /* Wide canvases get quiet parchment margins instead of stretched decorations. */
+  .heritage-scene__paper img { object-position: center; }
+}
