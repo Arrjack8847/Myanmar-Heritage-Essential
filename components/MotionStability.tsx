@@ -5,76 +5,106 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
- * Keep GSAP trigger measurements reliable after mobile Safari URL-bar changes,
- * delayed responsive images/fonts, back-forward navigation and orientation.
- * Never disables or reduces an animation for phones.
+ * Refresh scroll measurements after real layout changes, not every mobile
+ * browser-toolbar animation. Keeping the resize loop quiet prevents jitter
+ * in Safari while preserving full-resolution artwork and chapter choreography.
  */
 export default function MotionStability() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    let frame1 = 0;
-    let frame2 = 0;
-    let debounce: ReturnType<typeof setTimeout> | undefined;
+    let raf = 0;
+    let delay: number | undefined;
+    let cancelled = false;
+    let viewportWidth = window.innerWidth;
+    let viewportHeight = window.innerHeight;
 
-    const refresh = () => {
-      window.cancelAnimationFrame(frame1);
-      window.cancelAnimationFrame(frame2);
-      if (debounce !== undefined) clearTimeout(debounce);
-      debounce = setTimeout(() => {
-        frame1 = window.requestAnimationFrame(() => {
-          frame2 = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    const requestRefresh = () => {
+      if (cancelled) return;
+      if (delay !== undefined) window.clearTimeout(delay);
+      delay = window.setTimeout(() => {
+        window.cancelAnimationFrame(raf);
+        raf = window.requestAnimationFrame(() => {
+          if (!cancelled) ScrollTrigger.refresh();
         });
-      }, 100);
+      }, 145);
     };
 
-    const story = document.querySelector<HTMLElement>(".royal-story");
-    const hero = document.getElementById("welcome");
-    const page = document.querySelector<HTMLElement>(".ceremony-one-screen");
-    const ceremonyRunway = document.querySelector<HTMLElement>(".ceremony-story__scroll");
-    const images = story ? Array.from(story.querySelectorAll<HTMLImageElement>("img")) : [];
+    const onResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const widthChanged = Math.abs(width - viewportWidth) > 1;
+      const heightChanged = Math.abs(height - viewportHeight) > 1;
+      // iOS and Android URL bars resize the visible viewport repeatedly.
+      // Recalculating sticky scroll positions during that animation causes jumps.
+      const toolbarOnly = !widthChanged && width < 820 &&
+        Math.abs(height - viewportHeight) < 140;
+      viewportWidth = width;
+      viewportHeight = height;
+      if (widthChanged || (heightChanged && !toolbarOnly)) requestRefresh();
+    };
+
+    const images = Array.from(
+      document.querySelectorAll<HTMLImageElement>(".invitation-page img")
+    );
+    const onImageSettled = () => requestRefresh();
     const pending = images.filter((img) => !img.complete);
     pending.forEach((img) => {
-      img.addEventListener("load", refresh);
-      img.addEventListener("error", refresh);
+      img.addEventListener("load", onImageSettled, { once: true });
+      img.addEventListener("error", onImageSettled, { once: true });
     });
 
-    const resizeObserver = typeof ResizeObserver !== "undefined"
-      ? new ResizeObserver(refresh)
+    const tracked = [
+      document.getElementById("welcome"),
+      document.querySelector<HTMLElement>(".ceremony-story__scroll"),
+      document.getElementById("memories"),
+      document.getElementById("with-love"),
+    ].filter((element): element is HTMLElement => Boolean(element));
+
+    const sizes = new WeakMap<HTMLElement, { width: number; height: number }>();
+    const observer = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver((entries) => {
+          let changed = false;
+          for (const entry of entries) {
+            const target = entry.target as HTMLElement;
+            const next = { width: entry.contentRect.width, height: entry.contentRect.height };
+            const prev = sizes.get(target);
+            sizes.set(target, next);
+            if (prev && (Math.abs(prev.width - next.width) > 1 ||
+              Math.abs(prev.height - next.height) > 2)) changed = true;
+          }
+          if (changed) requestRefresh();
+        })
       : null;
-    if (hero) resizeObserver?.observe(hero);
-    if (page) resizeObserver?.observe(page);
-    if (ceremonyRunway) resizeObserver?.observe(ceremonyRunway);
+    tracked.forEach((element) => observer?.observe(element));
 
-    window.addEventListener("load", refresh);
-    window.addEventListener("pageshow", refresh);
-    window.addEventListener("orientationchange", refresh);
+    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("orientationchange", requestRefresh);
+    window.addEventListener("pageshow", requestRefresh);
+    window.addEventListener("load", requestRefresh);
 
-    // Fonts alter heading size and therefore section / trigger positions.
-    let cancelled = false;
     if (document.fonts) {
       document.fonts.ready.then(() => {
-        if (!cancelled) refresh();
+        if (!cancelled) requestRefresh();
       }).catch(() => {});
     }
-    refresh();
+    requestRefresh();
 
     return () => {
       cancelled = true;
-      if (debounce !== undefined) clearTimeout(debounce);
-      window.cancelAnimationFrame(frame1);
-      window.cancelAnimationFrame(frame2);
-      window.removeEventListener("load", refresh);
-      window.removeEventListener("pageshow", refresh);
-      window.removeEventListener("orientationchange", refresh);
+      if (delay !== undefined) window.clearTimeout(delay);
+      window.cancelAnimationFrame(raf);
+      observer?.disconnect();
       pending.forEach((img) => {
-        img.removeEventListener("load", refresh);
-        img.removeEventListener("error", refresh);
+        img.removeEventListener("load", onImageSettled);
+        img.removeEventListener("error", onImageSettled);
       });
-      resizeObserver?.disconnect();
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", requestRefresh);
+      window.removeEventListener("pageshow", requestRefresh);
+      window.removeEventListener("load", requestRefresh);
     };
   }, []);
-
   return null;
 }

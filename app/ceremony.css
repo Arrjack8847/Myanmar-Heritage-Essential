@@ -636,3 +636,55 @@
 @media (prefers-reduced-motion: reduce) {
   .ceremony-scene__mist-bridge { display: none; }
 }
+
+
+/* Short landscape phones: the fixed one-screen program would physically crop
+   three event descriptions. Keep both original ornate states in normal flow.
+   Portrait keeps the full scroll-scrub ceremony, with every decorative PNG. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .ceremony-story__scroll {
+    height: auto !important;
+  }
+  .celebration.celebration--royal.ceremony-scene {
+    position: relative !important;
+    height: auto !important;
+    min-height: 100svh;
+    overflow: hidden;
+  }
+  .ceremony-page {
+    width: min(calc(100% - 32px), 620px);
+    height: auto !important;
+    min-height: 0;
+    margin: 0 auto;
+    padding: 58px 0 72px;
+  }
+  .ceremony-frame { opacity: .44; }
+  .ceremony-cover, .ceremony-program {
+    position: relative !important;
+    inset: auto !important;
+    height: auto;
+    width: min(80%, 475px);
+    margin: 0 auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  .ceremony-program {
+    margin-top: 46px;
+    padding: 20px 10px;
+    background: rgba(255,250,238,.83);
+    border: 1px solid rgba(183,142,80,.36);
+  }
+  .ceremony-cover h2 { font-size: clamp(36px, 9vh, 60px); }
+  .ceremony-cover__day { font-size: clamp(80px, 23vh, 116px); }
+  .ceremony-program__title { font-size: clamp(34px, 8vh, 44px); }
+  .ceremony-timeline__event {
+    min-height: 74px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  .ceremony-timeline__thread { transform: none !important; }
+  .ceremony-scroll { display: none; }
+  .ceremony-scene__mist-bridge { display: none; }
+}

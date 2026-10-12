@@ -554,3 +554,38 @@
   .finaleWash { opacity: 0 !important; }
   .photoWindow img,.viewPhoto,.finaleView { transition: none !important; }
 }
+
+
+/* Keep all chapter photos sharp, but let narrow portrait text wrap naturally. */
+.chapterCopy, .chapterDescription, .finaleWords { min-width: 0; }
+.chapterCopy h3, .finaleWords h3 { overflow-wrap: anywhere; }
+@media (max-width: 360px) {
+  .chapter { padding-inline: 34px 8px; }
+  .chapterCopy h3 { font-size: clamp(37px, 11vw, 44px); }
+  .finaleWords h3 { font-size: clamp(40px, 12vw, 50px); }
+  .finaleWords > span { font-size: 18px; }
+}
+/* Landscape phones are often under 500px tall: the photo and controls must
+   remain reachable, so the sticky zoom becomes one complete static scene. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .finaleRunway { height: auto !important; }
+  .finaleStage {
+    position: relative !important;
+    height: max(380px, 100svh);
+    min-height: 380px;
+  }
+  .finaleMount { transform: none !important; }
+  .finaleMat { opacity: 0 !important; }
+  .finaleShade { opacity: 1 !important; }
+  .finaleWash { opacity: 0 !important; }
+  .finaleWords {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    bottom: 22px;
+  }
+  .finaleWords h3 { font-size: clamp(35px, 8vh, 50px); }
+  .finaleWords > span { font-size: 18px; }
+  .finalePetals { opacity: .2 !important; }
+  .finaleView { width: 138px; }
+}

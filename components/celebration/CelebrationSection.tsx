@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import useMotionLayoutRevision from "@/components/useMotionLayoutRevision";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,10 +18,12 @@ import CeremonyTimeline from "./CeremonyTimeline";
 export default function CelebrationSection() {
   const sceneRef = useRef<HTMLElement>(null);
 
+  const layoutRevision = useMotionLayoutRevision();
   useEffect(() => {
     const scene = sceneRef.current;
     const runway = scene?.closest<HTMLElement>(".ceremony-story__scroll");
-    if (!scene || !runway || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!scene || !runway || (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(orientation: landscape) and (max-height: 560px)").matches)) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const ambient: gsap.core.Animation[] = [];
@@ -139,7 +142,7 @@ export default function CelebrationSection() {
       document.removeEventListener("visibilitychange", sync);
       context.revert();
     };
-  }, []);
+  }, [layoutRevision]);
 
   return (
     <div id="celebration" className="ceremony-story__scroll">

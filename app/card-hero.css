@@ -204,3 +204,25 @@
   .heritage-scene__mist img,
   .heritage-scene__petal { will-change: auto; }
 }
+
+
+/* Accurate container-based type sizes prevent long names escaping the
+   original portrait card at 320px and in short landscape viewports. */
+.heritage-scene__typography h1 { max-width: 100%; overflow-wrap: anywhere; }
+.heritage-scene__typography [data-typography-part="message"] { overflow-wrap: anywhere; }
+@media (max-width: 360px) {
+  .heritage-scene__typography h1 { font-size: clamp(27px, 15.5cqw, 55px); }
+  .heritage-scene__typography [data-typography-part="heading"] {
+    font-size: clamp(7px, 2.1cqw, 9px);
+    letter-spacing: .08em;
+  }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  .heritage-scene__card { top: 2svh; width: min(53vw, 47svh); }
+  .heritage-scene__typography h1 { font-size: clamp(22px, 14cqw, 47px); }
+  .heritage-scene__typography [data-typography-part="message"] { font-size: clamp(10px, 4.8cqw, 18px); }
+  .heritage-scene__typography [data-typography-part="date"] { font-size: clamp(13px, 5.8cqw, 24px); }
+  .heritage-scene__typography [data-typography-part="heading"] { font-size: clamp(6px, 2.1cqw, 9px); margin-bottom: 2px; }
+  .heritage-scene__floral { height: 33%; width: min(25vw, 200px); }
+  .heritage-scene [data-scroll-discovery] { bottom: 0; min-height: 44px; }
+}

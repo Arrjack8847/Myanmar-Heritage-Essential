@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import useMotionLayoutRevision from "@/components/useMotionLayoutRevision";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -46,9 +47,11 @@ function Layer({ name, file, className, sizes, cover = false, mirrored = false }
 export default function RoyalGateway() {
   const sectionRef = useRef<HTMLElement>(null);
 
+  const layoutRevision = useMotionLayoutRevision();
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(orientation: landscape) and (max-height: 560px)").matches)) return;
 
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
@@ -201,7 +204,7 @@ export default function RoyalGateway() {
     // after the new layout enters the page.
     ScrollTrigger.refresh();
     return () => context.revert();
-  }, []);
+  }, [layoutRevision]);
 
   return (
     <section id="venue" ref={sectionRef} className={styles.story} aria-labelledby="venue-title">

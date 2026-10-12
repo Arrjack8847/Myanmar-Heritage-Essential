@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import styles from "./RoyalImageControl.module.css";
 
 export type ButtonAsset =
@@ -80,13 +80,25 @@ function Art({ asset, mobileAsset, hoverAsset, pressedAsset, focusAsset, state, 
     : asset;
   const [width, height] = dimensions[file];
   const [baseWidth, baseHeight] = dimensions[asset];
+  // Preserve the original mobile artwork but serve an appropriately sized,
+  // high-quality Next.js image instead of downloading a full-size raw PNG.
+  const mobileSrcSet = mobileAsset
+    ? getImageProps({
+        src: assetUrl(mobileAsset),
+        alt: "",
+        width: dimensions[mobileAsset][0],
+        height: dimensions[mobileAsset][1],
+        sizes: "(max-width: 640px) 90vw, 380px",
+        quality: 85,
+      }).props.srcSet
+    : undefined;
   return (
     <span className={styles.art} style={{ aspectRatio: baseWidth / baseHeight }}>
       <picture>
         {mobileAsset && (
           <source
             media="(max-width: 640px)"
-            srcSet={assetUrl(state === "rest" ? mobileAsset : file)}
+            srcSet={state === "rest" ? mobileSrcSet : undefined}
           />
         )}
         <Image

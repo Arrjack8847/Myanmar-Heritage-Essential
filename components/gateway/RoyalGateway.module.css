@@ -391,3 +391,33 @@
 @media (prefers-reduced-motion: reduce) {
   .handoffCanopy { display: none; }
 }
+
+
+/* Landscape compact-height fallback: keep the full gateway illustration as a
+   static frame and put venue text in flow so directions never get cropped. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .story { height: auto !important; min-height: 100svh; }
+  .stage {
+    position: relative !important;
+    top: auto;
+    height: auto !important;
+    min-height: 100svh;
+  }
+  .copy {
+    position: relative;
+    inset: auto;
+    min-height: 100svh;
+    height: auto;
+    padding: 72px 24px 60px;
+    pointer-events: auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  .readingScrim { opacity: .95 !important; }
+  .entryHaze { opacity: .14 !important; }
+  .venueVeil { opacity: .12 !important; }
+  .exitMist, .scrollCue { display: none; }
+  .curtainLeft { translate: -27% 0; }
+  .curtainRight { translate: 27% 0; }
+}
