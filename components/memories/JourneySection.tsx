@@ -105,7 +105,7 @@ export default function JourneySection({ onOpenPhoto }: Props) {
                   <span className={styles.photoWindow}>
                     {/* Keep the original client photograph unmodified. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                    <img data-chronicle-original-photo src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
                   </span>
                   <span className={styles.photoFrame} aria-hidden="true">
                     <Image src={ASSETS + "/05-royal-photo-frame.png"} alt="" fill

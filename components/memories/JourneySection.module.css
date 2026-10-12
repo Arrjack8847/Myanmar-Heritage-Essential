@@ -220,7 +220,7 @@
 }
 .photoWindow {
   position: absolute;
-  inset: 7% 11% 7.5%;
+  inset: 10% 14% 10%;
   overflow: hidden;
   background: #d4b796;
   border-radius: 2px;

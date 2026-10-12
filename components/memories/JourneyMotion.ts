@@ -69,8 +69,7 @@ export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
           const photo = chapter.querySelector<HTMLElement>("[data-chronicle-photo]");
           const copy = chapter.querySelector<HTMLElement>("[data-chronicle-copy]");
           const marker = chapter.querySelector<HTMLElement>("[data-chronicle-marker]");
-          const photograph = photo?.querySelector<HTMLImageElement>(".photoWindow img")
-            ?? photo?.querySelector<HTMLImageElement>("img");
+          const photograph = photo?.querySelector<HTMLImageElement>("[data-chronicle-original-photo]");
 
           if (photo) {
             gsap.fromTo(photo, { autoAlpha: 0.7, y: 38, scale: 0.97 }, {
