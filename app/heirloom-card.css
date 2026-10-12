@@ -6,8 +6,8 @@
   z-index: 11;
   top: 48%;
   left: 50%;
-  width: min(91vw, calc(80svh * 941 / 1672), 430px);
-  aspect-ratio: 941 / 1672;
+  width: min(91vw, calc(80svh * 846 / 1634), 430px);
+  aspect-ratio: 846 / 1634;
   transform: translate(-50%, -50%);
   opacity: 0;
   visibility: hidden;
@@ -28,14 +28,44 @@
 .royal-heirloom__crown,
 .royal-heirloom__portrait-frame,
 .royal-heirloom__rings-art,
-.royal-heirloom__accent {
+.royal-heirloom__accent,
+.royal-heirloom__blessing-divider {
   position: absolute;
   display: block;
   pointer-events: none;
 }
 .royal-heirloom__paper { z-index: 0; inset: 0; }
-.royal-heirloom__frame { z-index: 3; inset: 1.3%; opacity: .87; }
-.royal-heirloom__corners { z-index: 4; inset: 2%; opacity: .48; }
+.royal-heirloom__frame {
+  z-index: 3;
+  top: 0;
+  left: -3.3%;
+  width: 106.6%;
+  height: 100%;
+  opacity: .87;
+}
+/* Crop the square corner-set into four real card corners, not a square
+   image centered over a portrait-format card. Keep the PNG pixels unstretched. */
+.royal-heirloom__corners {
+  z-index: 4;
+  position: absolute;
+  inset: 0;
+  opacity: .54;
+  pointer-events: none;
+}
+.royal-heirloom__corner {
+  position: absolute;
+  width: 30%;
+  aspect-ratio: 1180 / 1153;
+  display: block;
+  background-image: url("/heritage/heirloom/heirloom-card-corners.png");
+  background-repeat: no-repeat;
+  background-size: 200% 200%;
+  pointer-events: none;
+}
+.royal-heirloom__corner--tl { top: 2%; left: 1%; background-position: left top; }
+.royal-heirloom__corner--tr { top: 2%; right: 1%; background-position: right top; }
+.royal-heirloom__corner--bl { bottom: 2%; left: 1%; background-position: left bottom; }
+.royal-heirloom__corner--br { bottom: 2%; right: 1%; background-position: right bottom; }
 .royal-heirloom__crown {
   z-index: 5; width: 32%; height: 8%; top: 1.8%; left: 34%;
 }
@@ -45,7 +75,8 @@
 .royal-heirloom__crown img,
 .royal-heirloom__portrait-frame img,
 .royal-heirloom__rings-art img,
-.royal-heirloom__accent img { object-fit: contain; }
+.royal-heirloom__accent img,
+.royal-heirloom__blessing-divider img { object-fit: contain; }
 
 .royal-heirloom__eyebrow {
   position: absolute;
@@ -154,23 +185,13 @@
   display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
 .royal-heirloom__blessing-divider {
-  display: flex;
-  align-items: center;
-  width: 45%;
-  gap: 6px;
-  margin-bottom: 2%;
-}
-.royal-heirloom__blessing-divider::before,
-.royal-heirloom__blessing-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg,transparent,#c5a06b,transparent);
-}
-.royal-heirloom__blessing-divider i {
-  width: 5px; height: 5px; flex: none;
-  border: 1px solid #bb9858;
-  transform: rotate(45deg);
+  display: block;
+  position: relative;
+  width: 49%;
+  height: 15%;
+  min-height: 8px;
+  margin-bottom: 1.6%;
+  flex: none;
 }
 .royal-heirloom__blessing p {
   margin: 0;
@@ -207,14 +228,14 @@
   flex: none;
 }
 @media (max-height: 600px) {
-  .royal-heirloom { width: min(90vw, calc(78svh * 941 / 1672), 430px); }
+  .royal-heirloom { width: min(90vw, calc(78svh * 846 / 1634), 430px); }
   .royal-heirloom__eyebrow { top: 10%; }
   .royal-heirloom__row--groom { top: 16.5%; }
   .royal-heirloom__blessing { top: 77%; }
   .invitation-page .royal-heirloom__button.royal-action { min-height: 38px; }
 }
 @media (min-width: 760px) {
-  .royal-heirloom { width: min(430px, calc(82svh * 941 / 1672)); }
+  .royal-heirloom { width: min(430px, calc(82svh * 846 / 1634)); }
 }
 @media (prefers-reduced-motion: reduce) {
   /* One fully readable still invitation replaces the two moving cover states. */
