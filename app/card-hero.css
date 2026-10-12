@@ -226,3 +226,22 @@
   .heritage-scene__floral { height: 33%; width: min(25vw, 200px); }
   .heritage-scene [data-scroll-discovery] { bottom: 0; min-height: 44px; }
 }
+
+
+/* Tablet portrait and compact laptop: keep the opening artwork centered and
+   within the live viewport; do not scale the PNGs beyond their source bounds. */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .heritage-scene__card {
+    width: min(440px, 44svh, 65vw);
+    top: clamp(40px, 7svh, 82px);
+  }
+  .heritage-scene__floral {
+    width: min(32vw, 300px);
+    height: 34%;
+  }
+  .heritage-scene__prelude { top: clamp(7px, 1.8svh, 22px); }
+}
+@media (min-width: 641px) and (max-height: 740px) {
+  .heritage-scene__card { top: clamp(31px, 5svh, 65px); width: min(410px, 43svh); }
+  .heritage-scene__signoff { bottom: 85px; }
+}

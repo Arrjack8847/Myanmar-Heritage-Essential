@@ -231,3 +231,20 @@
 @media (max-width: 390px), (max-height: 710px) {
   .directionsArt { margin-top: 12px; }
 }
+
+
+/* Small tablets and laptop windows need a shorter venue hierarchy. */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .gateway { width: min(100%, 510px); }
+  .gateway .title { font-size: clamp(48px, 6vw, 69px); }
+  .gateway .venueName { font-size: clamp(36px, 5vw, 51px); }
+  .gateway .address { font-size: clamp(16px, 2vw, 19px); }
+}
+@media (min-width: 641px) and (max-height: 740px) {
+  .gateway .title { font-size: clamp(43px, 6.7svh, 58px); margin-top: 6px; }
+  .gateway .divider { margin-top: 6px; }
+  .gateway .details { padding-top: 6px; }
+  .gateway .welcome { margin-bottom: 5px; }
+  .gateway .address { margin-top: 6px; }
+  .directionsArt { margin-top: 9px; }
+}

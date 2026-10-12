@@ -421,3 +421,24 @@
   .curtainLeft { translate: -27% 0; }
   .curtainRight { translate: 27% 0; }
 }
+
+
+/* Responsive iPad portrait and compact 13-inch laptop composition.
+   Architectural layers stay full detail; only their visible spacing changes. */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .copy {
+    padding-inline: clamp(26px, 6vw, 74px);
+    padding-block: max(30px, env(safe-area-inset-top, 0px))
+      max(35px, env(safe-area-inset-bottom, 0px));
+  }
+  .crown { width: min(82vw, 660px); top: 4%; }
+  .pillarLeft,.pillarRight { width: min(28vw, 230px); top: 27%; }
+  .curtainLeft,.curtainRight { width: min(38vw, 300px); top: 28%; }
+  .floralLeft,.floralRight { width: min(34vw, 330px); bottom: -11%; }
+}
+@media (min-width: 641px) and (max-height: 740px) {
+  .crown { top: 1%; width: min(73vw, 560px); }
+  .pillarLeft,.pillarRight { top: 22%; }
+  .curtainLeft,.curtainRight { top: 25%; }
+  .lanterns { top: 10%; }
+}

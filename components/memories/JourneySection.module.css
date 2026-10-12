@@ -474,7 +474,7 @@
   background: linear-gradient(180deg,#c19b63,transparent);
 }
 
-@media (max-width:800px) {
+@media (max-width:979px) {
   .paper { height: clamp(640px,115svh,1000px); }
   .canvasDesktop { display: none; }
   .canvasMobile { display: block; }
@@ -535,7 +535,7 @@
   .chapterDescription { font-size: 19px; }
   .finaleWords h3 { font-size: 50px; }
 }
-@media (max-height:650px) and (max-width:800px) {
+@media (max-height:650px) and (max-width:979px) {
   .finaleWords { bottom: 26px; }
 }
 @media (prefers-reduced-motion:reduce) {
