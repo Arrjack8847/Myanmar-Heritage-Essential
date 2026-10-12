@@ -1013,3 +1013,22 @@ html, body { max-width: 100%; }
   /* Wide canvases get quiet parchment margins instead of stretched decorations. */
   .heritage-scene__paper img { object-position: center; }
 }
+
+/* iPhone Safari: consistent, accessible text rasterization and touch behavior
+   regardless of DPR, Dynamic Island, browser toolbar and screen size. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+@media (max-width: 480px) and (orientation: portrait) {
+  .invitation-page .skip-link:focus-visible {
+    top: max(14px, env(safe-area-inset-top, 0px));
+  }
+  .invitation-page .lightbox__close {
+    top: max(12px, env(safe-area-inset-top, 0px));
+    right: max(12px, env(safe-area-inset-right, 0px));
+  }
+  /* Larger iPhone models receive the same design; only the frame scales. */
+  .heritage-scene__typography { max-width: 100%; min-width: 0; }
+  .heritage-scene__typography h1 { overflow-wrap: anywhere; }
+}

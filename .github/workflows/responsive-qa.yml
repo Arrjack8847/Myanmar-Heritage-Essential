@@ -43,6 +43,11 @@ jobs:
         env:
           QA_BROWSER: ${{ matrix.browser }}
           QA_BASE_URL: http://127.0.0.1:3000
+      - name: Verify consistent experience across iPhone sizes and DPR
+        if: matrix.browser == 'webkit'
+        run: node scripts/qa-iphone-consistency.mjs
+        env:
+          QA_BASE_URL: http://127.0.0.1:3000
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
