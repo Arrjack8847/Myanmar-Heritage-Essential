@@ -393,3 +393,24 @@
   .contactArt { margin-top: 23px; width: min(100%, 290px); }
   .backArt { margin-top: 27px; width: min(100%, 257px); }
 }
+
+
+/* Section 05: preserve the parchment and original landscape resolution while
+   giving the thank-you message and image-based controls room on small devices. */
+.story { min-width: 0; }
+.content { min-width: 0; }
+.names { overflow-wrap: anywhere; }
+@media (max-width: 375px) {
+  .content { width: calc(100% - 38px); }
+  .title { font-size: clamp(44px, 13vw, 51px); }
+  .message { font-size: clamp(19px, 5.6vw, 22px); }
+  .countdownUnit { padding-inline: 2px; }
+  .countdownNumber { font-size: clamp(27px, 8.2vw, 34px); }
+  .calendarArt,.contactArt,.backArt { max-width: 100%; }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  .content { padding-top: 65px; padding-bottom: 165px; }
+  .sky { height: 235px; }
+  .floraLeft,.floraRight { height: 175px; width: 190px; }
+  .title { font-size: clamp(49px, 10vw, 84px); }
+}

@@ -952,3 +952,45 @@ img, svg { max-width: 100%; }
   .invitation-page .lightbox__nav:active,
   .invitation-page .lightbox__close:active { transform: none !important; }
 }
+
+
+/* DEVICE POLISH · Preserve the exact artwork while removing viewport overflow,
+   keeping touch controls reachable, and protecting long editable client copy. */
+html, body { width: 100%; min-width: 0; }
+.invitation-page { min-width: 0; }
+.invitation-page :where(h1, h2, h3, p, figcaption) { overflow-wrap: break-word; }
+.invitation-page :where(button, a) { -webkit-touch-callout: default; }
+.invitation-page :where(button, a):focus-visible { outline-offset: 4px; }
+.invitation-page .lightbox {
+  height: 100dvh;
+  min-height: 0;
+  padding-top: max(72px, calc(env(safe-area-inset-top, 0px) + 70px));
+  padding-bottom: max(28px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+}
+.invitation-page .lightbox__figure { min-width: 0; overflow: hidden; }
+.invitation-page .lightbox__figure img { max-height: calc(100dvh - 185px); }
+@media (max-width: 420px) {
+  .invitation-page .lightbox { gap: 0; padding-inline: 4px; }
+  .invitation-page .lightbox__nav { width: 44px; min-width: 44px; height: 54px; }
+  .invitation-page .lightbox__figure { max-width: calc(100vw - 104px); }
+  .invitation-page .lightbox__figure figcaption { font-size: 16px; gap: 8px; }
+  .invitation-page .lightbox__figure img { border-width: 2px; }
+}
+@media (max-width: 340px) {
+  .invitation-page .lightbox__figure { max-width: calc(100vw - 100px); }
+  .invitation-page .lightbox__figure figcaption { font-size: 14px; }
+  .site-footer { padding-inline: 15px; letter-spacing: .12em; }
+}
+@media (hover: none) {
+  /* Hover art is for a precise pointer; do not leave sticky hover effects on touch. */
+  .gallery__tile:hover img { transform: none; }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  .invitation-page .lightbox {
+    padding-top: max(18px, env(safe-area-inset-top, 0px));
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  }
+  .invitation-page .lightbox__figure img { max-height: calc(100dvh - 70px); }
+  .invitation-page .lightbox__close { top: 4px; right: 4px; }
+  .invitation-page .lightbox__figure figcaption { font-size: 14px; }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, type RefObject } from "react";
+import useMotionLayoutRevision from "@/components/useMotionLayoutRevision";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,9 +11,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  * individual chapters. Still content remains visible when JS/motion is off.
  */
 export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
+  const layoutRevision = useMotionLayoutRevision();
   useEffect(() => {
     const section = root.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(orientation: landscape) and (max-height: 560px)").matches)) return;
 
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
@@ -170,5 +173,5 @@ export default function useJourneyMotion(root: RefObject<HTMLElement | null>) {
       window.removeEventListener("load", refresh);
       ctx.revert();
     };
-  }, [root]);
+  }, [root, layoutRevision]);
 }
