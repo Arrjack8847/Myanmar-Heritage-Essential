@@ -1,0 +1,231 @@
+/* JN-W01 / Section 01 — second royal heirloom portrait reveal.
+   All art remains in separately replaceable PNG layers; the overlay has ONE
+   viewport footprint, even though its contents reveal over extended scroll. */
+.royal-heirloom {
+  position: absolute;
+  z-index: 11;
+  top: 48%;
+  left: 50%;
+  width: min(91vw, calc(80svh * 941 / 1672), 430px);
+  aspect-ratio: 941 / 1672;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  container-type: inline-size;
+  isolation: isolate;
+}
+
+.royal-heirloom__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 13px 16px rgba(95, 60, 43, .17));
+}
+.royal-heirloom__paper,
+.royal-heirloom__frame,
+.royal-heirloom__corners,
+.royal-heirloom__crown,
+.royal-heirloom__portrait-frame,
+.royal-heirloom__rings-art,
+.royal-heirloom__accent {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+.royal-heirloom__paper { z-index: 0; inset: 0; }
+.royal-heirloom__frame { z-index: 3; inset: 1.3%; opacity: .87; }
+.royal-heirloom__corners { z-index: 4; inset: 2%; opacity: .48; }
+.royal-heirloom__crown {
+  z-index: 5; width: 32%; height: 8%; top: 1.8%; left: 34%;
+}
+.royal-heirloom__paper img,
+.royal-heirloom__frame img,
+.royal-heirloom__corners img,
+.royal-heirloom__crown img,
+.royal-heirloom__portrait-frame img,
+.royal-heirloom__rings-art img,
+.royal-heirloom__accent img { object-fit: contain; }
+
+.royal-heirloom__eyebrow {
+  position: absolute;
+  z-index: 6; top: 9.8%; left: 9%; width: 82%;
+  margin: 0;
+  text-align: center;
+  font: 600 clamp(10px, 3.4cqw, 15px)/1.7 var(--burmese);
+  color: #aa814b;
+}
+.royal-heirloom__row {
+  position: absolute;
+  z-index: 5;
+  left: 11.5%; width: 77%;
+  height: 22.8%;
+  display: grid; grid-template-columns: 45% 55%;
+  align-items: center;
+  min-width: 0;
+}
+.royal-heirloom__row--groom { top: 16%; }
+.royal-heirloom__row--bride { top: 53%; grid-template-columns: 55% 45%; }
+.royal-heirloom__portrait {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  pointer-events: none;
+}
+.royal-heirloom__photo {
+  position: absolute;
+  inset: 7.5% 11.5% 8.5%;
+  display: block;
+  border-radius: 48% 48% 9% 9% / 27% 27% 7% 7%;
+  overflow: hidden;
+  background: #eee0cd;
+  box-shadow: inset 0 0 3px rgba(88,49,37,.13);
+}
+.royal-heirloom__photo img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.04);
+}
+.royal-heirloom__portrait-frame { inset: -3.5% -4%; }
+.royal-heirloom__name {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center;
+  min-width: 0; text-align: center;
+  color: #9d713b;
+}
+.royal-heirloom__name small {
+  display: block;
+  font: 500 clamp(10px, 3.4cqw, 14px)/1.7 var(--burmese);
+  color: #b1905b;
+}
+.royal-heirloom__name h2 {
+  margin: 1.5cqw 0 .5cqw;
+  max-width: 100%;
+  font: 600 clamp(12px, 5cqw, 22px)/1.58 var(--burmese);
+  overflow-wrap: anywhere;
+  color: #93642f;
+  text-shadow: 0 1px 0 rgba(255,248,224,.85);
+}
+.royal-heirloom__name-flourish {
+  display: flex;
+  align-items: center;
+  width: 85%;
+  height: 10cqw;
+  justify-content: center;
+  gap: 1.2cqw;
+}
+.royal-heirloom__accent {
+  position: relative;
+  width: 31%;
+  height: 100%;
+}
+.royal-heirloom__name-rule {
+  flex: 1;
+  min-width: 3px;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,#c6a162,transparent);
+}
+.royal-heirloom__rings {
+  z-index: 6; position: absolute; top: 39.5%; left: 23%;
+  width: 54%; height: 12.5%;
+  display: flex; align-items: center; justify-content: center; gap: 2cqw;
+}
+.royal-heirloom__rings-art {
+  position: relative;
+  flex: 0 0 44%;
+  width: 44%;
+  height: 100%;
+}
+.royal-heirloom__divider-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,#c7a36e 64%,transparent);
+}
+.royal-heirloom__blessing {
+  position: absolute;
+  z-index: 6;
+  left: 11%; width: 78%; top: 77.5%; height: 10.2%;
+  text-align: center;
+  color: #88623f;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+.royal-heirloom__blessing-divider {
+  display: flex;
+  align-items: center;
+  width: 45%;
+  gap: 6px;
+  margin-bottom: 2%;
+}
+.royal-heirloom__blessing-divider::before,
+.royal-heirloom__blessing-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,#c5a06b,transparent);
+}
+.royal-heirloom__blessing-divider i {
+  width: 5px; height: 5px; flex: none;
+  border: 1px solid #bb9858;
+  transform: rotate(45deg);
+}
+.royal-heirloom__blessing p {
+  margin: 0;
+  font: 500 clamp(9px, 3.15cqw, 13px)/1.8 var(--burmese);
+  text-wrap: balance;
+}
+.royal-heirloom__cta {
+  position: absolute;
+  z-index: 10;
+  top: 89%; left: 9%;
+  width: 82%;
+  display: flex; justify-content: center; align-items: center;
+  pointer-events: none;
+}
+.invitation-page .royal-heirloom__button.royal-action {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 6px 13px;
+  gap: 7px;
+  font: 600 clamp(10px, 3.65cqw, 15px)/1.5 var(--burmese);
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: normal;
+  pointer-events: auto;
+}
+.invitation-page .royal-heirloom__button .royal-action__label {
+  white-space: normal;
+}
+.invitation-page .royal-heirloom__button .royal-action__arrow {
+  font: 400 19px/1 Georgia, serif;
+  flex: none;
+}
+@media (max-height: 600px) {
+  .royal-heirloom { width: min(90vw, calc(78svh * 941 / 1672), 430px); }
+  .royal-heirloom__eyebrow { top: 10%; }
+  .royal-heirloom__row--groom { top: 16.5%; }
+  .royal-heirloom__blessing { top: 77%; }
+  .invitation-page .royal-heirloom__button.royal-action { min-height: 38px; }
+}
+@media (min-width: 760px) {
+  .royal-heirloom { width: min(430px, calc(82svh * 941 / 1672)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* One fully readable still invitation replaces the two moving cover states. */
+  .heritage-scene__card,
+  .heritage-scene__prelude,
+  .heritage-scene__floral,
+  .heritage-scene__signoff { display: none !important; }
+  .royal-heirloom {
+    opacity: 1 !important; visibility: visible !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  .heritage-story__intro { height: 100svh; }
+  .royal-unfold { top: calc(100svh - 88px); }
+}

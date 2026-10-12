@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { invitation } from "@/data/invitation";
 import InvitationTypography, { addInvitationTypographyReveal } from "./InvitationTypography";
+import RoyalHeirloomCard from "./heirloom/RoyalHeirloomCard";
 import ScrollDiscoveryIndicator, { addScrollDiscoveryReveal } from "./ScrollDiscoveryIndicator";
 
 const ASSETS = "/heritage/";
@@ -70,73 +71,125 @@ export default function HeritageHero() {
         syncAmbient();
       });
 
-      // Scrubbed, reversible depth. Motion on OUTER planes never competes
-      // with the subtle idle animation on their INNER image surfaces.
+      // One scroll authority for BOTH physical invitation pages.
+      // The uploaded heirloom card replaces the empty parchment interval;
+      // background mist/pagodas persist and the original opening is untouched.
       const intro = section.closest<HTMLElement>(".heritage-story__intro") ?? section;
+      gsap.set(".royal-heirloom", { autoAlpha: 0, y: 24, scale: 0.97 });
+      gsap.set([
+        ".royal-heirloom__top-portrait",
+        ".royal-heirloom__groom-name",
+        ".royal-heirloom__rings",
+        ".royal-heirloom__bride-name",
+        ".royal-heirloom__bottom-portrait",
+        ".royal-heirloom__blessing",
+        ".royal-heirloom__cta",
+      ], { autoAlpha: 0, y: 11 });
+
       const scrollDepth = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
           trigger: intro,
           start: "top top",
-          // Scroll only through the sticky portion, not through the next chapter.
           end: "bottom bottom",
-          scrub: 0.6,
+          scrub: 0.65,
           invalidateOnRefresh: true,
         },
       });
+
       scrollDepth
+        // Original royal cover retains its approved parallax and scroll exit.
         .to(".heritage-scene__pagodas", {
           y: () => -Math.min(section.clientHeight * 0.045, 40),
-          scale: 1.024, ease: "none",
+          scale: 1.024, duration: 3.2,
         }, 0)
         .to(".heritage-scene__mist", {
           y: () => -Math.min(section.clientHeight * 0.072, 59),
-          ease: "none",
+          duration: 3.2,
         }, 0)
         .to(".heritage-scene__hanging", {
           y: () => -Math.min(section.clientHeight * 0.09, 72),
-          x: -7, ease: "none",
+          x: -7, duration: 3.2,
         }, 0)
         .to(".heritage-scene__foliage", {
           y: () => -Math.min(section.clientHeight * 0.055, 45),
-          x: 6, ease: "none",
+          x: 6, duration: 3.2,
         }, 0)
         .to(".heritage-scene__card", {
           y: () => -Math.min(section.clientHeight * 0.055, 43),
-          ease: "none",
+          duration: 2.1,
         }, 0)
         .to(".heritage-scene__floral--left", {
           y: () => -Math.min(section.clientHeight * 0.11, 85),
-          x: -13, ease: "none",
+          x: -13, duration: 2.1,
         }, 0)
         .to(".heritage-scene__floral--right", {
           y: () => -Math.min(section.clientHeight * 0.10, 75),
-          x: 13, ease: "none",
+          x: 13, duration: 2.1,
         }, 0)
-        // Second half of the sticky scroll: the printed cover rises away.
-        // Content and its card fade as a single physical element, never separately.
+        // Crossfade the original cover and the heirloom card:
+        // do not wait for the first card to disappear completely.
         .to(".heritage-scene__card", {
           y: () => -Math.min(section.clientHeight * 0.18, 148),
-          scale: 0.94, autoAlpha: 0, duration: 0.5, ease: "power1.in",
-        }, 0.5)
+          scale: 0.94, autoAlpha: 0, duration: 1.35,
+        }, 2.1)
         .to(".heritage-scene__floral--left", {
-          x: -68, y: -110, autoAlpha: 0, duration: 0.48, ease: "none",
-        }, 0.52)
+          x: -68, y: -110, autoAlpha: 0, duration: 1.1,
+        }, 2.25)
         .to(".heritage-scene__floral--right", {
-          x: 68, y: -110, autoAlpha: 0, duration: 0.48, ease: "none",
-        }, 0.52)
+          x: 68, y: -110, autoAlpha: 0, duration: 1.1,
+        }, 2.25)
         .to(".heritage-scene__hanging", {
-          x: -34, autoAlpha: 0, duration: 0.45, ease: "none",
-        }, 0.55)
+          x: -34, autoAlpha: 0, duration: 1.0,
+        }, 2.4)
         .to(".heritage-scene__foliage", {
-          x: 27, autoAlpha: 0, duration: 0.45, ease: "none",
-        }, 0.55)
-        .to(".heritage-scene__prelude", { autoAlpha: 0, y: -18, duration: 0.36 }, 0.38)
-        .to(".heritage-scene__signoff", { autoAlpha: 0, duration: 0.35 }, 0.4)
-        .to(".heritage-scene__pagodas", { opacity: 0.22, duration: 0.4 }, 0.6)
-        .to(".heritage-scene__mist", { opacity: 0.12, duration: 0.4 }, 0.6);
+          x: 27, autoAlpha: 0, duration: 1.0,
+        }, 2.4)
+        .to(".heritage-scene__prelude", {
+          autoAlpha: 0, y: -18, duration: 0.9,
+        }, 1.9)
+        .to(".heritage-scene__signoff", {
+          autoAlpha: 0, duration: 0.9,
+        }, 2.0)
+        .to(".heritage-scene__pagodas", {
+          opacity: 0.48, duration: 3.0,
+        }, 3.0)
+        .to(".heritage-scene__mist", {
+          opacity: 0.4, duration: 3.0,
+        }, 3.0)
+        // One continuous royal portrait invitation, never a new route/modal.
+        .to(".royal-heirloom", {
+          autoAlpha: 1, y: 0, scale: 1, duration: 1.3,
+        }, 2.75)
+        .to(".royal-heirloom__top-portrait", {
+          autoAlpha: 1, y: 0, duration: 0.8,
+        }, 3.85)
+        .to(".royal-heirloom__groom-name", {
+          autoAlpha: 1, y: 0, duration: 0.8,
+        }, 4.25)
+        .to(".royal-heirloom__rings", {
+          autoAlpha: 1, y: 0, duration: 0.85,
+        }, 4.95)
+        .to(".royal-heirloom__bride-name", {
+          autoAlpha: 1, y: 0, duration: 0.8,
+        }, 5.55)
+        .to(".royal-heirloom__bottom-portrait", {
+          autoAlpha: 1, y: 0, duration: 0.8,
+        }, 5.85)
+        .to(".royal-heirloom__blessing", {
+          autoAlpha: 1, y: 0, duration: 0.9,
+        }, 6.6)
+        .to(".royal-heirloom__cta", {
+          autoAlpha: 1, y: 0, duration: 0.8,
+        }, 7.1)
+        // A generous legible hold follows before the section exits.
+        .to({}, { duration: 4.1 }, 8.0)
+        .to(".royal-heirloom", {
+          autoAlpha: 0, y: -26, scale: 0.978, duration: 1.0,
+        }, 12.1);
 
       if (scrollCue) {
-        scrollDepth.to(scrollCue, { autoAlpha: 0, y: -9, duration: 0.35 }, 0.38);
+        scrollDepth.to(scrollCue, { autoAlpha: 0, y: -9, duration: 0.65 }, 1.95);
       }
 
       const idle = (selector: string, vars: gsap.TweenVars) => {
@@ -219,6 +272,9 @@ export default function HeritageHero() {
           </div>
         </div>
       </div>
+
+      {/* The second heirloom invitation shares the very same paper and mist. */}
+      <RoyalHeirloomCard />
 
       {/* 11: two independently art-directed foreground bouquets */}
       <div className="heritage-scene__floral heritage-scene__floral--left" aria-hidden="true">
