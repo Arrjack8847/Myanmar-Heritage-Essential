@@ -22,8 +22,9 @@
 .royal-story__petal { position: absolute; opacity: .32; will-change: transform, opacity; }
 .royal-story__petal img { display: block; object-fit: contain; }
 
-/* Chapter one cover: separate, brief hold during its own scroll exit. */
-.heritage-story__intro { position: relative; height: 158svh; }
+/* One sticky runway: original cover, heirloom reveal, readable hold, then Section 2. */
+.royal-story { --royal-intro-height: 310svh; }
+.heritage-story__intro { position: relative; height: var(--royal-intro-height); }
 .heritage-story__intro > .hero.heritage-scene {
   position: sticky;
   top: 0;
@@ -34,7 +35,7 @@
 .royal-unfold {
   position: absolute;
   z-index: 13;
-  top: calc(158svh - 88px);
+  top: calc(var(--royal-intro-height) - 88px);
   left: 0;
   width: 100%;
   height: 176px;

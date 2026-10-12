@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./card-hero.css";
 import "./ceremony.css";
+import "./heirloom-card.css";
 
 export const metadata: Metadata = {
   title: "Myanmar Heritage | Wedding Invitation · JackNex Studio",

@@ -15,6 +15,21 @@ export const invitation = {
     romanticMessage: "Two hearts, one beautiful beginning",
     language: "en" as const, // Change to "my" for Myanmar Unicode typography.
   },
+  /**
+   * Section 01's second royal heirloom page.
+   * Fictional demo identities and existing gallery preview photographs.
+   * Replace both portraits with licensed/client-approved files for delivery.
+   */
+  heirloom: {
+    groomName: "မောင်အောင်",
+    brideName: "မသီရိ",
+    groomPortrait: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=85",
+    bridePortrait: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=85",
+    blessing: "မင်္ဂလာအခမ်းအနားသို့ ကြွရောက်ချီးမြှင့်ပေးပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည်။",
+    buttonText: "ဖိတ်ကြားလွှာ ကြည့်ရန်",
+    buttonTarget: "#celebration",
+  },
+
   tagline: "A celebration of love, family & forever",
   greeting: "With grateful hearts and joyful spirits, we invite you to share in the beginning of our forever.",
   dateISO: "2026-12-12T09:00:00+06:30",
