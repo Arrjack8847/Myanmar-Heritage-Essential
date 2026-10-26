@@ -1097,6 +1097,7 @@ html {
   display: block;
   inset: 0;
 }
+.living-butterflies__orbit { position: absolute; display: block; inset: 0; }
 .living-butterflies svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .living-butterfly__wing {
   transform-box: view-box;
@@ -1119,7 +1120,10 @@ html {
   from { transform: scaleX(1); }
   to { transform: scaleX(.36); }
 }
+/* Extra ceremony petals are background texture, not a second petal storm. */
+.ceremony-scene__petals { opacity: 0.58; }
 @media (max-width: 640px) {
+  .ceremony-scene__petals { opacity: 0.4; }
   .ceremony-scene__border {
     width: clamp(125px, 36vw, 200px);
     height: 35%;
