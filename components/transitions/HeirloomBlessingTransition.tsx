@@ -56,13 +56,17 @@ export default function HeirloomBlessingTransition() {
   return (
     <div ref={bridgeRef} className={styles.bridge} aria-hidden="true">
       <div className={styles.light} data-heirloom-light />
-      <div className={styles.flowerLeft} data-heirloom-flower>
-        <Image src="/heritage/floral-left.png" alt="" fill
+      <div className={styles.flowerLeft} data-heirloom-flower data-living-border data-wind-strength="0.42" >
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src="/heritage/floral-left.png" alt="" fill
           sizes="(max-width: 640px) 46vw, 330px" quality={65} loading="lazy" />
+        </span>
       </div>
-      <div className={styles.flowerRight} data-heirloom-flower>
-        <Image src="/heritage/floral-right.png" alt="" fill
+      <div className={styles.flowerRight} data-heirloom-flower data-living-border data-wind-strength="0.42" data-wind-direction="reverse" >
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src="/heritage/floral-right.png" alt="" fill
           sizes="(max-width: 640px) 46vw, 330px" quality={65} loading="lazy" />
+        </span>
       </div>
       <span className={styles.thread}>
         <span className={styles.threadFill} data-heirloom-thread />
