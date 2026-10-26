@@ -180,7 +180,9 @@ export default function CelebrationSection() {
         <div className="ceremony-scene__petals" aria-hidden="true">
           {(["a", "b", "c", "d"] as const).map((key, index) => (
             <div className={"ceremony-scene__petal ceremony-scene__petal--" + key} key={key}>
-              <Image src={"/heritage/petals/petal-0" + (index + 1) + ".png"} alt="" fill sizes="46px" />
+              <span className="living-petal-wind" data-wind-petal>
+                <Image src={"/heritage/petals/petal-0" + (index + 1) + ".png"} alt="" fill sizes="46px" />
+              </span>
             </div>
           ))}
         </div>
