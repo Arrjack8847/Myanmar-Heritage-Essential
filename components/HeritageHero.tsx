@@ -204,10 +204,6 @@ export default function HeritageHero() {
       // Slow, independent ambient motion while the card stays still.
       // Use only transform/opacity, never animated blur or backdrop filters.
       idle(".heritage-scene__mist img", { x: 8, duration: 11 });
-      idle(".heritage-scene__hanging img", { y: 3, rotation: 0.18, duration: 6.4 });
-      idle(".heritage-scene__foliage img", { y: 2, rotation: -0.16, duration: 7.6 });
-      idle(".heritage-scene__floral--left img", { y: -3, rotation: 0.24, duration: 5.7 });
-      idle(".heritage-scene__floral--right img", { y: -2, rotation: -0.22, duration: 6.6 });
 
 
     }, section);
@@ -241,11 +237,15 @@ export default function HeritageHero() {
         <Image src={ASSETS + "golden-mist.png"} alt="" fill sizes="(max-width: 700px) 100vw, 760px" />
       </div>
       {/* 05 + 06: independent hanging flowers and botanical goldwork */}
-      <div className="heritage-scene__hanging" aria-hidden="true">
-        <Image src={ASSETS + "hanging-magnolias.png"} alt="" fill sizes="(max-width: 700px) 100vw, 760px" />
+      <div className="heritage-scene__hanging" data-living-border data-wind-strength="0.54" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--top" data-wind-surface>
+          <Image src={ASSETS + "hanging-magnolias.png"} alt="" fill sizes="(max-width: 700px) 100vw, 760px" />
+        </span>
       </div>
-      <div className="heritage-scene__foliage" aria-hidden="true">
-        <Image src={ASSETS + "botanical-gold.png"} alt="" fill sizes="(max-width: 700px) 100vw, 760px" />
+      <div className="heritage-scene__foliage" data-living-border data-wind-strength="0.45" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--top" data-wind-surface>
+          <Image src={ASSETS + "botanical-gold.png"} alt="" fill sizes="(max-width: 700px) 100vw, 760px" />
+        </span>
       </div>
 
       <div className="heritage-scene__prelude">
@@ -277,11 +277,15 @@ export default function HeritageHero() {
       <RoyalHeirloomCard />
 
       {/* 11: two independently art-directed foreground bouquets */}
-      <div className="heritage-scene__floral heritage-scene__floral--left" aria-hidden="true">
-        <Image src={ASSETS + "floral-left.png"} alt="" fill sizes="(max-width: 700px) 66vw, 430px" />
+      <div className="heritage-scene__floral heritage-scene__floral--left" data-living-border data-wind-strength="0.86" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src={ASSETS + "floral-left.png"} alt="" fill sizes="(max-width: 700px) 66vw, 430px" />
+        </span>
       </div>
-      <div className="heritage-scene__floral heritage-scene__floral--right" aria-hidden="true">
-        <Image src={ASSETS + "floral-right.png"} alt="" fill sizes="(max-width: 700px) 66vw, 430px" />
+      <div className="heritage-scene__floral heritage-scene__floral--right" data-living-border data-wind-strength="0.76" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src={ASSETS + "floral-right.png"} alt="" fill sizes="(max-width: 700px) 66vw, 430px" />
+        </span>
       </div>
 
       <p className="heritage-scene__signoff">Honouring tradition. <span>Beginning forever.</span></p>

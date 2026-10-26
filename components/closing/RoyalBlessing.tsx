@@ -199,11 +199,15 @@ export default function RoyalBlessing() {
         skyClassName={styles.sky}
         mistClassName={styles.mist}
       />
-      <div className={styles.floraLeft} data-blessing-layer="flora-left" aria-hidden="true">
-        <Image src={ASSETS + "floral-left.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
+      <div className={styles.floraLeft} data-blessing-layer="flora-left" data-living-border data-wind-strength="0.38" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src={ASSETS + "floral-left.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
+        </span>
       </div>
-      <div className={styles.floraRight} data-blessing-layer="flora-right" aria-hidden="true">
-        <Image src={ASSETS + "floral-right.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
+      <div className={styles.floraRight} data-blessing-layer="flora-right" data-living-border data-wind-strength="0.35" data-wind-direction="reverse" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src={ASSETS + "floral-right.png"} alt="" fill sizes="(max-width: 640px) 70vw, 480px" quality={75} />
+        </span>
       </div>
       <div className={styles.readingLight} data-blessing-light aria-hidden="true" />
 

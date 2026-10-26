@@ -38,17 +38,23 @@ export default function JourneySection({ onOpenPhoto }: Props) {
           fill sizes="100vw" quality={70} loading="lazy" />
       </div>
 
-      <div className={styles.hangingFlowers} data-chronicle-flower aria-hidden="true">
-        <Image src="/heritage/hanging-magnolias.png" alt="" fill
+      <div className={styles.hangingFlowers} data-chronicle-flower data-living-border data-wind-strength="0.46" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--top" data-wind-surface>
+          <Image src="/heritage/hanging-magnolias.png" alt="" fill
           sizes="(max-width:640px) 120px, 300px" quality={68} loading="lazy" />
+        </span>
       </div>
-      <div className={styles.flowerLeft} data-chronicle-flower aria-hidden="true">
-        <Image src={ASSETS + "/11a-floral-parallax-left.png"} alt="" fill
+      <div className={styles.flowerLeft} data-chronicle-flower data-living-border data-wind-strength="0.64" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src={ASSETS + "/11a-floral-parallax-left.png"} alt="" fill
           sizes="(max-width:640px) 150px, 320px" quality={65} loading="lazy" />
+        </span>
       </div>
-      <div className={styles.flowerRight} data-chronicle-flower aria-hidden="true">
-        <Image src={ASSETS + "/11b-floral-parallax-right.png"} alt="" fill
+      <div className={styles.flowerRight} data-chronicle-flower data-living-border data-wind-strength="0.59" data-wind-direction="reverse" aria-hidden="true">
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          <Image src={ASSETS + "/11b-floral-parallax-right.png"} alt="" fill
           sizes="(max-width:640px) 150px, 320px" quality={65} loading="lazy" />
+        </span>
       </div>
 
       <header className={styles.intro} data-chronicle-intro>
