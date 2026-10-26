@@ -161,6 +161,21 @@ export default function CelebrationSection() {
           <Image src="/heritage/golden-mist.png" alt="" fill sizes="100vw" />
         </div>
         <div className="ceremony-scene__light" aria-hidden="true" />
+        {/* Foreground floral borders move on nested surfaces; the timeline owns the scene. */}
+        <div className="ceremony-scene__border ceremony-scene__border--left"
+          data-living-border data-wind-strength="0.50" aria-hidden="true">
+          <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+            <Image src="/heritage/floral-left.png" alt="" fill
+              sizes="(max-width: 640px) 160px, 320px" quality={72} />
+          </span>
+        </div>
+        <div className="ceremony-scene__border ceremony-scene__border--right"
+          data-living-border data-wind-strength="0.46" data-wind-direction="reverse" aria-hidden="true">
+          <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+            <Image src="/heritage/floral-right.png" alt="" fill
+              sizes="(max-width: 640px) 160px, 320px" quality={72} />
+          </span>
+        </div>
         <div className="ceremony-scene__mist-bridge" aria-hidden="true" />
         <div className="ceremony-scene__petals" aria-hidden="true">
           {(["a", "b", "c", "d"] as const).map((key, index) => (
