@@ -42,9 +42,9 @@ export default function LivingEnvironmentController() {
         direction: host?.dataset.windDirection === "reverse" ? -1 : 1,
         kind,
         visible: false,
-        x: gsap.quickSetter(element, "x", "px"),
-        y: gsap.quickSetter(element, "y", "px"),
-        rotation: gsap.quickSetter(element, "rotation", "deg"),
+        x: gsap.quickSetter(element, "x", "px") as (value: number) => void,
+        y: gsap.quickSetter(element, "y", "px") as (value: number) => void,
+        rotation: gsap.quickSetter(element, "rotation", "deg") as (value: number) => void,
       };
     });
 
