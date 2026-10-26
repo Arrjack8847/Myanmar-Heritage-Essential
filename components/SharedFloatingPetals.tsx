@@ -119,14 +119,16 @@ export default function SharedFloatingPetals() {
             width: petal.size, height: petal.size,
           } as CSSProperties}
         >
-          <Image
+          <span className="living-petal-wind" data-wind-petal>
+            <Image
             src={"/heritage/petals/" + petal.file}
             alt=""
             fill
             loading={index < 3 ? "eager" : "lazy"}
             quality={80}
             sizes="(max-width: 759px) 96px, 120px"
-          />
+            />
+          </span>
         </div>
       ))}
     </div>
