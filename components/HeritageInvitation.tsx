@@ -15,6 +15,8 @@ import HeirloomBlessingTransition from "@/components/transitions/HeirloomBlessin
 import SharedFloatingPetals from "@/components/SharedFloatingPetals";
 import MotionStability from "@/components/MotionStability";
 import MotionDebug from "@/components/MotionDebug";
+import SharedButterflies from "@/components/environment/SharedButterflies";
+import LivingEnvironmentController from "@/components/environment/LivingEnvironmentController";
 import {
   GoldenThread,
   HeritageCrest,
@@ -105,6 +107,7 @@ export default function HeritageInvitation() {
       <a className="skip-link" href="#celebration">Skip to invitation details</a>
       <div className="paper-grain" aria-hidden="true" />
       <GoldenThread className="golden-thread" />
+      <SharedButterflies />
 
       {/* A SINGLE sticky petal layer spans hero, ceremony and royal gateway.
           Keeping it above both stories stops the petals resetting at the seam. */}
@@ -123,6 +126,7 @@ export default function HeritageInvitation() {
       </div>
       <MotionStability />
       <MotionDebug />
+      <LivingEnvironmentController />
 
       {/* 04 — EDITORIAL LOVE STORY — natural scroll + golden thread */}
       <JourneySection onOpenPhoto={setLightbox} />
