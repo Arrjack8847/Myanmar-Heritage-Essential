@@ -42,7 +42,18 @@ export default function SharedButterflies() {
         window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     gsap.registerPlugin(ScrollTrigger);
+    const idleTracks: gsap.core.Timeline[] = [];
     const context = gsap.context(() => {
+      // Small independent loops continue even when the guest isn't scrolling.
+      // Motion lives on an inner wrapper so it never overrides scroll flight.
+      overlay.querySelectorAll<HTMLElement>("[data-butterfly-orbit]").forEach((orbit, i) => {
+        idleTracks.push(gsap.timeline({ repeat: -1, yoyo: true, paused: true })
+          .to(orbit, { x: i === 0 ? 23 : -17, y: -18, rotation: i === 0 ? -6 : 5,
+            duration: i === 0 ? 4.1 : 5.2, ease: "sine.inOut" })
+          .to(orbit, { x: i === 0 ? -15 : 14, y: 13, rotation: i === 0 ? 5 : -5,
+            duration: i === 0 ? 4.9 : 4.5, ease: "sine.inOut" }));
+      });
+
       const lead = overlay.querySelector<HTMLElement>('[data-butterfly-flight="lead"]');
       const companion = overlay.querySelector<HTMLElement>('[data-butterfly-flight="companion"]');
       if (!lead || !companion) return;
@@ -81,16 +92,24 @@ export default function SharedButterflies() {
         .to(companion, { x: () => w() * 0.76, y: () => h() * 0.37, rotation: -12, duration: 1.2 }, 9.2)
         .to(companion, { autoAlpha: 0, duration: 1.1 }, 10.5);
     }, overlay);
-    return () => context.revert();
+    const sync = () => {
+      idleTracks.forEach((track) => document.hidden ? track.pause() : track.play());
+    };
+    document.addEventListener("visibilitychange", sync);
+    sync();
+    return () => {
+      document.removeEventListener("visibilitychange", sync);
+      context.revert();
+    };
   }, []);
 
   return (
     <div ref={overlayRef} className="living-butterflies" aria-hidden="true">
       <div className="living-butterflies__flight living-butterflies__flight--lead" data-butterfly-flight="lead">
-        <span className="living-butterflies__wind" data-wind-butterfly><Butterfly /></span>
+        <span className="living-butterflies__wind" data-wind-butterfly><span className="living-butterflies__orbit" data-butterfly-orbit="lead"><Butterfly /></span></span>
       </div>
       <div className="living-butterflies__flight living-butterflies__flight--companion" data-butterfly-flight="companion">
-        <span className="living-butterflies__wind" data-wind-butterfly><Butterfly second /></span>
+        <span className="living-butterflies__wind" data-wind-butterfly><span className="living-butterflies__orbit" data-butterfly-orbit="companion"><Butterfly second /></span></span>
       </div>
     </div>
   );
