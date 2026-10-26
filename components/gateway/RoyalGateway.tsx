@@ -22,19 +22,25 @@ type LayerProps = {
 
 /** Every decorative element is a real, independently positionable layer. */
 function Layer({ name, file, className, sizes, cover = false, mirrored = false }: LayerProps) {
+  const isFlower = name.startsWith("florals");
+  const artwork = (
+    <Image src={ASSET + file} alt="" fill sizes={sizes} quality={75}
+      loading={name === "courtyard" || name === "crown" ? "eager" : "lazy"}
+      draggable={false}
+      className={mirrored ? styles.mirrored : undefined}
+      style={{ objectFit: cover ? "cover" : "contain" }} />
+  );
   return (
-    <div className={className} data-gw={name} aria-hidden="true">
-      <Image
-        src={ASSET + file}
-        alt=""
-        fill
-        sizes={sizes}
-        quality={75}
-        loading={name === "courtyard" || name === "crown" ? "eager" : "lazy"}
-        draggable={false}
-        className={mirrored ? styles.mirrored : undefined}
-        style={{ objectFit: cover ? "cover" : "contain" }}
-      />
+    <div className={className} data-gw={name}
+      data-living-border={isFlower ? "" : undefined}
+      data-wind-strength={isFlower ? "0.72" : undefined}
+      data-wind-direction={mirrored ? "reverse" : undefined}
+      aria-hidden="true">
+      {isFlower ? (
+        <span className="living-wind-surface living-wind-surface--bottom" data-wind-surface>
+          {artwork}
+        </span>
+      ) : artwork}
     </div>
   );
 }
